@@ -36,8 +36,9 @@ const config: Config = {
     // image: 'img/docusaurus-social-card.jpg',
     navbar: {
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        alt: 'InsurUp Logo',
+        src: 'img/logo-light.svg',
+        srcDark: 'img/logo-dark.svg',
       },
       items: [
         {
@@ -45,8 +46,13 @@ const config: Config = {
           label: 'GitHub',
           position: 'right',
         },
+        {
+          href: 'https://app.insurup.com',
+          label: 'InsurUp CRM',
+          position: 'right',
+        },
         // {
-          // type: 'docsVersionDropdown',
+        //   type: 'docsVersionDropdown',
         // }
       ],
     },

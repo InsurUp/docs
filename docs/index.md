@@ -1,47 +1,37 @@
 ---
+title: Başlangıç
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# InsurUp'a Hoş Geldiniz! 🚀
 
-Let's discover **Docusaurus in less than 5 minutes**.
+InsurUp, sigorta acenteleri ve brokerları için geliştirilmiş yenilikçi bir CRM çözümüdür. Kolay kullanımı, güçlü özellikleri ve esnek altyapısıyla, sigorta işlemlerinizi hızlı ve verimli bir şekilde yönetmenize olanak tanır. İster küçük bir acente olun, ister büyük bir broker ağı yönetin; InsurUp, sigorta süreçlerinizi daha kolay ve etkili hale getirir.
 
-## Getting Started
+## 🌟 InsurUp Nedir?
 
-Get started by **creating a new site**.
+InsurUp, sigorta acentelerinin ve brokerlarının iş süreçlerini kolaylaştırmak için özel olarak tasarlanmış bulut tabanlı bir CRM platformudur. Platform, sigorta acentelerinin teklif hazırlama, poliçe yönetimi, müşteri ilişkileri ve veri analizi gibi temel işlemlerini tek bir çatı altında toplar. Esnek ve kullanıcı dostu arayüzü sayesinde, herhangi bir teknik bilgi gerektirmeden kullanıcıların ihtiyaçlarına göre özelleştirilebilir ve kolayca adapte edilebilir. 
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+Bulut tabanlı yapısı, kullanıcıların diledikleri yerden sisteme erişmelerine olanak tanırken, güçlü entegrasyon özellikleriyle sigorta şirketleriyle hızlı ve güvenli bağlantılar kurmalarını sağlar. Self servis modülleriyle kullanıcılar kendi başlarına acente kurulumlarını tamamlayabilir, teklifleri hızla hazırlayabilir ve müşteri bilgilerini tek bir ekranda görüntüleyebilir. Tüm bu özellikler, InsurUp'ı modern sigorta operasyonlarının merkezi haline getirir.
 
-### What you'll need
+InsurUp hakkında daha fazla bilgi için [InsurUp web sitemizi](https://www.insurup.com) sayfamızı ziyaret edin.
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+## 🎯 Nasıl Başlayabilirsiniz?
 
-## Generate a new site
+Yeni bir kullanıcı olarak başlamak çok kolay! Adım adım kullanıcı rehberlerimizden faydalanarak hızlıca sistemi keşfedebilirsiniz. Başlamak için aşağıdaki adımları takip edin:
 
-Generate a new Docusaurus site using the **classic template**.
+1. **[Giriş Yapın](./kullanici-rehberleri/giris-sayfasi)**: İlk adım olarak platforma giriş yapın ve hesabınızı aktif hale getirin.
+2. **[Acentenizi Kurun](./kullanici-rehberleri/acente-bilgileri-ve-kurulum-adimlari)**: Acente bilgilerinizi girerek kurulum işlemini tamamlayın.
+3. **[Kullanıcılarınızı Ekleyin](./kullanici-rehberleri/kullanicilar)**: Acenteniz için yeni kullanıcılar davet edin ve yetkilendirmeleri yapın.
+4. **[Tekliflerinizi ve Poliçelerinizi Yönetin](./kullanici-rehberleri/teklifler)**: Hızlıca teklif hazırlayın ve poliçe süreçlerinizi yönetin.
 
-The classic template will automatically be added to your project after you run the command:
+## 📚 Kullanıcı Rehberleri
 
-```bash
-npm init docusaurus@latest my-website classic
-```
+Platformdaki tüm modüller hakkında detaylı bilgi almak için [Kullanıcı Rehberleri](./kullanici-rehberleri) sayfamıza göz atabilirsiniz. Burada sistemdeki her özellik için adım adım açıklamalar bulacaksınız. Rehberlerimiz, sıkça karşılaşılan sorunlara ve merak edilen özelliklere dair pratik çözümler sunar.
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+## 📞 Yardıma mı ihtiyacınız var?
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+Herhangi bir konuda desteğe ihtiyaç duyarsanız, [Kullanıcı Rehberleri](./kullanici-rehberleri) sayfasından yardım alabilir veya [Destek Ekibi](mailto:destek@insurup.com) ile iletişime geçebilirsiniz.
 
-## Start your site
+---
 
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+InsurUp ile sigorta operasyonlarınızı daha verimli hale getirin, işinizi büyütün ve müşteri memnuniyetini artırın. Şimdi başlayın ve InsurUp'ın avantajlarını keşfedin! 🎉
