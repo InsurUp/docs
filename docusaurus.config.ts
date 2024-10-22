@@ -32,6 +32,12 @@ const config: Config = {
   ],
 
   themeConfig: {
+    algolia: {
+      appId: '0I029DQXAX',
+      apiKey: '0d6ced51c9a10c943bf0933463d4e2ce',
+      indexName: 'insurup',
+      contextualSearch: true
+    },
     // Replace with your project's social card
     // image: 'img/docusaurus-social-card.jpg',
     navbar: {
@@ -104,7 +110,7 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
-    },
+    }
   } satisfies Preset.ThemeConfig,
 };
 
