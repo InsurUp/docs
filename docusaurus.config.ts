@@ -23,7 +23,7 @@ const config: Config = {
       {
         docs: {
           editUrl: 'https://github.com/InsurUp/docs/blob/main/',
-          // includeCurrentVersion: false,
+          includeCurrentVersion: false,
           routeBasePath: '/'
         },
         blog: false,
@@ -38,8 +38,6 @@ const config: Config = {
       indexName: 'insurup',
       contextualSearch: true
     },
-    // Replace with your project's social card
-    // image: 'img/docusaurus-social-card.jpg',
     navbar: {
       logo: {
         alt: 'InsurUp Logo',
@@ -57,9 +55,9 @@ const config: Config = {
           label: 'InsurUp CRM',
           position: 'right',
         },
-        // {
-        //   type: 'docsVersionDropdown',
-        // }
+        {
+          type: 'docsVersionDropdown',
+        }
       ],
     },
     // footer: {
