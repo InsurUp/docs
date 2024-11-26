@@ -68,10 +68,10 @@ Bir teklif primi InsurUp'a iletildiği zaman tetiklenir.
     "birthDate": "1994-01-01",
     "fullName": "Müşteri ismi",
     "phoneNumber": {
-      "number": "5359685518",
+      "number": "5432222222",
       "countryCode": 90,
-      "areaCode": "535",
-      "numberWithoutAreaCode": "9685518"
+      "areaCode": "543",
+      "numberWithoutAreaCode": "2222222"
     },
     "email": {
       "value": "customer@insurup.com"
@@ -90,6 +90,34 @@ Bir teklif primi InsurUp'a iletildiği zaman tetiklenir.
   "tempPreInfoDocumentUrl": null
 }
 ```
+
+**Örnek Sigortalı Tüzel Müşteri Payload**
+
+```json
+  "insuredCustomer": {
+    "$type": "company",
+    "title": "Şirket ismi",
+    "taxNumber": "6130782524",
+    "phoneNumber": {
+      "number": "5432222222",
+      "countryCode": 90,
+      "areaCode": "543",
+      "numberWithoutAreaCode": "2222222"
+    },
+    "email": {
+      "value": "customer@insurup.com"
+    },
+    "city": {
+      "value": "34",
+      "text": "İSTANBUL"
+    },
+    "district": {
+      "value": "1823",
+      "text": "KÜÇÜKÇEKMECE"
+    }
+  },
+```
+
 
 ### `proposal_premium.purchasing` *sync*
 
@@ -137,7 +165,7 @@ Bir teklif primini satın alma isteği **başarılı** olunca tetiklenir.
   "paymentType": "CreditCard",
   "policyStartDate": "2024-11-20",
   "policyEndDate": "2025-11-20",
-  "policyDocumentContentUrl": null
+  "tempDocumentUrl": null
 }
 ```
 
