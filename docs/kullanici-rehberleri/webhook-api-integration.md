@@ -24,6 +24,7 @@ Bir teklif primi InsurUp'a iletildiği zaman tetiklenir.
 
 ```json
 {
+  "$event": "proposal_premium.received",
   "proposalId": "673afd15f11de64fe1f2bjdb",
   "productId": 40235,
   "premiums": [
@@ -35,7 +36,8 @@ Bir teklif primi InsurUp'a iletildiği zaman tetiklenir.
       "exchangeRate": 1,
       "paymentType": "All",
       "currency": "TurkishLira",
-      "insuranceCompanyProposalNumber": "142534209"
+      "insuranceCompanyProposalNumber": "142534209",
+      "proposalProductId": "67452b1a022dec6666bf06d8"
     },
     {
       "installmentNumber": 2,
@@ -45,7 +47,8 @@ Bir teklif primi InsurUp'a iletildiği zaman tetiklenir.
       "exchangeRate": 1,
       "paymentType": "All",
       "currency": "TurkishLira",
-      "insuranceCompanyProposalNumber": "142534209"
+      "insuranceCompanyProposalNumber": "142534209",
+      "proposalProductId": "67452b1a022dec6666bf06d8"
     },
     {
       "installmentNumber": 3,
@@ -55,14 +58,20 @@ Bir teklif primi InsurUp'a iletildiği zaman tetiklenir.
       "exchangeRate": 1,
       "paymentType": "All",
       "currency": "TurkishLira",
-      "insuranceCompanyProposalNumber": "142534209"
+      "insuranceCompanyProposalNumber": "142534209",
+      "proposalProductId": "67452b1a022dec6666bf06d8"
     }
   ],
   "insuredCustomer": {
-    "name": "Müşteri ismi",
+    "$type": "individual",
+    "identityNumber": "12345678910",
+    "birthDate": "1994-01-01",
+    "fullName": "Müşteri ismi",
     "phoneNumber": {
-      "number": "5334180719",
-      "countryCode": 90
+      "number": "5432222222",
+      "countryCode": 90,
+      "areaCode": "543",
+      "numberWithoutAreaCode": "2222222"
     },
     "email": {
       "value": "customer@insurup.com"
@@ -75,8 +84,38 @@ Bir teklif primi InsurUp'a iletildiği zaman tetiklenir.
       "value": "1823",
       "text": "KÜÇÜKÇEKMECE"
     }
-  }
+  },
+  "event": 1,
+  "tempProposalDocumentUrl": null,
+  "tempPreInfoDocumentUrl": null
 }
+```
+
+**Örnek Sigortalı Tüzel Müşteri Payload**
+
+```json
+  "insuredCustomer": {
+    "$type": "company",
+    "title": "Şirket ismi",
+    "taxNumber": "6130782524",
+    "phoneNumber": {
+      "number": "5432222222",
+      "countryCode": 90,
+      "areaCode": "543",
+      "numberWithoutAreaCode": "2222222"
+    },
+    "email": {
+      "value": "customer@insurup.com"
+    },
+    "city": {
+      "value": "34",
+      "text": "İSTANBUL"
+    },
+    "district": {
+      "value": "1823",
+      "text": "KÜÇÜKÇEKMECE"
+    }
+  },
 ```
 
 ### `proposal_premium.purchasing` *sync*
