@@ -163,7 +163,8 @@ Bir teklif primini satın alma isteği **başarılı** olunca tetiklenir.
   "installmentNumber": 1,
   "paymentType": "CreditCard",
   "policyStartDate": "2024-11-20",
-  "policyEndDate": "2025-11-20"
+  "policyEndDate": "2025-11-20",
+  "tempDocumentUrl": null
 }
 ```
 
