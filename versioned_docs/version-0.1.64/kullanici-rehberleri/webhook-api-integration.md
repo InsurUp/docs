@@ -94,6 +94,7 @@ Bir teklif primi InsurUp'a iletildiği zaman tetiklenir.
 **Örnek Sigortalı Tüzel Müşteri Payload**
 
 ```json
+{
   "insuredCustomer": {
     "$type": "company",
     "title": "Şirket ismi",
@@ -115,7 +116,8 @@ Bir teklif primi InsurUp'a iletildiği zaman tetiklenir.
       "value": "1823",
       "text": "KÜÇÜKÇEKMECE"
     }
-  },
+  }
+}
 ```
 
 ### `proposal_premium.purchasing` *sync*
@@ -280,3 +282,13 @@ public class SignatureValidator {
     }
 }
 ```
+
+### PaymentType Değerleri
+
+PaymentType alanında kullanılabilecek değerler aşağıdaki gibidir:
+
+| Değer | Açıklama |
+|-------|----------|
+| CreditCard | Kredi kartı ile ödeme |
+| OpenAccount | Açık hesap ile ödeme |
+| Secure3d | 3D Secure ile ödeme |
