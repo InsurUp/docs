@@ -280,3 +280,14 @@ public class SignatureValidator {
     }
 }
 ```
+
+### PaymentType Değerleri
+
+PaymentType alanında kullanılabilecek değerler aşağıdaki gibidir:
+
+| Değer | Açıklama |
+|-------|----------|
+| CreditCard | Kredi kartı ile ödeme |
+| OpenAccount | Açık hesap ile ödeme |
+| Secure3d | 3D Secure ile ödeme |
+| All | Tüm ödeme tipleri |
