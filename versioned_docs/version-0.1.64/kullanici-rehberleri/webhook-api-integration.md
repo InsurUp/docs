@@ -195,7 +195,7 @@ Dosya poliçe transfer, online poliçe transfer, proje üzerinden poliçe oluşt
 
 ### `policy.updated` *async*
 
-Dosya poliçe transfer, online poliçe transfer, proje üzerinden poliçe oluşturma durumlarında tetiklenir.
+Dosya poliçe transfer, online poliçe transfer durumunda zeyil poliçe iletimini tetikler.
 
 **Örnek Payload**
 
