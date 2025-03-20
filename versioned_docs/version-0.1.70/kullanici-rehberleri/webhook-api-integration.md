@@ -306,3 +306,23 @@ PaymentType alanında kullanılabilecek değerler aşağıdaki gibidir:
 | Trafik | 4 | Trafik Sigortası |
 | Tss | 5 | Tamamlayıcı Sağlık Sigortası |
 | Imm | 6 | İşyeri Mali Mesuliyet Sigortası |
+
+### Channel Değerleri
+
+`channel` alanında kullanılabilecek değerler aşağıdaki gibidir:
+
+| Değer | JSON Değeri | Açıklama |
+|-------|-------------|-----------|
+| Unknown | UNKNOWN | Bilinmeyen kanal |
+| Manual | MANUAL | Manuel giriş |
+| Website | WEBSITE | Web sitesi üzerinden |
+| GoogleAds | GOOGLE_ADS | Google Ads üzerinden |
+| CallCenter | CALL_CENTER | Çağrı merkezi üzerinden |
+| SocialMedia | SOCIAL_MEDIA | Sosyal medya üzerinden |
+| MobileApp | MOBILE_APP | Mobil uygulama üzerinden |
+| OfflineProposalForm | OFFLINE_PROPOSAL_FORM | Çevrimdışı teklif formu |
+| Field | FIELD | Saha satışı |
+| PrintMedia | PRINT_MEDIA | Basılı medya |
+| FairEvent | FAIR_EVENT | Fuar ve etkinlikler |
+| BusinessPartner | BUSINESS_PARTNER | İş ortağı |
+| Chatbot | CHATBOT | Chatbot üzerinden |

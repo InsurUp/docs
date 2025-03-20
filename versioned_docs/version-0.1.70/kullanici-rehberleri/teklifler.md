@@ -41,27 +41,6 @@ Sağ üst köşede bulunan **+ Teklif Al** butonuna basarak yeni bir teklif form
 
 Ekranın sağ alt kısmında, teklif listesindeki sayfalar arasında ileri/geri geçiş yapabileceğiniz butonlar bulunmaktadır.
 
-
-### Channel Değerleri
-
-`channel` alanında kullanılabilecek değerler aşağıdaki gibidir:
-
-| Değer | JSON Değeri | Açıklama |
-|-------|-------------|-----------|
-| Unknown | UNKNOWN | Bilinmeyen kanal |
-| Manual | MANUAL | Manuel giriş |
-| Website | WEBSITE | Web sitesi üzerinden |
-| GoogleAds | GOOGLE_ADS | Google Ads üzerinden |
-| CallCenter | CALL_CENTER | Çağrı merkezi üzerinden |
-| SocialMedia | SOCIAL_MEDIA | Sosyal medya üzerinden |
-| MobileApp | MOBILE_APP | Mobil uygulama üzerinden |
-| OfflineProposalForm | OFFLINE_PROPOSAL_FORM | Çevrimdışı teklif formu |
-| Field | FIELD | Saha satışı |
-| PrintMedia | PRINT_MEDIA | Basılı medya |
-| FairEvent | FAIR_EVENT | Fuar ve etkinlikler |
-| BusinessPartner | BUSINESS_PARTNER | İş ortağı |
-| Chatbot | CHATBOT | Chatbot üzerinden |
-
 :::tip
 Teklif detay sayfasında, teklifin içeriği hakkında daha fazla bilgiye erişebilir ve gerektiğinde revizyon yapabilirsiniz.
 :::
