@@ -41,9 +41,6 @@ Sağ üst köşede bulunan **+ Teklif Al** butonuna basarak yeni bir teklif form
 
 Ekranın sağ alt kısmında, teklif listesindeki sayfalar arasında ileri/geri geçiş yapabileceğiniz butonlar bulunmaktadır.
 
-:::tip
-Teklif detay sayfasında, teklifin içeriği hakkında daha fazla bilgiye erişebilir ve gerektiğinde revizyon yapabilirsiniz.
-:::
 
 ### Channel Değerleri
 
@@ -64,3 +61,7 @@ Teklif detay sayfasında, teklifin içeriği hakkında daha fazla bilgiye erişe
 | FairEvent | FAIR_EVENT | Fuar ve etkinlikler |
 | BusinessPartner | BUSINESS_PARTNER | İş ortağı |
 | Chatbot | CHATBOT | Chatbot üzerinden |
+
+:::tip
+Teklif detay sayfasında, teklifin içeriği hakkında daha fazla bilgiye erişebilir ve gerektiğinde revizyon yapabilirsiniz.
+:::
