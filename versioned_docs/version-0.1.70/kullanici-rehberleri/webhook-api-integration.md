@@ -210,6 +210,8 @@ Dosya poliçe transfer, online poliçe transfer durumunda zeyil poliçe iletimin
   "paymentType": "CreditCard",
   "endorsementNumber": 1,
   "isCancel": false,
+  "netPremium": 7340.47,
+  "grossPremium": 8171.8,
   "event": 1001
 }
 ```
