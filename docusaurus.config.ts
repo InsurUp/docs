@@ -23,7 +23,7 @@ const config: Config = {
       {
         docs: {
           editUrl: 'https://github.com/InsurUp/docs/blob/main/',
-          includeCurrentVersion: true,
+          includeCurrentVersion: false,
           routeBasePath: '/'
         },
         blog: false,
