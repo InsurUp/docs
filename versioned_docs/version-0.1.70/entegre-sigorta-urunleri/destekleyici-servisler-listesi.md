@@ -16,7 +16,7 @@ InsurUp’ın destekleyici servis entegrasyonları, sigorta şirketlerinin siste
 | Robot Entegrasyon Sayısı | 48 |
 
 ## Web Servis / Destekleyici Servisler Listesi
-Sigorta şirketlerinin sunduğu API’ler aracılığıyla Tramer gibi destekleyici sorgular doğrudan sistemlerden alınır. Bu yaklaşım, [Web Servis (API)](./web-servis-listesi) entegrasyon mantığına paralel olup ilgili şirketten “web servis erişim izni/partaj” gerektirir. Kapsam, şirketlerin sunduğu servislere göre değişebilir.
+Sigorta şirketlerinin sunduğu API’ler aracılığıyla Tramer gibi destekleyici sorgular doğrudan sistemlerden alınır. Bu yaklaşım, [Web Servis (API)](./web-servis-listesi.md) entegrasyon mantığına paralel olup ilgili şirketten “web servis erişim izni/partaj” gerektirir. Kapsam, şirketlerin sunduğu servislere göre değişebilir.
 
 | Şirket                   | Tramer |
 | ------------------------ | ------ |
@@ -63,7 +63,7 @@ Sigorta şirketlerinin sunduğu API’ler aracılığıyla Tramer gibi destekley
 | Zurich Sigorta           | ✓      |
 
 ## Robot / Destekleyici Servisler Listesi
-Web servis bulunmadığında ya da tercih edilmediğinde, InsurUp’ın [Robot (RPA)](./robot-urun-listesi) katmanı sigorta şirketlerinin ekranlarından işlemleri insan operatör gibi gerçekleştirir. Aşağıdaki tabloda robot ile sağlanan destekleyici servis entegrasyonları listelenmiştir.
+Web servis bulunmadığında ya da tercih edilmediğinde, InsurUp’ın [Robot (RPA)](./robot-urun-listesi.md) katmanı sigorta şirketlerinin ekranlarından işlemleri insan operatör gibi gerçekleştirir. Aşağıdaki tabloda robot ile sağlanan destekleyici servis entegrasyonları listelenmiştir.
 
 | Sigorta Şirketi | Tescil | Doğum Tarihi | Mernis | Tramer | Uavt Adres | Dask Eski Poliçe |
 | --------------- | ------ | ------------ | ------ | ------ | ---------- | ---------------- |
