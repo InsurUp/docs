@@ -23,3 +23,7 @@ yarn-error.log*
 
 # Claude Code configuration
 CLAUDE.md
+
+# Local agent docs
+AGENTS.md
+agents.md

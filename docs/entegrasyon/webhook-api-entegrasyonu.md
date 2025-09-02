@@ -1,3 +1,9 @@
+---
+title: Webhook API Entegrasyonu
+sidebar_position: 3
+slug: /entegrasyon/webhook-api-entegrasyonu
+---
+
 # Webhook API Entegrasyonu
 
 Webhook'lar, bir olay meydana geldiğinde veya gelirken belirtilen URL'e istek atmak için kullanılır. InsurUp'da iki çeşit event vardır.
