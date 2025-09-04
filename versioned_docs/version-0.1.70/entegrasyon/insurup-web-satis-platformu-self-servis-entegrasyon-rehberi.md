@@ -4,7 +4,7 @@ sidebar_position: 2
 slug: /entegrasyon/insurup-web-satis-platformu-self-servis-entegrasyon-rehberi
 ---
 
-# 🌟 InsurUp Web Satış Platformu Self‑servis Entegrasyon Rehberi 
+# 🌟 InsurUp Web Satış Platformu Self‑servis Entegrasyon Rehberi
 
 Bu doküman, sigorta acenteleri ve brokerlarının kendi web satış platformlarını InsurUp sistemine entegre edebilmeleri için hazırlanmıştır. Aşağıdaki adımlar, müşteri (B2C) akışlarını kullanarak müşterinin giriş yapmasından poliçe satın almasına kadar olan süreci açıklar. Her endpoint adı ve zorunlu parametreleri belirtmek için InsurUp’un API sözleşmesindeki tanımlara ve kod örneklerine başvurulmuştur. Doküman, API’ye doğrudan erişim yerine açıklayıcı örnekler sunar; uygulama geliştirirken gerçek endpoint’lere POST/GET/DELETE istekleri gönderilmelidir.
 
