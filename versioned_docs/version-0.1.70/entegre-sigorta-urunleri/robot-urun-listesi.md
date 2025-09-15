@@ -14,7 +14,7 @@ RPA yaklaşımı, API erişiminin mümkün olmadığı durumlarda süreçleri ot
 | ---- | ----- |
 | Aktif Şirket Sayısı | 20 (en az bir branşta entegrasyon olan) |
 | Branş Sayısı | 3 (Kasko, Trafik, TSS) |
-| Toplam Ürün Sayısı | 35 (her ✓ bir ürün entegrasyonunu temsil eder) |
+| Toplam Ürün Sayısı | 47 (her ✓ bir ürün entegrasyonunu temsil eder) |
 
 ## Entegre Robot Ürünleri
 
@@ -25,8 +25,8 @@ RPA yaklaşımı, API erişiminin mümkün olmadığı durumlarda süreçleri ot
 | Ak              | ✓     | ✓      |     |
 | Allianz         | ✓     | ✓      | ✓   |
 | Ana             |       |        |     |
-| Anadolu         |       |        |     |
-| Ankara          | ✓     |        |     |
+| Anadolu         |       |        | ✓   |
+| Ankara          | ✓     | ✓      | ✓   |
 | AtlasMutel      |       |        |     |
 | Aveon           |       |        |     |
 | Axa             |       |        |     |
@@ -41,23 +41,23 @@ RPA yaklaşımı, API erişiminin mümkün olmadığı durumlarda süreçleri ot
 | Groupama        |       |        |     |
 | Gulf            |       |        |     |
 | Halk            |       |        |     |
-| HDI             | ✓     | ✓      |     |
+| HDI             | ✓     | ✓      | ✓   |
 | Hepiyi          | ✓     | ✓      | ✓   |
 | Koru            | ✓     | ✓      |     |
 | Magdeburger     | ✓     | ✓      |     |
-| Mapfre          | ✓     |        |     |
+| Mapfre          | ✓     | ✓      |     |
 | Neova           |       |        |     |
 | Nippon          |       |        |     |
-| Orient          |       |        |     |
+| Orient          | ✓     |        |     |
 | Prive           |       |        |     |
-| Quick           | ✓     | ✓      |     |
+| Quick           | ✓     | ✓      | ✓   |
 | Ray             | ✓     | ✓      |     |
-| Sompo           | ✓     | ✓      |     |
+| Sompo           | ✓     | ✓      | ✓   |
 | Şeker           |       |        |     |
 | Tmt             |       |        |     |
-| Türkiye         | ✓     | ✓      |     |
-| Türkiye Katılım |       |        | ✓   |
-| Unico           | ✓     |        |     |
+| Türkiye         | ✓     | ✓      | ✓   |
+| Türkiye Katılım | ✓     | ✓      | ✓   |
+| Unico           | ✓     | ✓      |     |
 | Zurich          |       |        |     |
 
 **✓** işareti bulunan alanlar, ilgili sigorta şirketinin o branşta robot entegrasyonuna sahip olduğunu göstermektedir.
