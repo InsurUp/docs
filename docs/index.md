@@ -29,8 +29,8 @@ Yeni bir kullanıcı olarak başlamak çok kolay! Adım adım kullanıcı rehber
 ### Kullanıcı Rehberleri
 Platformdaki tüm modüller hakkında detaylı bilgi almak için [Kullanıcı Rehberleri](./kullanici-rehberleri) sayfamıza göz atabilirsiniz. Burada sistemdeki her özellik için adım adım açıklamalar bulacaksınız. Rehberlerimiz, sıkça karşılaşılan sorunlara ve merak edilen özelliklere dair pratik çözümler sunar.
 
-### Entegre Sigorta Ürünleri
-Sigorta şirketleri ile entegrasyon ve ürün bilgileri için [Entegre Sigorta Ürünleri](./entegre-sigorta-urunleri) sayfamızı ziyaret edebilirsiniz.
+### Entegre Servisler Listesi
+Sigorta şirketleri ile entegrasyon ve ürün bilgileri için [Entegre Servisler Listesi](./entegre-servisler-listesi) sayfamızı ziyaret edebilirsiniz.
 
 ### Entegrasyon
 Sistem entegrasyonları ve API kullanımı hakkında bilgi almak için [Entegrasyon](./entegrasyon) bölümümüzü inceleyebilirsiniz.
