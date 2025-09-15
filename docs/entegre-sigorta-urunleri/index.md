@@ -1,10 +1,10 @@
 ---
-title: "Entegre Sigorta Ürünleri"
+title: "Entegre Servisler Listesi"
 sidebar_position: 2
 ---
 
 
-# Entegre Sigorta Ürünleri
+# Entegre Servisler Listesi
 
 InsurUp, sigorta şirketleriyle iki entegrasyon tipini destekler: Web Servis (API) ve Robot (RPA). Aşağıda kapsamlarını ve kullanım senaryolarını özetledik; detaylı ürün listelerine bağlantılardan ulaşabilirsiniz.
 
