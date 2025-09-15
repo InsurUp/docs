@@ -1,0 +1,8 @@
+{
+  "label": "Robot Agent Kurulumu",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Robot Agent kurulumu ve konfigürasyonu ile ilgili dokümanlar"
+  }
+}
