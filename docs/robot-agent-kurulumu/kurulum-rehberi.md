@@ -13,6 +13,8 @@ Bu rehber, Robot Agent uygulamasının bilgisayarınıza kurulumunu adım adım 
    - Tarayıcınızda InsurUp web sitesini açın.
    - Kullanıcı bilgilerinizle giriş yapın.
 
+![InsurUp Giriş Ekranı](/img/kurulumimages/insurup-login-screen.svg)
+
 2. **Masaüstü uygulamasını indirin**
    - Sağ üstteki kullanıcı adınıza tıklayın.
    - Açılan menüden **"Masaüstü App"** seçeneğini seçin.
@@ -24,9 +26,18 @@ Bu rehber, Robot Agent uygulamasının bilgisayarınıza kurulumunu adım adım 
    - Genellikle **İndirilenler** klasöründe bulunur.
    - Dosya adı: `RobotAgent-Setup.exe`.
 
+| İndirilenler Klasörü | Tarayıcıda İndirme Geçmişi |
+|:---:|:---:|
+| ![İndirilenler Klasörü](/img/kurulumimages/downloads-folder.svg) | ![İndirme Geçmişi](/img/kurulumimages/download-history.svg) |
+| İndirilenler klasöründe dosya | Tarayıcıda indirme geçmişi |
+
+![Windows Güvenlik Uyarısı 1](/img/kurulumimages/windows-security-warning-1.svg)
+
 2. **Kurulumu başlatın**
    - Dosyaya çift tıklayarak çalıştırın.
    - Kurulum sihirbazı açılacaktır.
+
+![Windows Güvenlik Uyarısı 2](/img/kurulumimages/windows-security-warning-2.svg)
 
 ## 3. Güvenlik Uyarısı ⚠️
 
@@ -41,6 +52,8 @@ Bu uyarı normal bir durumdur. Robot Agent uygulaması güvenlidir ve InsurUp ta
 :::
 
 ## 4. Kurulum Yardımcısı 🔧
+
+![RobotAgent Kurulum Yardımcısı](/img/kurulumimages/robotagent-installation-wizard.svg)
 
 1. **Kurulum dizini**
    - Varsayılan kurulum dizini: `C:\RobotAgent`.
@@ -62,6 +75,8 @@ Bu uyarı normal bir durumdur. Robot Agent uygulaması güvenlidir ve InsurUp ta
 2. **Profilim sayfasına erişin**
    - Kullanıcı menüsünden **"Profilim"** seçeneğini seçin.
 
+![InsurUp Profil Sayfası](/img/kurulumimages/insurup-profile-page.svg)
+
 3. **Aktivasyon kodunu kopyalayın**
    - Aktivasyon kodunu bulun ve kopyalayın.
 
@@ -70,12 +85,18 @@ Bu uyarı normal bir durumdur. Robot Agent uygulaması güvenlidir ve InsurUp ta
 1. **Robot Agent uygulamasını açın**
    - Kurulum tamamlandıktan sonra uygulamayı çalıştırın.
 
+![RobotAgent Ana Ekran](/img/kurulumimages/robotagent-main-screen.png)
+
 2. **Aktivasyon kodunu girin**
    - "InsurUp Aktivasyon Kodu" alanına kopyaladığınız kodu yapıştırın.
+
+![RobotAgent Aktivasyon Ekranı](/img/kurulumimages/robotagent-activation-screen.svg)
 
 3. **Bağlantıyı kurun**
    - "Bağlan" butonuna tıklayın.
    - "Aktivasyon Başarılı" mesajını görünce "Tamam" butonuna tıklayın.
+
+![Aktivasyon Başarılı Dialog](/img/kurulumimages/activation-success-dialog.png)
 
 4. **Kurulum tamamlandı**
    - Uygulama artık kullanıma hazırdır! 🎉

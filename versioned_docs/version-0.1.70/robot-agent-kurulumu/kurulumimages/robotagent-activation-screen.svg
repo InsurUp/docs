@@ -1,0 +1,39 @@
+<svg width="400" height="280" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dialog Background -->
+  <rect x="0" y="0" width="400" height="280" fill="#2d2d2d" rx="8"/>
+  
+  <!-- Title Bar -->
+  <rect x="0" y="0" width="400" height="30" fill="#3a3a3a" rx="8"/>
+  <text x="20" y="20" fill="white" font-family="Arial, sans-serif" font-size="14" font-weight="bold">RobotAgent - Aktivasyon</text>
+  
+  <!-- Close Button -->
+  <rect x="360" y="7" width="20" height="16" fill="#3a3a3a" rx="3"/>
+  <text x="366" y="19" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">×</text>
+  
+  <!-- Logo -->
+  <rect x="170" y="50" width="60" height="60" fill="#4a90e2" rx="8"/>
+  <circle cx="200" cy="80" r="20" fill="white"/>
+  <path d="M190 80 L200 70 L210 80 L200 90 Z" fill="#4a90e2"/>
+  
+  <!-- Main Text -->
+  <text x="20" y="140" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" x="200">RobotAgent Aktivasyon</text>
+  <text x="20" y="165" fill="#cccccc" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" x="200">InsurUp aktivasyon kodunuzu girin</text>
+  
+  <!-- Input Field -->
+  <rect x="50" y="190" width="300" height="35" fill="#1a1a1a" rx="4" stroke="#555" stroke-width="1"/>
+  <text x="60" y="212" fill="#888888" font-family="Arial, sans-serif" font-size="12">InsurUp Aktivasyon Kodu</text>
+  
+  <!-- Connect Button -->
+  <rect x="150" y="240" width="100" height="30" fill="#28a745" rx="4"/>
+  <text x="180" y="260" fill="white" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Bağlan</text>
+  
+  <!-- Red Arrow pointing to input field -->
+  <path d="M200 170 L200 190" stroke="#ff4444" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Arrow marker -->
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#ff4444"/>
+    </marker>
+  </defs>
+</svg>

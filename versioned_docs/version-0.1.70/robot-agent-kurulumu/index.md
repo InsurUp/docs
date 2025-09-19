@@ -22,6 +22,7 @@ Robot Agent ile ilgili tüm bilgilere aşağıdaki rehberlerden ulaşabilirsiniz
 
 1. **[Kurulum Rehberi](./kurulum-rehberi.md)**: Adım adım kurulum talimatları.
 2. **[Kullanım Rehberi](./kullanim-rehberi.md)**: Uygulama kullanımı ve özellikleri.
+3. **[Mobil Kurulum Rehberi](./mobil-kurulum-rehberi.md)**: Mobile Robot Agent uygulaması kurulum ve aktivasyon rehberi.
 
 ## 🔧 Temel Özellikler
 
