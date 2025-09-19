@@ -1,0 +1,49 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Browser Window -->
+  <rect x="0" y="0" width="400" height="300" fill="#2d2d2d" rx="8"/>
+  
+  <!-- Browser Header -->
+  <rect x="0" y="0" width="400" height="40" fill="#3a3a3a" rx="8"/>
+  
+  <!-- Address Bar -->
+  <rect x="10" y="8" width="300" height="24" fill="#1a1a1a" rx="4"/>
+  <text x="20" y="24" fill="#cccccc" font-family="Arial, sans-serif" font-size="12">insurup.com</text>
+  
+  <!-- Browser Icons -->
+  <circle cx="320" cy="20" r="8" fill="#4a90e2"/>
+  <circle cx="340" cy="20" r="8" fill="#4a90e2"/>
+  <rect x="360" y="12" width="16" height="16" fill="#4a90e2" rx="2"/>
+  <rect x="380" y="12" width="16" height="16" fill="#4a90e2" rx="2"/>
+  
+  <!-- Download History Popup -->
+  <rect x="50" y="60" width="300" height="180" fill="#2a2a2a" rx="6" stroke="#4a90e2" stroke-width="2"/>
+  
+  <!-- Popup Header -->
+  <rect x="50" y="60" width="300" height="30" fill="#3a3a3a" rx="6"/>
+  <text x="70" y="80" fill="white" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Recent download history</text>
+  <text x="320" y="80" fill="white" font-family="Arial, sans-serif" font-size="16">×</text>
+  
+  <!-- Download Item -->
+  <rect x="70" y="100" width="260" height="50" fill="#1a1a1a" rx="4"/>
+  
+  <!-- File Icon -->
+  <rect x="80" y="110" width="20" height="30" fill="#4a90e2" rx="2"/>
+  <path d="M85 110 L95 110 L95 115 L100 115 L100 140 L85 140 Z" fill="#2a5aa0"/>
+  
+  <!-- File Info -->
+  <text x="110" y="125" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">RobotAgent-Setup.exe</text>
+  <text x="110" y="140" fill="#888888" font-family="Arial, sans-serif" font-size="10">67.7 MB • Done</text>
+  
+  <!-- Full History Link -->
+  <text x="70" y="200" fill="#4a90e2" font-family="Arial, sans-serif" font-size="12">Full download history</text>
+  
+  <!-- Red Arrow -->
+  <path d="M350 250 L320 200" stroke="#ff4444" stroke-width="3" fill="none" marker-end="url(#arrowhead1)"/>
+  
+  <!-- Arrow marker -->
+  <defs>
+    <marker id="arrowhead1" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#ff4444"/>
+    </marker>
+  </defs>
+</svg>

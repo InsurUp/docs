@@ -1,0 +1,29 @@
+<svg width="400" height="280" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dialog Background -->
+  <rect x="0" y="0" width="400" height="280" fill="#2d2d2d" rx="8"/>
+  
+  <!-- Title Bar -->
+  <rect x="0" y="0" width="400" height="30" fill="#3a3a3a" rx="8"/>
+  <text x="20" y="20" fill="white" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Aktivasyon Kodu Talebi</text>
+  
+  <!-- Close Button -->
+  <rect x="360" y="7" width="20" height="16" fill="#3a3a3a" rx="3"/>
+  <text x="366" y="19" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">×</text>
+  
+  <!-- Content -->
+  <text x="20" y="60" fill="#cccccc" font-family="Arial, sans-serif" font-size="12">Kullanıcı Adı:</text>
+  <rect x="20" y="75" width="360" height="25" fill="#1a1a1a" rx="4" stroke="#555" stroke-width="1"/>
+  <text x="30" y="92" fill="#888888" font-family="Arial, sans-serif" font-size="11">kullanici.adi</text>
+
+  <text x="20" y="120" fill="#cccccc" font-family="Arial, sans-serif" font-size="12">E-posta:</text>
+  <rect x="20" y="135" width="360" height="25" fill="#1a1a1a" rx="4" stroke="#555" stroke-width="1"/>
+  <text x="30" y="152" fill="#888888" font-family="Arial, sans-serif" font-size="11">eposta@example.com</text>
+
+  <text x="20" y="180" fill="#cccccc" font-family="Arial, sans-serif" font-size="12">Açıklama:</text>
+  <rect x="20" y="195" width="360" height="40" fill="#1a1a1a" rx="4" stroke="#555" stroke-width="1"/>
+  <text x="30" y="210" fill="#888888" font-family="Arial, sans-serif" font-size="11">Neden aktivasyon kodu talep ediyorsunuz?</text>
+
+  <!-- Button -->
+  <rect x="280" y="245" width="100" height="25" fill="#4a90e2" rx="4"/>
+  <text x="300" y="262" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Kodu Talep Et</text>
+</svg>
