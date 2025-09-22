@@ -10,6 +10,7 @@ InsurUp ile sistemlerinizi entegre ederken kullanabileceğiniz başlıca rehberl
 ## Bu bölümde neler var?
 
 - [InsurUp Web Satış Platformu Self‑servis Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-entegrasyon-rehberi): B2C akışında müşteri oturumundan teklif/poliçe ve ödeme süreçlerine kadar uçtan uca entegrasyon adımları.
+- [InsurUp Web Satış Platformu Self-servis Kasko Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-kasko-entegrasyon-rehberi): Kasko branşı için InsurUp B2C entegrasyon akışını, teklif, ödeme ve poliçeleştirme örnekleriyle anlatır.
 - [Webhook API Entegrasyonu](/entegrasyon/webhook-api-entegrasyonu): InsurUp tarafından tetiklenen async/sync webhook event’leri, imza doğrulama ve örnek payload’lar.
 
 ## Kimler için?
