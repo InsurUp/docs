@@ -8,12 +8,6 @@ slug: /entegrasyon/insurup-web-satis-platformu-self-servis-kasko-entegrasyon-reh
 
 Bu rehber, InsurUp Web Satış Platformu (B2C) üzerinde kasko branşı için uçtan uca entegrasyonu açıklar. Acentelerin kendi web sitelerinden InsurUp’a bağlanarak müşterinin oturum açması, aracın sisteme tanıtılması, teklif alınması ve ödeme/poliçeleştirme işlemlerini nasıl yürüteceğini adım adım gösterir. Tüm örnekler `api.insurup.com` üzerindeki REST servislerini temel alır.
 
-## Notlar
-
-- **Agent ID**: Her çağrıda `agentId` alanı gönderilmelidir. Bu kimlik InsurUp CRM üzerinden alınır ve çağrının ilgili acenteye ait olduğunu gösterir.
-- **Authorization header**: Müşteri oturum açtıktan sonra elde edilen `accessToken`, `Authorization: Bearer <token>` başlığı ile gönderilir. Kısa ömürlü token'ları yenilemek için `auth/customer/refresh` servisini kullanın.
-- **Çevrim içi/çevrim dışı kontrolü**: Bazı acenteler veya sigorta şirketleri kasko tekliflerini çevrim dışı üretir. `coverageGroupIds` üzerinden teklif alınamazsa müşteri bilgilerini offline akışla InsurUp CRM’e iletin. B2C kodunda `offlineBranch` kontrolü bu amaçla kullanılır (bkz. `KaskoQuotePage.tsx` satır 26-33).
-
 ## 1. Kimlik doğrulama ve oturum yönetimi
 
 ### 1.1 Müşteri giriş/kayıt
