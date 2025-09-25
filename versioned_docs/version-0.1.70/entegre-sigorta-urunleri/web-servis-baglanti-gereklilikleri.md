@@ -17,6 +17,7 @@ Aşağıdaki tabloda, sigorta şirketlerinin entegrasyon sırasında genellikle 
 | ACIBADEM | Partaj - Acente Numarası |
 | AK SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Kanal ID:<br />Şube ID:<br />Token: |
 | NEOVA SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Acente Numarası:<br />Şube ID:<br />Satış Kaynağı Kodu:<br />Uygulama Güvenlik Anahtarı:<br />API Anahtarı: |
+| NIPPON SİGORTA | Şirketten talep edilmeli |
 | AXA SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Acente Numarası:<br />Referans Kullanıcı: |
 | ANKARA SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Kanal ID: |
 | RAY SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Acente Numarası:<br />Kullanıcı IP:<br />Ortam: |
@@ -29,13 +30,14 @@ Aşağıdaki tabloda, sigorta şirketlerinin entegrasyon sırasında genellikle 
 | UNICO SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Acente Numarası:<br />Branch Code:<br />Source Code:<br />Uygulama Güvenlik Anahtarı: |
 | ALLIANZ SİGORTA | Kullanıcı Adı:<br />Acente Numarası:<br />Alt Acente Numarası:<br />API Anahtarı: |
 | SOMPO SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Kanal ID:<br />Kullanıcı IP:<br />İstemci IP: |
-| QUICK SİGORTA | Acente Numarası: |
+| QUICK SİGORTA | İstemci ID:<br />İstemci Secret: |
 | TURKIYE KATILIM | Kullanıcı Adı:<br />Şifre:<br />Acente Numarası: |
 | BEREKET SİGORTA | Acente Numarası: |
+| CORPUS SİGORTA | Şirketten talep edilmeli |
 | GULF SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Firma Kodu:<br />İstemci IP:<br />GUID:<br />Kanal ID: |
-| HEPİYİ SİGORTA | Acente Numarası: |
 | MAPFRE SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Acente Numarası:<br />API Anahtarı:<br />İstemci IP: |
-| EUREKO SİGORTA | Acente Numarası: |
+| EUREKO SİGORTA | Şirketten talep edilmeli |
 | MAGDEBURGER SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Acente Numarası:<br />İstemci ID:<br />İstemci Gizli Anahtarı: |
+
 
 Bu gereklilikleri toplayıp InsurUp'a tanımladığınızda, ekibiniz ürünleri hızla devreye alabilir ve süreçleri kesintisiz takip edebilir.
