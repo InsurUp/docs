@@ -12,6 +12,7 @@ InsurUp, sigorta şirketleriyle iki entegrasyon tipini destekler: Web Servis (AP
 Sigorta şirketlerinin sistemlerine doğrudan API ile bağlanıp teklif, poliçeleştirme ve mutabakat verilerini anlık olarak InsurUp CRM’e aktaran entegrasyon katmanıdır. Bu entegrasyon için ilgili şirketten "web servis erişim izni/partaj" alınması gerekir. Kapsam ve süreklilik şirketlerin sunduğu servislere bağlıdır; tüm ürünleri kapsama garantisi yoktur.
 
 [Web Servis Listesi →](/entegre-sigorta-urunleri/web-servis-listesi)
+[Web Servis Bağlantı Gereklilikleri →](/entegre-sigorta-urunleri/web-servis-baglanti-gereklilikleri)
 
 ## Robot (RPA)  
 Web servis olmayan ya da tercih edilmeyen durumlarda, InsurUp’ın robotu sigorta şirketlerinin ekranlarına otomatik girerek teklif, poliçe ve üretim mutabakatı gibi işlemleri insan operatör gibi gerçekleştirir.
