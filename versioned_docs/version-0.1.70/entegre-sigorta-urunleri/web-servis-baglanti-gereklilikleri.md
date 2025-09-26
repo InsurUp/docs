@@ -10,6 +10,46 @@ InsurUp'ta web servis entegrasyonu başlatmak için ilgili sigorta şirketinin b
 
 Talep sonrasında sigorta şirketiyle web servis sözleşmesi imzalanır ve sözleşme tamamlandıktan sonra şirket, InsurUp sistemine erişimi sağlayacak web servis onaylarını verir. Onay bilgileri ulaştığında InsurUp panelinde `Sigorta Şirketleri` menüsüne gidip sağ üstteki `+` butonuna basarak ilgili şirket için yeni web servis kaydını oluşturabilirsiniz.
 
+
+
+Adım adım görsel rehber: 🚀
+
+**1) Sigorta Şirketi sekmesi** 🧭
+
+InsurUp CRM'de sol menüden `Sigorta Şirketleri` sekmesine gidin. Web servis ekleme işlemlerine bu sekmeden başlayacaksınız. ➡️
+
+![Sigorta Şirketi sekmesi](./web-servis-baglanti-gereklilikleri-images/sigorta-sirketi-sekmesi.jpg)
+
+**2) Web servis ekleme butonu** ➕
+
+Sağ üstteki `+` ikonuna tıklayın ve açılan menüden `Web Servis` seçeneğini seçin. 🖱️
+
+![Web servis ekleme butonu](./web-servis-baglanti-gereklilikleri-images/webserviseklemebutonu.jpg)
+
+**3) Ekleme pop‑up'ı** 🧾
+
+Karşınıza bu pop‑up çıkacak. Buradan ilgili sigorta şirketini ve ürün/branşı seçip gerekli partaj bilgilerini gireceksiniz. 🛠️
+
+![Ekleme pop-up](./web-servis-baglanti-gereklilikleri-images/eklemepop-up.jpg)
+
+**4) Sigorta şirketi seçimi** 🏢
+
+Açılır menüden entegrasyon yapacağınız sigorta şirketini seçebilirsiniz. 🔽
+
+![Sigorta şirketi seç](./web-servis-baglanti-gereklilikleri-images/sigortasirketisec.jpg)
+
+**5) Ürün / Branş seçimi** 🧩
+
+`Ürün / Branş` alanından çalışacağınız branşları seçin. Seçiminiz, hangi alanların zorunlu olacağı ve teklifleme sürecinde hangi adımların aktifleşeceği üzerinde etkili olacaktır; bu nedenle gerçek iş akışınıza uygun branşları işaretlediğinizden emin olun. 📌
+
+![Ürün / Branş](./web-servis-baglanti-gereklilikleri-images/urun-brans.jpg)
+
+**6) Partaj bilgileri** 🧮
+
+Bu adımda, şirketin istediği partaj alanlarını doldurun. Aşağıdaki tabloda, her sigorta şirketi için hangi bilgilerin gerekli olduğuna dair listeyi bulabilirsiniz. 👇
+
+![Partaj](./web-servis-baglanti-gereklilikleri-images/partaj.jpg)
+
 Aşağıdaki tabloda, sigorta şirketlerinin entegrasyon sırasında genellikle talep ettiği alanları bulabilirsiniz. Bu alanları şirket bazında hazırlayıp ilgili ekiplerle paylaşarak onay sürecini tamamladıktan sonra InsurUp'a eklemeniz gerekir.
 
 | Sigorta şirketleri | Gerekli bağlantılar |
