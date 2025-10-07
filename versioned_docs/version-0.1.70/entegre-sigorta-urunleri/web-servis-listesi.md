@@ -24,7 +24,7 @@ Kapsam ve süreklilik, şirketlerin sunduğu servislere bağlıdır; tüm ürün
 | AK Sigorta               |       | ✓      | ✓            | ✓    |                    |                    |     |
 | Allianz Sigorta          |       | ✓      |              |      | ✓                  |                    |     |
 | Ana Sigorta              |       |        |              |      |                    |                    |     |
-| Anadolu Sigorta          |       | ✓      | ✓            |      | ✓                  |                    |     |
+| Anadolu Sigorta          |  ✓     | ✓      | ✓            |      | ✓                  |                    |     |
 | Ankara Sigorta           |       |        | ✓            | ✓    | ✓                  |                    |     |
 | Arex Sigorta             |       |        |              |      |                    |                    |     |
 | Atlas Sigorta            |       |        |              |      |                    |                    |     |
