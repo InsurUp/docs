@@ -74,22 +74,22 @@ Web servis bulunmadığında ya da tercih edilmediğinde, InsurUp’ın [Robot (
 | Ana             |✓      |    ✓         | ✓      |✓       | ✓        |   ✓             |
 | Gri             | ✓      |    ✓         | ✓      |✓       | ✓        |   ✓              |
 | Aveon           | ✓      |    ✓         | ✓      |✓       | ✓        |   ✓              |
-| Allianz         | ✓      |    ✓         | ✓      |✓       |           |                 |
-| Ray             | ✓       | ✓            | ✓      | ✓      |            |                  |
-| Türkiye         |  ✓      | ✓            | ✓      | ✓      | ✓          |                  |
-| Anadolu         |        |              |        |  ✓      |            |                  |
+| Allianz         |       |    ✓         | ✓      |✓       |           |                 |
+| Ray             |        | ✓            | ✓      | ✓      |            |                  |
+| Türkiye         |        | ✓            | ✓      | ✓      | ✓          |                  |
+| Anadolu         |        |  ✓           |  ✓     |        |            |                  |
 | Hepiyi          |        |             |         | ✓      |            |                  |
 | Magdeburger     | ✓      | ✓            | ✓      | ✓      |            |                  |
 | Quick           |  ✓      | ✓            |       |        |            |                  |
-| Bereket         | ✓      | ✓            |       |        |            |                  |
-| Ankara          |        | ✓            | ✓      | ✓      | ✓          |                  |
-| Eureko          |        | ✓            | ✓      | ✓      |            |                  |
-| Sompo           |        | ✓            | ✓      |        |            |                  |
-| Corpus          | ✓      |              |        |        |            |                  |
-| Neova           | ✓      |              |        |        |            |                  |
-| Orient          | ✓      |              |        |        |            |                  |
-| Şeker           | ✓      |              |        |        |            |                  |
-| Zurich          | ✓      |              |        |        |            |                  |
+| Bereket         |        |             |       |        |            |                  |
+| Ankara          |        |             |       |       |           |                  |
+| Eureko          |        |             |       |       |            |                  |
+| Sompo           |        |             |       |        |            |                  |
+| Corpus          |       |              |        |        |            |                  |
+| Neova           |       |              |        |        |            |                  |
+| Orient          |       |              |        |        |            |                  |
+| Şeker           |       |              |        |        |            |                  |
+| Zurich          |       |              |        |        |            |                  |
 | Acıbadem        |        |              |        |        |            |                  |
 | AcnTürk         |        |              |        |        |            |                  |
 | Ak              |        |              |        |        |            |                  |
