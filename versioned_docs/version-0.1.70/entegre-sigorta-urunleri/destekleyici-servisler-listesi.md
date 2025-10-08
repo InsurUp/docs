@@ -81,7 +81,6 @@ Web servis bulunmadığında ya da tercih edilmediğinde, InsurUp’ın [Robot (
 | Hepiyi          |        |             |         | ✓      |            |                  |
 | Magdeburger     | ✓      | ✓            | ✓      | ✓      |            |                  |
 | Quick           |  ✓      | ✓            |       |        |            |                  |
-| HDI             |        |              |        |        |            |                  |
 | Bereket         | ✓      | ✓            |       |        |            |                  |
 | Ankara          |        | ✓            | ✓      | ✓      | ✓          |                  |
 | Eureko          |        | ✓            | ✓      | ✓      |            |                  |
@@ -102,6 +101,7 @@ Web servis bulunmadığında ya da tercih edilmediğinde, InsurUp’ın [Robot (
 | Groupama        |        |              |        |        |            |                  |
 | Gulf            |        |              |        |        |            |                  |
 | Halk            |        |              |        |        |            |                  |
+| HDI             |        |              |        |        |            |                  |
 | Mapfre          |        |              |        |        |            |                  |
 | Nippon          |        |              |        |        |            |                  |
 | Tmt             |        |              |        |        |            |                  |
