@@ -14,7 +14,7 @@ RPA yaklaşımı, API erişiminin mümkün olmadığı durumlarda süreçleri ot
 | ---- | ----- |
 | Aktif Şirket Sayısı | 22 (en az bir branşta entegrasyon olan) |
 | Branş Sayısı | 3 (Kasko, Trafik, TSS) |
-| Toplam Ürün Sayısı | 47 (her ✓ bir ürün entegrasyonunu temsil eder) |
+| Toplam Ürün Sayısı | 52 (her ✓ bir ürün entegrasyonunu temsil eder) |
 
 ## Entegre Robot Ürünleri
 
@@ -32,11 +32,11 @@ RPA yaklaşımı, API erişiminin mümkün olmadığı durumlarda süreçleri ot
 | Axa             |       |        |     |
 | Bereket         | ✓     | ✓      |     |
 | Corpus          |       | ✓      |     |
-| Doğa            | ✓     | ✓      |     |
+| Doğa            | ✓     | ✓      |  ✓   |
 | Dubai           |       |        |     |
 | Ethica          |       |        |     |
 | Eureko          | ✓     | ✓      |     |
-| Generali        |       | ✓      |     |
+| Generali        | ✓    | ✓      |     |
 | Gri             |       |        |     |
 | Groupama        |       |        |     |
 | Gulf            |       |        |     |
@@ -44,14 +44,14 @@ RPA yaklaşımı, API erişiminin mümkün olmadığı durumlarda süreçleri ot
 | HDI             | ✓     | ✓      | ✓   |
 | Hepiyi          | ✓     | ✓      | ✓   |
 | Koru            | ✓     | ✓      |     |
-| Magdeburger     | ✓     | ✓      |     |
+| Magdeburger     | ✓     | ✓      |  ✓  |
 | Mapfre          | ✓     | ✓      |     |
 | Neova           |       |        |     |
 | Nippon          |       |        |     |
 | Orient          | ✓     |        |     |
 | Prive           |       |        |     |
 | Quick           | ✓     | ✓      | ✓   |
-| Ray             | ✓     | ✓      |     |
+| Ray             | ✓     | ✓      |  ✓  |
 | Sompo           | ✓     | ✓      | ✓   |
 | Şeker           |       |        |     |
 | Tmt             |       |        |     |
