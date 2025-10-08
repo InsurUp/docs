@@ -68,21 +68,21 @@ Web servis bulunmadığında ya da tercih edilmediğinde, InsurUp’ın [Robot (
 | Sigorta Şirketi | Tescil | Doğum Tarihi | Mernis | Tramer | Uavt Adres | Dask Eski Poliçe |
 | --------------- | ------ | ------------ | ------ | ------ | ---------- | ---------------- |
 | Doğa            | ✓      | ✓            | ✓      | ✓      | ✓          | ✓                |
-| Koru            | ✓      |              |        |        |            |                  |
-| Türkiye Katılım | ✓      |              |        |        |            |                  |
-| Prive           | ✓      |              |        |        |            |                  |
-| Ana             | ✓      |              |        |        |            |                  |
-| Gri             |        |              |        |        |            |                  |
-| Aveon           | ✓      |              |        |        |            |                  |
-| Allianz         |        | ✓            | ✓      | ✓      |            |                  |
-| Ray             |        | ✓            | ✓      | ✓      |            |                  |
-| Türkiye         |        | ✓            | ✓      | ✓      | ✓          |                  |
-| Anadolu         |        |              |        |        |            |                  |
-| Hepiyi          |        | ✓            | ✓      | ✓      |            |                  |
-| Magdeburger     |        | ✓            | ✓      | ✓      |            |                  |
-| Quick           |        | ✓            | ✓      |        |            |                  |
+| Koru            | ✓      |    ✓         | ✓      |✓       | ✓        |   ✓               |
+| Türkiye Katılım |✓      |    ✓         | ✓      |✓       | ✓        |   ✓               |
+| Prive           | ✓      |    ✓         | ✓      |✓       | ✓        |   ✓                |
+| Ana             |✓      |    ✓         | ✓      |✓       | ✓        |   ✓             |
+| Gri             | ✓      |    ✓         | ✓      |✓       | ✓        |   ✓              |
+| Aveon           | ✓      |    ✓         | ✓      |✓       | ✓        |   ✓              |
+| Allianz         | ✓      |    ✓         | ✓      |✓       |           |                 |
+| Ray             | ✓       | ✓            | ✓      | ✓      |            |                  |
+| Türkiye         |  ✓      | ✓            | ✓      | ✓      | ✓          |                  |
+| Anadolu         |        |              |        |  ✓      |            |                  |
+| Hepiyi          |        |             |         | ✓      |            |                  |
+| Magdeburger     | ✓      | ✓            | ✓      | ✓      |            |                  |
+| Quick           |  ✓      | ✓            |       |        |            |                  |
 | HDI             |        |              |        |        |            |                  |
-| Bereket         |        | ✓            | ✓      |        |            |                  |
+| Bereket         | ✓      | ✓            |       |        |            |                  |
 | Ankara          |        | ✓            | ✓      | ✓      | ✓          |                  |
 | Eureko          |        | ✓            | ✓      | ✓      |            |                  |
 | Sompo           |        | ✓            | ✓      |        |            |                  |
