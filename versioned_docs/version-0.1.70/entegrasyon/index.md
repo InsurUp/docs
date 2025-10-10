@@ -9,15 +9,17 @@ InsurUp ile sistemlerinizi entegre ederken kullanabileceğiniz başlıca rehberl
 
 ## Bu bölümde neler var?
 
+- [GraphQL API Entegrasyonu](/entegrasyon/graphql-api-entegrasyonu): InsurUp GraphQL API'si ile programatik etkileşim, müşteri sorguları ve diğer veri işlemleri.
 - [InsurUp Web Satış Platformu Self‑servis Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-entegrasyon-rehberi): B2C akışında müşteri oturumundan teklif/poliçe ve ödeme süreçlerine kadar uçtan uca entegrasyon adımları.
 - [InsurUp Web Satış Platformu Self-servis Kasko Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-kasko-entegrasyon-rehberi): Kasko branşı için InsurUp B2C entegrasyon akışını, teklif, ödeme ve poliçeleştirme örnekleriyle anlatır.
-- [Webhook API Entegrasyonu](/entegrasyon/webhook-api-entegrasyonu): InsurUp tarafından tetiklenen async/sync webhook event’leri, imza doğrulama ve örnek payload’lar.
+- [Webhook API Entegrasyonu](/entegrasyon/webhook-api-entegrasyonu): InsurUp tarafından tetiklenen async/sync webhook event'leri, imza doğrulama ve örnek payload'lar.
 
 ## Kimler için?
 
-- Kendi web satış platformunu InsurUp’a bağlamak isteyen acente ve broker IT ekipleri.
-- Gerçek zamanlı bildirim ve iş akışlarını webhook’lar üzerinden yönetmek isteyen ekipler.
+- InsurUp verilerini kendi sistemlerine entegre etmek isteyen geliştiriciler.
+- Kendi web satış platformunu InsurUp'a bağlamak isteyen acente ve broker IT ekipleri.
+- Gerçek zamanlı bildirim ve iş akışlarını webhook'lar üzerinden yönetmek isteyen ekipler.
 
 ## Nasıl başlarım?
 
-Önce genel mimariyi ve ihtiyaçları anlamak için self‑servis entegrasyon rehberini inceleyin. Sonrasında, gerçek zamanlı olayları sisteminize aktarmak için webhook entegrasyonunu yapılandırın.
+Veri entegrasyonu için GraphQL API dökümanını inceleyerek başlayın. Kendi web satış platformunuzu entegre etmek için self‑servis entegrasyon rehberini takip edin. Gerçek zamanlı olayları sisteminize aktarmak için webhook entegrasyonunu yapılandırın.
