@@ -6,7 +6,7 @@ slug: /entegrasyon/insurup-web-satis-platformu-self-servis-kasko-entegrasyon-reh
 
 # InsurUp Web Satış Platformu Self-servis Kasko Entegrasyon Rehberi
 
-Bu rehber, InsurUp Web Satış Platformu (B2C) üzerinde kasko branşı için uçtan uca entegrasyonu açıklar. Acentelerin kendi web sitelerinden InsurUp’a bağlanarak müşterinin oturum açması, aracın sisteme tanıtılması, teklif alınması ve ödeme/poliçeleştirme işlemlerini nasıl yürüteceğini adım adım gösterir. Tüm örnekler `api.insurup.com` üzerindeki REST servislerini temel alır.
+Bu rehber, InsurUp Web Satış Platformu (B2C) üzerinde kasko branşı için uçtan uca entegrasyonu açıklar. Acentelerin kendi web sitelerinden InsurUp'a bağlanarak müşterinin oturum açması, aracın sisteme tanıtılması, teklif alınması ve ödeme/poliçeleştirme işlemlerini nasıl yürüteceğini adım adım gösterir. Tüm örnekler `api.insurup.com` üzerindeki REST servislerini temel alır.
 
 ## 1. Kimlik doğrulama ve oturum yönetimi
 
@@ -39,11 +39,11 @@ Content-Type: application/json
 }
 ```
 
-Eğer InsurUp tarafından çok faktörlü doğrulama (MFA) zorunlu tutuluyorsa, SMS ile gönderilen kodu `auth/customer/verify-mfa` endpoint’i üzerinden doğrulayın.
+Eğer InsurUp tarafından çok faktörlü doğrulama (MFA) zorunlu tutuluyorsa, SMS ile gönderilen kodu `auth/customer/verify-mfa` endpoint'i üzerinden doğrulayın.
 
 ### 1.2 Refresh token
 
-Access token yaklaşık 10 dakika geçerlidir. Oturumu uzatmak için refresh token ile yeni erişim token’ı alın.
+Access token yaklaşık 10 dakika geçerlidir. Oturumu uzatmak için refresh token ile yeni erişim token'ı alın.
 
 ```http
 POST /api/auth/customer/refresh
@@ -92,9 +92,9 @@ Plaka ve ruhsat bilgilerini gönderdikten sonra `POST /api/customers/{customerId
 
 ### 3.1 Teminat grupları (coverage group)
 
-Kasko teklifleri, InsurUp CRM’de tanımlanan teminat gruplarıyla alınır. `coverageGroupId` değeri teklif kapsamını belirler; birden fazla ID göndererek alternatif fiyatlar üretebilirsiniz. Henüz grubunuz yoksa InsurUp ekibiyle çalışarak ihtiyaca uygun kasko paketleri oluşturun.
+Kasko teklifleri, InsurUp CRM'de tanımlanan teminat gruplarıyla alınır. `coverageGroupId` değeri teklif kapsamını belirler; birden fazla ID göndererek alternatif fiyatlar üretebilirsiniz. Henüz grubunuz yoksa InsurUp ekibiyle çalışarak ihtiyaca uygun kasko paketleri oluşturun.
 
-Teminat seçimlerini görmek için `GET /api/coverage-choices:kasko?insuranceCompanyId={id}` servisini kullanın. Bu uç nokta, CRM’de paket oluştururken kullanılacak teminat seçeneklerini döner.
+Teminat seçimlerini görmek için `GET /api/coverage-choices:kasko?insuranceCompanyId={id}` servisini kullanın. Bu uç nokta, CRM'de paket oluştururken kullanılacak teminat seçeneklerini döner.
 
 ### 3.2 Teklif oluşturma
 
@@ -167,7 +167,7 @@ InsurUp üç farklı ödeme modelini destekler:
 
 ### 4.2 Ödeme servisi çağrısı
 
-Seçilen ürün ve taksit için ödeme başlatmak üzere aşağıdaki endpoint’i çağırın.
+Seçilen ürün ve taksit için ödeme başlatmak üzere aşağıdaki endpoint'i çağırın.
 
 ```http
 POST /api/proposals/{proposalId}/products/{proposalProductId}/purchase/async
@@ -192,22 +192,23 @@ Yanıtta dönen `redirectUrl`, kullanıcıyı ödeme sağlayıcısına iletir. �
 Ödeme başarılı olduğunda InsurUp bir `policyId` üretir.
 
 - `GET /api/policies/{policyId}`: Poliçe bilgilerini döner.
-- `GET /api/policies/{policyId}/document`: Poliçe PDF’ini indirir.
+- `GET /api/policies/{policyId}/document`: Poliçe PDF'ini indirir.
 - `POST /api/policies/{policyId}/document/send`: Poliçe belgesini müşteriye e-posta ile gönderir.
 
 ## 5. Özet akış
 
 1. **Kimlik doğrulama**: Müşteri `auth/customer/login-or-register` ile giriş yapar, gerekirse MFA doğrulanır.
-2. **Müşteri bilgisi**: `customers/me` ile müşteri ID’si ve temel bilgiler alınır.
+2. **Müşteri bilgisi**: `customers/me` ile müşteri ID'si ve temel bilgiler alınır.
 3. **Araç ekleme**: `customers/me/vehicles` ile araçlar listelenir, gerekirse `external-lookup` ile plaka/ruhsat bilgileri doğrulanır ve yeni araç kaydedilir.
 4. **Teklif oluşturma**: `POST /api/proposals` ile kasko teklifi oluşturulur ve `proposalId` alınır.
 5. **Teklifleri listeleme**: `proposals/{proposalId}/products` ile şirket teklifleri ve primleri gösterilir; kullanıcı bir ürün ve taksit seçer.
-6. **Ödeme**: Seçilen `proposalProductId` ve `installmentNumber` ile `purchase/async` endpoint’i çağrılır.
+6. **Ödeme**: Seçilen `proposalProductId` ve `installmentNumber` ile `purchase/async` endpoint'i çağrılır.
 7. **Poliçeleştirme**: Ödeme sonrası oluşan `policyId` ile poliçe bilgisi ve belge servisine erişilir.
 
 ## 6. Test verileri ve ipuçları
 
 - Test ortamında gerçek TCKN, plaka ve kart bilgileri yerine örnek değerler kullanın (ör. TCKN `11111111110`, plaka `34ABC123`, ruhsat `A/1234567`, kart `4242 4242 4242 4242`).
 - Hata durumlarında `GET /api/proposals/{proposalId}/products/{proposalProductId}/retry` ile ürün teklifini yeniden deneyebilirsiniz.
-- Teklif ve ödeme süreçlerinde gerçek zamanlı durum takibi için InsurUp’un SignalR servislerini entegre edin.
+- Teklif ve ödeme süreçlerinde gerçek zamanlı durum takibi için InsurUp'un SignalR servislerini entegre edin.
 - Entegrasyon boyunca güncel API sözleşmesi ve değişiklikleri takip etmek için [docs.insurup.com](https://docs.insurup.com) ve InsurUp destek ekibiyle iletişimde kalın.
+

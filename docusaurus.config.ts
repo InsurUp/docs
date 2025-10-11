@@ -23,7 +23,7 @@ const config: Config = {
       {
         docs: {
           editUrl: 'https://github.com/InsurUp/docs/blob/main/',
-          includeCurrentVersion: false,
+          includeCurrentVersion: true,
           routeBasePath: '/'
         },
         blog: false,
@@ -54,9 +54,6 @@ const config: Config = {
           href: 'https://app.insurup.com',
           label: 'InsurUp CRM',
           position: 'right',
-        },
-        {
-          type: 'docsVersionDropdown',
         }
       ],
     },
