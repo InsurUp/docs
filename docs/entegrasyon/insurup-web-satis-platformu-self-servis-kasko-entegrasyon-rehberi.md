@@ -159,29 +159,88 @@ Bu bilgiler ödeme adımında kullanılacaktır.
 
 ### 4.1 Ödeme tipleri
 
-InsurUp üç farklı ödeme modelini destekler:
+**Önemli Not:** Robot ürünlerde satın alma isteği bulunmamaktadır. Satın alma işlemi yalnızca web servis ürünlerinde mevcuttur.
 
-- **3D Secure (`type = 3DSecure`)**: Kart bilgileri acentenin web sitesinde toplanır; ödeme bankanın 3D Secure sayfasında doğrulanır.
-- **Insurance Company Redirect (`type = InsuranceCompanyRedirect`)**: Kart bilgileri ve doğrulama, sigorta şirketinin ödeme sayfasında tamamlanır.
-- **Sync (`type = Sync`)**: Bazı şirketlerin anlık ödeme sistemleri için kullanılır.
+InsurUp birçok ödeme tipini destekler:
+
+**Async:**
+
+1. **3D Secure** (`$type = 3d-secure`): Kart bilgileri acentenin web sitesinde toplanır; ödeme bankanın 3D Secure sayfasında doğrulanır.
+
+2. **Insurance Company Redirect** (`$type = insurance-company-redirect`): Kart bilgileri ve doğrulama, sigorta şirketinin ödeme sayfasında tamamlanır.
+
+3. **3rd Party 3D Secure** (`$type = third-party-3d-secure`): Sync yöntemdeki credit-card yöntemine sahip olup 3D Secure veya InsuranceCompanyRedirect olmayan sigorta şirketlerinde InsurUp'ın geliştirdiği ek bir yöntem. Müşteriden kart bilgilerinin alınması sonrasında 3. parti (Papara, QPay, Paratika) bir şirket ile kartı doğrular. Bu yöntemin kullanılabilmesi için acente/brokerın ilgili ödeme şirketiyle anlaşması olması gerekmektedir.
+
+**Sync:**
+
+4. **Credit Card** (`$type = credit-card`): Doğrudan kart bilgileri girilerek poliçeleştirilir ama sync yöntemde.
+
+5. **Open Account** (`$type = open-account`): Sigorta şirketleriyle açık hesap anlaşması olan acente/brokerlar için geçerlidir. Direkt satın alma isteği gerçekleştirilir.
+
+Eğer bir web satış projesi yapılacaksa kullanılabilecek yöntemler async yöntemlerdir (1-2-3. yöntemler). Fakat bazı şirketler bazı ödeme tiplerini destekler. Hangi şirketin hangi ödeme yöntemini desteklediğini görmek için [Ödeme Yöntemleri Listesi](/entegre-sigorta-urunleri/odeme-yontemleri-listesi) sayfasına bakabilirsiniz. En güncel bilgi için InsurUp'dan bilgi alın.
 
 ### 4.2 Ödeme servisi çağrısı
 
 Seçilen ürün ve taksit için ödeme başlatmak üzere aşağıdaki endpoint'i çağırın.
+
+#### 3D Secure Örneği
 
 ```http
 POST /api/proposals/{proposalId}/products/{proposalProductId}/purchase/async
 Authorization: Bearer <accessToken>
 
 {
-  "type": "3DSecure",
-  "installmentNumber": 3,
-  "cardHolderName": "YUSUF YILMAZ",
-  "cardNumber": "4242424242424242",
-  "expirationMonth": "11",
-  "expirationYear": "26",
-  "cvc": "123",
-  "callbackUrl": "https://acente.example.com/kasko/odeme-sonuc"
+  "$type": "3d-secure",
+  "card": {
+    "identityNumber": null,
+    "number": "",
+    "cvc": "",
+    "expiryMonth": "",
+    "expiryYear": "",
+    "holderName": ""
+  },
+  "proposalId": "",
+  "proposalProductId": "",
+  "installmentNumber": 1,
+  "callbackUrl": ""
+}
+```
+
+#### Insurance Company Redirect Örneği
+
+```http
+POST /api/proposals/{proposalId}/products/{proposalProductId}/purchase/async
+Authorization: Bearer <accessToken>
+
+{
+  "$type": "insurance-company-redirect",
+  "callbackUrl": "",
+  "installmentNumber": 1,
+  "proposalId": "",
+  "proposalProductId": "6911d24a134c60468e941886"
+}
+```
+
+#### 3rd Party 3D Secure Örneği
+
+```http
+POST /api/proposals/{proposalId}/products/{proposalProductId}/purchase/async
+Authorization: Bearer <accessToken>
+
+{
+  "$type": "third-party-3d-secure",
+  "card": {
+    "identityNumber": null,
+    "number": "",
+    "cvc": "",
+    "expiryMonth": "",
+    "expiryYear": "",
+    "holderName": ""
+  },
+  "proposalId": "",
+  "proposalProductId": "",
+  "installmentNumber": 1,
+  "callbackUrl": ""
 }
 ```
 

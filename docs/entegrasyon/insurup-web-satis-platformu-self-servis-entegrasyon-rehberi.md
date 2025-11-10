@@ -111,29 +111,92 @@ Teklif ve poliçe listeleri: Web satış portalında geçmiş teklif ve poliçel
 
 ### 4.1 Ödeme tipleri
 
-Müşteri, teklif edilen ürünlerden birini satın almak istediğinde `purchase` akışı çağrılır. InsurUp üç ödeme tipi tanımlar:
+**Önemli Not:** Robot ürünlerde satın alma isteği bulunmamaktadır. Satın alma işlemi yalnızca web servis ürünlerinde mevcuttur.
 
-- 3D Secure: Kart bilgileri sizde toplanır, SMS doğrulaması bankada yapılır. `type = 3DSecure` ve kart bilgileri payload’da gönderilir.
-- Insurance Company Redirect: Kart bilgileri ve 3D doğrulama sigorta şirketi sayfasında toplanır. `type = InsuranceCompanyRedirect` gönderilir, kart bilgisi payload’da gönderilmez; kullanıcı yönlendirilir.
-- Sync Payment: Bazı şirketlerin anlık (synchronous) ödeme sistemleri için.
+Müşteri, teklif edilen ürünlerden birini satın almak istediğinde `purchase` akışı çağrılır. InsurUp birçok ödeme tipini destekler:
 
-Satın alma endpoint’i:
+**Async:**
+
+1. **3D Secure** (`$type = 3d-secure`): Kart bilgileri acentenin web sitesinde toplanır; ödeme bankanın 3D Secure sayfasında doğrulanır.
+
+2. **Insurance Company Redirect** (`$type = insurance-company-redirect`): Kart bilgileri ve doğrulama, sigorta şirketinin ödeme sayfasında tamamlanır.
+
+3. **3rd Party 3D Secure** (`$type = third-party-3d-secure`): Sync yöntemdeki credit-card yöntemine sahip olup 3D Secure veya InsuranceCompanyRedirect olmayan sigorta şirketlerinde InsurUp'ın geliştirdiği ek bir yöntem. Müşteriden kart bilgilerinin alınması sonrasında 3. parti (Papara, QPay, Paratika) bir şirket ile kartı doğrular. Bu yöntemin kullanılabilmesi için acente/brokerın ilgili ödeme şirketiyle anlaşması olması gerekmektedir.
+
+**Sync:**
+
+4. **Credit Card** (`$type = credit-card`): Doğrudan kart bilgileri girilerek poliçeleştirilir ama sync yöntemde.
+
+5. **Open Account** (`$type = open-account`): Sigorta şirketleriyle açık hesap anlaşması olan acente/brokerlar için geçerlidir. Direkt satın alma isteği gerçekleştirilir.
+
+Eğer bir web satış projesi yapılacaksa kullanılabilecek yöntemler async yöntemlerdir (1-2-3. yöntemler). Fakat bazı şirketler bazı ödeme tiplerini destekler. Hangi şirketin hangi ödeme yöntemini desteklediğini görmek için [Ödeme Yöntemleri Listesi](/entegre-sigorta-urunleri/odeme-yontemleri-listesi) sayfasına bakabilirsiniz. En güncel bilgi için InsurUp'dan bilgi alın.
+
+Satın alma endpoint'i:
 
 `POST /proposals/{proposalId}/products/{proposalProductId}/purchase/async`
 
-Gönderilecek alanlar:
+#### 3D Secure Örneği
 
-| Alan | Açıklama |
-| --- | --- |
-| `type` | Ödeme tipi: `3DSecure`, `InsuranceCompanyRedirect` veya `Sync`. |
-| `installmentNumber` | Taksit sayısı (1, 3, 6 vb.). |
-| `cardHolderName` | Kart sahibi adı (3D Secure tipinde). |
-| `cardNumber` | Kart numarası (3D Secure tipinde). |
-| `expirationMonth`/`expirationYear` | Son kullanma tarihi (3D Secure tipinde). |
-| `cvc` | Kart güvenlik kodu (3D Secure tipinde). |
-| `callbackUrl` | Ödemenin sonucu için InsurUp’un çağıracağı URL. |
+```http
+POST /api/proposals/{proposalId}/products/{proposalProductId}/purchase/async
+Authorization: Bearer <accessToken>
 
-API çağrısı sonucunda ödeme sağlayıcısına yönlendirilirsiniz. İşlemden sonra InsurUp, `callbackUrl` adresinize başarılı veya başarısız yanıt gönderir. Yanıt geldiğinde, yine de teklif ürününü sorgulayarak (`GET /proposals/{proposalId}/products/{proposalProductId}`) ödeme durumunu doğrulamanız önerilir; callback’e yapılan manuel istekler hatalı olabilir. Daha gerçek zamanlı bildirim için InsurUp’un SignalR üzerinden sunduğu canlı bildirim servisi kullanılabilir.
+{
+  "$type": "3d-secure",
+  "card": {
+    "identityNumber": null,
+    "number": "",
+    "cvc": "",
+    "expiryMonth": "",
+    "expiryYear": "",
+    "holderName": ""
+  },
+  "proposalId": "",
+  "proposalProductId": "",
+  "installmentNumber": 1,
+  "callbackUrl": ""
+}
+```
+
+#### Insurance Company Redirect Örneği
+
+```http
+POST /api/proposals/{proposalId}/products/{proposalProductId}/purchase/async
+Authorization: Bearer <accessToken>
+
+{
+  "$type": "insurance-company-redirect",
+  "callbackUrl": "",
+  "installmentNumber": 1,
+  "proposalId": "",
+  "proposalProductId": "6911d24a134c60468e941886"
+}
+```
+
+#### 3rd Party 3D Secure Örneği
+
+```http
+POST /api/proposals/{proposalId}/products/{proposalProductId}/purchase/async
+Authorization: Bearer <accessToken>
+
+{
+  "$type": "third-party-3d-secure",
+  "card": {
+    "identityNumber": null,
+    "number": "",
+    "cvc": "",
+    "expiryMonth": "",
+    "expiryYear": "",
+    "holderName": ""
+  },
+  "proposalId": "",
+  "proposalProductId": "",
+  "installmentNumber": 1,
+  "callbackUrl": ""
+}
+```
+
+API çağrısı sonucunda ödeme sağlayıcısına yönlendirilirsiniz. İşlemden sonra InsurUp, `callbackUrl` adresinize başarılı veya başarısız yanıt gönderir. Yanıt geldiğinde, yine de teklif ürününü sorgulayarak (`GET /proposals/{proposalId}/products/{proposalProductId}`) ödeme durumunu doğrulamanız önerilir; callback'e yapılan manuel istekler hatalı olabilir. Daha gerçek zamanlı bildirim için InsurUp'un SignalR üzerinden sunduğu canlı bildirim servisi kullanılabilir.
 
 ### 4.2 Poliçe bilgileri
 

@@ -23,6 +23,11 @@ Sigorta süreçlerini besleyen Tramer, MERNIS, UAVT Adres, DASK Eski Poliçe, Te
 
 [Destekleyici Servisler Listesi →](/entegre-sigorta-urunleri/destekleyici-servisler-listesi)
 
+## Ödeme Yöntemleri
+Web satış platformu entegrasyonlarında kullanılabilecek ödeme yöntemlerini sigorta şirketleri bazında gösteren liste.
+
+[Ödeme Yöntemleri Listesi →](/entegre-sigorta-urunleri/odeme-yontemleri-listesi)
+
 ## Müşteri Rehberleri
 Sigorta süreçlerinde müşterilerin ihtiyaç duyabileceği temel işlemler ve kayıt süreçleri hakkında detaylı rehberler.
 
