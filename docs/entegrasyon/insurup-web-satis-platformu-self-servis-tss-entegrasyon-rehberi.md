@@ -54,8 +54,8 @@ Content-Type: application/json
 {
   "height": 175,      // boy (cm)
   "weight": 75,       // kilo (kg)
-  "surgeries": null,  // ameliyat kodları (null gönderilmesi yeterlidir)
-  "diseases": null    // kronik hastalık kodları (null gönderilmesi yeterlidir)
+  "surgeries": [],  // ameliyat kodları (boş array gönderilmesi yeterlidir)
+  "diseases": []    // kronik hastalık kodları (boş array gönderilmesi yeterlidir)
 }
 ```
 
