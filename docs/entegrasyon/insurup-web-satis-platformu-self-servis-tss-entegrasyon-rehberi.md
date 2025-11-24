@@ -59,7 +59,7 @@ Content-Type: application/json
 }
 ```
 
-Yanıtta güncellenen sağlık bilgisi döner. Sadece boy ve kilo zorunludur; `surgeries` ve `diseases` alanları için [] (boş array) gönderilmesi yeterlidir. Sağlık verisi gönderdikten sonra KVKK ve E‑Ticaret aydınlatma/onaylarını CRM üzerinden almayı unutmayın.
+Yanıtta güncellenen sağlık bilgisi döner. Sadece boy ve kilo zorunludur; `surgeries` ve `diseases` alanları için [ ] (boş array) gönderilmesi yeterlidir. Sağlık verisi gönderdikten sonra KVKK ve E‑Ticaret aydınlatma/onaylarını CRM üzerinden almayı unutmayın.
 
 ## 3. Teminat grubu
 
