@@ -18,48 +18,52 @@ Kapsam ve süreklilik, şirketlerin sunduğu servislere bağlıdır; tüm ürün
 
 ## Entegre Web Servis Ürünleri
 
-| Şirket                   | Kasko | Trafik | Konut Yangın | Dask | Tamamlayıcı Sağlık | İMM |
-| ------------------------ | ----- | ------ | ------------ | ---- | ------------------ | --- |
-| AcnTurk Sigorta          |       |        |              |      |                    |     |
-| AK Sigorta               |       | ✓      | ✓            | ✓    |                    |     |
-| Allianz Sigorta          |       | ✓      |              |      |                    |     |
-| Ana Sigorta              |       |        |              |      |                    |     |
-| Anadolu Sigorta          |       | ✓      | ✓            |      | ✓                  |     |
-| Ankara Sigorta           |       |        | ✓            | ✓    |                    |     |
-| Arex Sigorta             |       |        |              |      |                    |     |
-| Atlas Sigorta            |       |        |              |      |                    |     |
-| AXA Sigorta              | ✓     | ✓      |              |      | ✓                  |     |
-| Bereket Sigorta          | ✓     | ✓      | ✓            | ✓    |                    |     |
-| Bupa Acıbadem Sigorta    |       |        |              |      |                    |     |
-| Corpus Sigorta           |       | ✓      |              | ✓    | ✓                  |     |
-| Doğa Sigorta             |       | ✓      |              |      |                    |     |
-| Emaa Sigorta             |       |        |              |      |                    |     |
-| Ethica Sigorta           |       |        |              |      |                    |     |
-| Eureko Sigorta           |       | ✓      |              |      |                    |     |
-| Fiba Sigorta             |       |        |              |      |                    |     |
-| Global World Sigorta     |       |        |              |      |                    |     |
-| Gulf Sigorta             |       |        |              | ✓    |                    |     |
-| HDI Katılım Sigorta      |       | ✓      | ✓            | ✓    |                    |     |
-| HDI Sigorta              | ✓     | ✓      | ✓            | ✓    | ✓                  |     |
-| Hepiyi Sigorta           |       |        |              |      |                    |     |
-| Koru Sigorta             |       | ✓      |              |      |                    |     |
-| Magdeburger Sigorta      |       |        |              | ✓    | ✓                  | ✓   |
-| Mapfre Sigorta           | ✓     |        |              |      |                    |     |
-| Medisa Sigorta           |       |        |              |      |                    |     |
-| Neova Sigorta            | ✓     |        |              | ✓    |                    | ✓   |
-| Nippon Sigorta           |       |        |              |      | ✓                  |     |
-| Orient Sigorta           |       |        |              |      |                    |     |
-| Prive Sigorta            |       |        |              |      |                    |     |
-| Quick Sigorta            | ✓     | ✓      |              |      | ✓                  |     |
-| Ray Sigorta              | ✓     | ✓      |              | ✓    |                    |     |
-| Referans Sigorta         |       |        |              |      |                    |     |
-| Sompo Sigorta            | ✓     | ✓      | ✓            | ✓    | ✓                  |     |
-| Şeker Sigorta            |       |        |              |      |                    |     |
-| Turkcell Dijital Sigorta |       |        |              |      |                    |     |
-| Türkiye Katılım Sigorta  | ✓     |        | ✓            | ✓    |                    |     |
-| Türkiye Sigorta          | ✓     | ✓      |              | ✓    | ✓                  |     |
-| Unico Sigorta            | ✓     |        |              | ✓    |                    |     |
-| VHV Sigorta              |       |        |              |      |                    |     |
-| Zurich Sigorta           | ✓     | ✓      |              |      |                    |     |
+| Şirket | Kasko | Trafik | Konut Yangın | Ferdi Kaza | Dask | Tamamlayıcı Sağlık | Acil Sağlık | İMM | Pati |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| AcnTurk Sigorta |  |  |  |  |  |  |  |  |  |
+| AK Sigorta | ✓ |  | ✓ |  | ✓ |  |  |  |  |
+| Allianz Sigorta | ✓ | ✓ | ʘ |  |  | ʘ |  |  |  |
+| Ana Sigorta |  |  |  |  |  |  |  |  |  |
+| Anadolu Sigorta | ✓ | ✓ | ✓ |  |  | ✓ |  |  | ʘ |
+| Ankara Sigorta | ✓ |  | ʘ | ʘ | ✓ |  |  |  |  |
+| Arex Sigorta |  |  |  |  |  |  |  |  |  |
+| Atlas Sigorta |  |  |  |  |  |  |  |  |  |
+| AXA Sigorta | ✓ | ✓ |  |  | ✓ | ✓ |  |  |  |
+| Bereket Sigorta | ✓ | ✓ | ✓ | ʘ | ✓ |  | ✓ |  |  |
+| Bupa Acıbadem Sigorta |  |  |  |  |  |  |  |  |  |
+| Corpus Sigorta |  |  |  |  |  |  |  |  |  |
+| Doğa Sigorta | ✓ | ✓ | ✓ |  | ✓ | ✓ |  |  |  |
+| Demir Hayat |  |  |  |  |  | ʘ |  |  |  |
+| Emaa Sigorta |  |  |  |  |  |  |  |  |  |
+| Ethica Sigorta |  |  |  |  |  |  |  |  |  |
+| Eureko Sigorta | ✓ | ✓ |  |  |  |  |  |  |  |
+| Fiba Sigorta |  |  |  |  |  |  |  |  |  |
+| Global World Sigorta |  |  |  |  |  |  |  |  |  |
+| Gulf Sigorta | ✓ |  |  |  | ✓ |  |  |  |  |
+| HDI Katılım Sigorta | ✓ |  | ✓ |  | ✓ |  |  |  |  |
+| HDI Sigorta | ✓ | ✓ | ✓ |  | ✓ | ʘ |  |  |  |
+| Hepiyi Sigorta |  |  |  |  |  |  |  |  |  |
+| Katılım Emeklilik |  |  |  |  |  | ✓ |  |  |  |
+| Koru Sigorta | ✓ | ✓ |  |  | ✓ |  |  |  |  |
+| Magdeburger Sigorta | ✓ |  |  |  | ✓ | ✓ |  | ✓ |  |
+| Mapfre Sigorta | ✓ | ✓ |  |  |  |  |  |  |  |
+| Medisa Sigorta |  |  |  |  |  |  |  |  |  |
+| Neova Sigorta | ✓ | ✓ |  |  | ✓ |  |  | ✓ |  |
+| Nippon Sigorta |  |  |  |  |  | ✓ |  |  |  |
+| Orient Sigorta |  |  |  |  |  |  |  |  |  |
+| Prive Sigorta |  |  |  |  |  |  |  |  |  |
+| Quick Sigorta | ✓ | ✓ |  |  |  |  |  |  |  |
+| Ray Sigorta | ✓ | ✓ | ✓ |  | ✓ |  |  |  |  |
+| Referans Sigorta |  |  |  |  |  |  |  |  |  |
+| Sompo Sigorta | ✓ | ✓ | ✓ |  | ✓ | ✓ |  |  |  |
+| Şeker Sigorta |  |  |  |  |  |  |  |  |  |
+| Turkcell Dijital Sigorta |  |  |  |  |  |  |  |  |  |
+| Türkiye Katılım Sigorta | ✓ | ✓ | ✓ |  | ✓ |  |  |  |  |
+| Türkiye Sigorta | ✓ | ✓ | ʘ |  | ✓ | ✓ |  | ʘ |  |
+| Unico Sigorta | ✓ | ✓ |  |  | ✓ |  |  |  |  |
+| VHV Sigorta |  |  |  |  |  |  |  |  |  |
+| Zurich Sigorta | ✓ | ✓ |  |  |  |  |  |  |  |
 
-**✓** işareti bulunan alanlar, ilgili sigorta şirketinin o branşta web servis entegrasyonuna sahip olduğunu göstermektedir.
+**✓** işareti bulunan alanlar, ilgili sigorta şirketinin o branşta web servis entegrasyonuna sahip olduğunu göstermektedir.  
+**ʘ** işareti bulunan alanlar, ilgili sigorta şirketinin o branşta web servis entegrasyonunun devam ettiğini göstermektedir.
+
