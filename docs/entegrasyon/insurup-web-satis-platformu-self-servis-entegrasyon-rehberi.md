@@ -73,6 +73,127 @@ Konut eklerken:
 - Adres bilgisi: `properties/query-address-by-property-number` servisinde UAVT (adres kodu) gönderilerek adres bilgileri (il, ilçe, mahalle, sokak, bina, daire) alınabilir. Bu servis GET tipindedir ve yalnızca adresi döner; metrekare veya yapı yılı gibi bilgileri manuel olarak göndermeniz gerekir.
 - UAVT kodu üretimi: Konuta ait UAVT kodu olmayan durumlarda, önce şehir → ilçe → mahalle → sokak şeklinde aşamalı listeler alınarak adres seçimi yapılır. Her seçim sonucunda API bir sonrakini listeler ve en sonunda UAVT kodu döner. Bu işlem, InsurUp CRM ekranı ile eşleştirilmiştir; ekran kaydında şehir, ilçe, mahalle, sokak seçilip daire girildiğinde UAVT kodunun oluştuğu gösterilmiştir.
 
+### 2.3 Satış fırsatı talebi (Case) oluşturma
+
+Müşteri kimlik doğrulamasını tamamladıktan ve `accessToken` aldıktan sonra, varlık bilgilerini girmeden önce InsurUp CRM'de otomatik olarak bir satış fırsatı talebi (Case) oluşturulmalıdır. Bu adım, müşterinin varlık bilgilerini doldurmadan veya teklif almadan sayfadan ayrılması durumunda bile potansiyel satış fırsatının CRM'de kayıt altına alınmasını sağlar.
+
+#### 2.3.1 Mevcut case kontrolü
+
+Öncelikle müşterinin ilgili branşta aktif bir satış fırsatı talebinin olup olmadığını kontrol edin. Bu kontrol GraphQL endpoint'i üzerinden yapılır.
+
+##### İstek
+
+```graphql
+POST /graphql
+
+Authorization: Bearer <accessToken>
+Content-Type: application/json
+
+{
+  "query": "query GetCustomerCases($customerId: UUID!, $type: CaseType!) { cases(customerId: $customerId, type: $type, status: [OPEN, IN_PROGRESS]) { id status type createdAt } }",
+  "variables": {
+    "customerId": "8f89a1b6-4e3c-4e5a-9...",
+    "type": "NEW_SALE_OPPORTUNITY"
+  }
+}
+```
+
+**Parametreler:**
+
+- `customerId`: `GET /api/customers/me` çağrısından elde edilen müşteri ID'si
+- `type`: Talep tipi; kasko için `NEW_SALE_OPPORTUNITY` kullanılır (diğer branşlar için ilgili CaseType değeri)
+- `status`: Kontrol edilecek durum listesi (`OPEN`, `IN_PROGRESS`)
+
+##### Yanıt
+
+Eğer aktif bir case varsa:
+
+```json
+{
+  "data": {
+    "cases": [
+      {
+        "id": "CASE-SO-abc123",
+        "status": "OPEN",
+        "type": "NEW_SALE_OPPORTUNITY",
+        "createdAt": "2024-12-05T10:30:00Z"
+      }
+    ]
+  }
+}
+```
+
+Eğer aktif case yoksa:
+
+```json
+{
+  "data": {
+    "cases": []
+  }
+}
+```
+
+#### 2.3.2 Yeni case oluşturma
+
+Aktif case bulunamadıysa, müşteri için yeni bir satış fırsatı talebi oluşturun.
+
+##### İstek
+
+```http
+POST /api/cases:new-sale-opportunity
+Authorization: Bearer <accessToken>
+Content-Type: application/json
+
+{
+  "customerId": "8f89a1b6-4e3c-4e5a-9...",
+  "type": "kasko",
+  "channel": "website",
+  "source": "web_sales_platform"
+}
+```
+
+**Parametreler:**
+
+- `customerId`: Müşteri kimliği
+- `type`: Branş tipi (`kasko`, `trafik`, `tss` vb.)
+- `channel`: Satış kanalı (`website`, `mobile`, `call_center` vb.)
+- `source`: Kaynağı belirtir (ör. `web_sales_platform`, `b2c_website`)
+
+##### Yanıt
+
+```json
+{
+  "id": "CASE-SO-vCWz0",
+  "customerId": "8f89a1b6-4e3c-4e5a-9...",
+  "type": "NEW_SALE_OPPORTUNITY",
+  "productType": "kasko",
+  "status": "OPEN",
+  "channel": "website",
+  "source": "web_sales_platform",
+  "createdAt": "2024-12-05T10:35:00Z",
+  "updatedAt": "2024-12-05T10:35:00Z"
+}
+```
+
+#### 2.3.3 Case durumları ve otomatik güncelleme
+
+Oluşturulan case, müşteri akışında ilerledikçe InsurUp CRM tarafından otomatik olarak güncellenir:
+
+- **OPEN**: Müşteri kimlik doğrulamasını tamamladı, henüz teklif almadı
+- **IN_PROGRESS**: Müşteri teklif aldı, henüz poliçeleştirmedi
+- **CLOSED_WON**: Poliçe başarıyla oluşturuldu
+- **CLOSED_LOST**: Müşteri akışı tamamlamadan ayrıldı veya teklif almadı
+
+Case oluşturulduktan sonra, müşteri teklif oluşturduğunda (`POST /api/proposals`) InsurUp CRM otomatik olarak case'i `IN_PROGRESS` durumuna getirir ve teklif bilgilerini case'e bağlar.
+
+#### 2.3.4 Önemli notlar
+
+- Case oluşturma işlemi müşteri oturumunda **yalnızca bir kez** yapılmalıdır. Sonraki sayfa yüklemelerinde veya sayfalar arası geçişlerde tekrar case oluşturmayın.
+- Case kontrolü ve oluşturma, müşteri varlık bilgilerini girmeden **önce** tamamlanmalıdır.
+- Aynı müşteri için aynı branşta birden fazla aktif case oluşturmaktan kaçının; önce mevcut case'leri kontrol edin.
+- Case ID'sini (`caseId`) yerel olarak saklayarak, gerektiğinde case'e referans verebilirsiniz.
+- Case yönetimi, acente ve broker yöneticilerinin CRM dashboard'unda satış fırsatlarını takip etmesini sağlar.
+
 ## 3. Teklif (proposal) alma süreci
 
 ### 3.1 Teklif yaratma
@@ -234,12 +355,13 @@ Aşağıdaki özet, self‑servis entegrasyonun genel akışını gösterir:
 
 1. Giriş/Kayıt: Müşteri TC/VKN, telefon numarası ve doğum tarihi ile `auth/customer/login-or-register` endpoint’ine istek yapar. Sistem login veya kayıt işlemini yapar ve access token döner. Gerekiyorsa MFA doğrulaması yapılır.
 2. Müşteri bilgilerini çekme: Token ile `customers/me` ve `customers/{id}/health-info` endpoint’leri çağrılarak müşteri bilgileri okunur.
-3. Varlık listesi/ekleme: Müşterinin mevcut araç ve konutları `customers/me/vehicles` ve `customers/me/properties` ile listelenir. Yeni araç veya konut için ilgili POST endpoint’leri kullanılır. Araç için `external-lookup`, konut için `query-address-by-property-number` veya adres seçim akışı uygulanır.
-4. Teklif alma: Araç veya konut hazır olduğunda `POST /proposals` ile teklif alınır. Zorunlu alanlar `type`, `customerId`, `vehicleId`/`propertyId`, `insuredCustomerId`, `channel` (website) ve `coverageGroupIds`’tir. Cevapta `proposalId` döner.
-5. Teklif detaylarını listeleme: `GET /proposals/{proposalId}/products` ve ilgili alt endpoint’lerle ürünler, teminatlar ve taksit seçenekleri görüntülenir.
-6. Satın alma: `POST /proposals/{proposalId}/products/{proposalProductId}/purchase/async` ile ödeme başlatılır. 3D Secure veya Insurance Company Redirect seçilir; kart bilgileri ve `callbackUrl` parametre olarak gönderilir.
-7. Ödeme sonrası doğrulama: `GET /proposals/{proposalId}/products/{proposalProductId}` ile ürün durumu kontrol edilir. Ayrıca SignalR ile anlık bildirim alınabilir.
-8. Poliçe oluşturma ve belge indirme: Ödeme başarılı ise `policyId` üretilir. Poliçe bilgisi ve belgeleri `GET /policies/{policyId}` ve ilgili doküman endpoint’lerinden alınır.
+3. Case oluşturma: OTP doğrulamasından sonra, `graphql` ile müşterinin aktif case'leri kontrol edilir. Eğer yoksa `POST /api/cases:new-sale-opportunity` ile yeni bir satış fırsatı talebi oluşturulur ve `caseId` alınır.
+4. Varlık listesi/ekleme: Müşterinin mevcut araç ve konutları `customers/me/vehicles` ve `customers/me/properties` ile listelenir. Yeni araç veya konut için ilgili POST endpoint’leri kullanılır. Araç için `external-lookup`, konut için `query-address-by-property-number` veya adres seçim akışı uygulanır.
+5. Teklif alma: Araç veya konut hazır olduğunda `POST /proposals` ile teklif alınır. Zorunlu alanlar `type`, `customerId`, `vehicleId`/`propertyId`, `insuredCustomerId`, `channel` (website) ve `coverageGroupIds`’tir. Cevapta `proposalId` döner.
+6. Teklif detaylarını listeleme: `GET /proposals/{proposalId}/products` ve ilgili alt endpoint’lerle ürünler, teminatlar ve taksit seçenekleri görüntülenir.
+7. Satın alma: `POST /proposals/{proposalId}/products/{proposalProductId}/purchase/async` ile ödeme başlatılır. 3D Secure veya Insurance Company Redirect seçilir; kart bilgileri ve `callbackUrl` parametre olarak gönderilir.
+8. Ödeme sonrası doğrulama: `GET /proposals/{proposalId}/products/{proposalProductId}` ile ürün durumu kontrol edilir. Ayrıca SignalR ile anlık bildirim alınabilir.
+9. Poliçe oluşturma ve belge indirme: Ödeme başarılı ise `policyId` üretilir. Poliçe bilgisi ve belgeleri `GET /policies/{policyId}` ve ilgili doküman endpoint’lerinden alınır.
 
 ---
 
