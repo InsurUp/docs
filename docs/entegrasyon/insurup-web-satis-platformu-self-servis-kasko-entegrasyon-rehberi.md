@@ -94,59 +94,54 @@ Müşteri kimlik doğrulamasını tamamladıktan ve `accessToken` aldıktan sonr
 
 #### 2.3.1 Mevcut case kontrolü
 
-Öncelikle müşterinin ilgili branşta aktif bir satış fırsatı talebinin olup olmadığını kontrol edin. Bu kontrol GraphQL endpoint'i üzerinden yapılır.
+Öncelikle müşterinin ilgili branşta (örn. kasko) aktif bir satış fırsatı talebinin olup olmadığını kontrol edin. Bu kontrol GraphQL endpoint'i üzerinden yapılır.
 
 ##### İstek
 
 ```graphql
-POST /graphql
+POST https://api.insurup.com/graphql
 
 Authorization: Bearer <accessToken>
 Content-Type: application/json
 
 {
-  "query": "query GetCustomerCases($customerId: UUID!, $type: CaseType!) { cases(customerId: $customerId, type: $type, status: [OPEN, IN_PROGRESS]) { id status type createdAt } }",
-  "variables": {
-    "customerId": "8f89a1b6-4e3c-4e5a-9...",
-    "type": "NEW_SALE_OPPORTUNITY"
-  }
+  "query": "query { cases( skip: 0 take: 100 where: { customerId: { eq: \"550e8400-e29b-41d4-a716-446655440000\" } status: { eq: OPEN } type: { eq: SALE_OPPORTUNITY } productBranch: { eq: KASKO } } order: { createdAt: DESC } ) { totalCount items { productBranch type status } } }"
 }
 ```
 
 **Parametreler:**
 
-- `customerId`: `GET /api/customers/me` çağrısından elde edilen müşteri ID'si
-- `type`: Talep tipi, kasko için `NEW_SALE_OPPORTUNITY` kullanılır
-- `status`: Kontrol edilecek durum listesi (`OPEN`, `IN_PROGRESS`)
+- `customerId`: `GET /api/customers/me` çağrısından elde edilen müşteri ID'si (örnekte sabit string olarak verilmiştir)
+- `productBranch`: Branş filtresi, kasko için `KASKO`
+- `type`: Talep tipi filtresi, `SALE_OPPORTUNITY`
+- `status`: Durum filtresi, `OPEN`
+- `skip`/`take`: Sayfalama için başlangıç ve limit
 
 ##### Yanıt
 
-Eğer aktif bir case varsa:
+Örnek yanıt:
 
 ```json
 {
   "data": {
-    "cases": [
-      {
-        "id": "CASE-SO-abc123",
-        "status": "OPEN",
-        "type": "NEW_SALE_OPPORTUNITY",
-        "createdAt": "2024-12-05T10:30:00Z"
-      }
-    ]
+    "cases": {
+      "totalCount": 5,
+      "items": [
+        {
+          "productBranch": "TRAFIK",
+          "type": "SALE_OPPORTUNITY",
+          "status": "OPEN"
+        }
+      ]
+    }
   }
 }
 ```
 
-Eğer aktif case yoksa:
+Karar mekanizması:
 
-```json
-{
-  "data": {
-    "cases": []
-  }
-}
-```
+- `items` içinde `status = OPEN`, `type = SALE_OPPORTUNITY` ve `productBranch = KASKO` kaydı varsa **yeni case oluşturulmaz**.
+- Böyle bir kayıt yoksa **yeni case oluşturulur**.
 
 #### 2.3.2 Yeni case oluşturma
 
@@ -160,19 +155,20 @@ Authorization: Bearer <accessToken>
 Content-Type: application/json
 
 {
-  "customerId": "8f89a1b6-4e3c-4e5a-9...",
-  "type": "kasko",
-  "channel": "website",
-  "source": "web_sales_platform"
+  "customerId": "550e8400-e29b-41d4-a716-446655440000",
+  "assetType": null,
+  "assetId": null,
+  "productBranch": "KASKO",
+  "channel": "WEBSITE"
 }
 ```
 
 **Parametreler:**
 
 - `customerId`: Müşteri kimliği
-- `type`: Branş tipi (`kasko`, `trafik`, `tss` vb.)
-- `channel`: Satış kanalı (`website`, `mobile`, `call_center` vb.)
-- `source`: Kaynağı belirtir (ör. `web_sales_platform`, `b2c_website`)
+- `assetType` / `assetId`: Opsiyonel varlık bilgisi (kasko için null bırakılabilir)
+- `productBranch`: Branş (`KASKO`, `TRAFIK`, `TSS` vb.)
+- `channel`: Satış kanalı (`WEBSITE`, `MOBILE`, `CALL_CENTER` vb.)
 
 ##### Yanıt
 
