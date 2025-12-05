@@ -157,19 +157,11 @@ Content-Type: application/json
 
 ##### Yanıt
 
-```json
-{
-  "id": "CASE-SO-vCWz0",
-  "customerId": "8f89a1b6-4e3c-4e5a-9...",
-  "type": "NEW_SALE_OPPORTUNITY",
-  "productType": "kasko",
-  "status": "OPEN",
-  "channel": "website",
-  "source": "web_sales_platform",
-  "createdAt": "2024-12-05T10:35:00Z",
-  "updatedAt": "2024-12-05T10:35:00Z"
-}
-```
+> Yanıtta yalnızca oluşturulan case kimliği döner:
+>
+> ```json
+> { "id": "CASE-SO-xyz123" }
+> ```
 
 #### 2.3.3 Case durumları ve otomatik güncelleme
 
