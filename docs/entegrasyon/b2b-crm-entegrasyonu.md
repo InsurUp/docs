@@ -271,7 +271,37 @@ query GetPolicies($first: Int, $filter: PolicyFilterInput) {
 
 ## 6. Acente ve şube tanımlayıcıları
 
-Teklif ve poliçe işlemlerinde doğru acente/şube atanması için `agentId` ve `agentBranchId` parametreleri kullanılır. Detaylı bilgi için [Mobil Entegrasyon Rehberi - Acente ve Şube Tanımlayıcıları](/entegrasyon/mobil-projeler-icin-web-satis-platformu-entegrasyonu#2-acente-ve-şube-tanımlayıcıları) bölümüne bakın.
+Teklif ve poliçe işlemlerinde doğru acente/şube atanması kritik öneme sahiptir. Üretim yapısına göre farklı parametreler gereklidir.
+
+### 6.1 Doğrudan acenteye üretim
+
+Eğer poliçe doğrudan ana acenteye üretilecekse, yalnızca `agentId` parametresi yeterlidir.
+
+| Parametre | Tip | Zorunlu | Açıklama |
+| --- | --- | --- | --- |
+| `agentId` | Guid | Evet | InsurUp tarafından sağlanan acente organizasyon kimliği |
+
+### 6.2 Şube veya partner üzerinden üretim
+
+Eğer poliçe bir şube, alt acente veya partner üzerinden üretilecekse, `agentId`'ye ek olarak `agentBranchId` parametresi de gönderilmelidir.
+
+| Parametre | Tip | Zorunlu | Açıklama |
+| --- | --- | --- | --- |
+| `agentId` | Guid | Evet | Ana acente organizasyon kimliği |
+| `agentBranchId` | String | Evet* | Şube veya partner kimliği |
+
+*Şube/partner yapısı kullanılıyorsa zorunludur.
+
+### 6.3 Ne zaman hangisi kullanılır?
+
+| Senaryo | agentId | agentBranchId |
+| --- | --- | --- |
+| Tek acenteli yapı, şube yok | Gerekli | Gerekli değil |
+| Ana acente adına üretim | Gerekli | Gerekli değil |
+| Şube adına üretim | Gerekli | Gerekli |
+| Partner/alt acente adına üretim | Gerekli | Gerekli |
+
+Bu parametreler; müşteri oluşturma (`/api/customers`) ve teklif oluşturma (`/api/proposals`) endpoint'lerinde kullanılır.
 
 ## 7. Webhook entegrasyonu
 
