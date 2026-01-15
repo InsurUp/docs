@@ -1,6 +1,6 @@
 ---
 title: "Mobil Projeler İçin Web Satış Platformu Entegrasyonu"
-sidebar_position: 4
+sidebar_position: 5
 slug: /entegrasyon/mobil-projeler-icin-web-satis-platformu-entegrasyonu
 ---
 
