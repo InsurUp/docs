@@ -333,10 +333,6 @@ API hata yanıtları standart HTTP durum kodları ile döner. `detail` ve `sugge
 - Token'ları güvenli şekilde saklayın ve yönetin
 - Kart bilgilerini sisteminizde saklamayın
 
-## 11. Test ortamı
-
-Test entegrasyonu için [Mobil Entegrasyon Rehberi - Test Ortamı](/entegrasyon/mobil-projeler-icin-web-satis-platformu-entegrasyonu#10-test-ortamı) bölümündeki test verilerini kullanabilirsiniz.
-
 ---
 
 Bu döküman B2B entegrasyonunun temel farklılıklarını kapsar. Ortak API akışları için ilgili entegrasyon rehberlerine başvurun. API endpoint detayları için [api.insurup.com/scalar](https://api.insurup.com/scalar) adresini kullanın. Entegrasyon sırasında oluşacak sorular için InsurUp teknik ekibiyle iletişime geçebilirsiniz.
