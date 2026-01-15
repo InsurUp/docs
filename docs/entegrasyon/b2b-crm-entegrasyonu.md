@@ -16,7 +16,7 @@ Temel API akışları için [InsurUp Web Satış Platformu Self-servis Entegrasy
 
 | Özellik | Web Satış Platformu | B2B / CRM Entegrasyonu |
 | --- | --- | --- |
-| Kimlik doğrulama | Müşteri login (OTP) | Client Credentials (M2M) |
+| Kimlik doğrulama | Müşteri login (OTP) | Agent User login (email/password) |
 | Kullanıcı etkileşimi | Müşteri web arayüzü kullanır | Partner backend sistemi API çağrısı yapar |
 | Ödeme yöntemi | 3D Secure veya Sigorta Şirketi Redirect | Doğrudan kredi kartı (sync) |
 | Müşteri verisi | InsurUp müşteri portalı | Partner kendi CRM'inde tutar |
@@ -24,48 +24,56 @@ Temel API akışları için [InsurUp Web Satış Platformu Self-servis Entegrasy
 
 ## 2. Kimlik doğrulama (Authentication)
 
-B2B entegrasyonlarında müşteri login akışı yerine **Client Credentials** (Machine-to-Machine) akışı kullanılır. Bu sayede partner sistemleri kullanıcı etkileşimi olmadan API'ye erişebilir.
+B2B entegrasyonlarında müşteri login akışı yerine **Agent User** kimlik doğrulaması kullanılır. Partner sisteminiz, InsurUp tarafından oluşturulan agent user hesabı ile API'ye erişir.
 
-### 2.1 Client Credentials akışı
+### 2.1 Login
 
-Partner sisteminiz aşağıdaki adımlarla access token alır:
+Partner sisteminiz aşağıdaki endpoint ile access token alır:
 
-**Token Endpoint:** `POST /connect/token`
+**Endpoint:** `POST /api/authentication:agent-user/login`
 
-> **Not:** Token endpoint'i AuthServer üzerinde bulunur. Base URL için InsurUp teknik ekibiyle iletişime geçin.
+**İstek gövdesi:**
 
-**İstek parametreleri:**
-
-| Parametre | Değer |
-| --- | --- |
-| `grant_type` | `client_credentials` |
-| `client_id` | InsurUp tarafından sağlanan client ID |
-| `client_secret` | InsurUp tarafından sağlanan client secret |
-| `scope` | `core-api` |
+| Alan | Tip | Zorunlu | Açıklama |
+| --- | --- | --- | --- |
+| `email` | String | Evet | Agent user e-posta adresi |
+| `password` | String | Evet | Agent user şifresi |
 
 **Yanıt:**
 
-| Alan | Açıklama |
-| --- | --- |
-| `access_token` | API çağrılarında kullanılacak JWT token |
-| `token_type` | `Bearer` |
-| `expires_in` | Token geçerlilik süresi (saniye) |
+| Alan | Tip | Açıklama |
+| --- | --- | --- |
+| `accessToken` | String | API çağrılarında kullanılacak JWT token |
+| `refreshToken` | String | Token yenilemek için kullanılacak token |
+| `expiresIn` | Integer | Access token geçerlilik süresi (saniye) |
+| `requiresTwoFactor` | Boolean | 2FA gerekli ise `true` döner |
+| `userId` | String | Kimliği doğrulanan kullanıcı ID'si |
 
 ### 2.2 Token kullanımı
 
-Alınan token, tüm API çağrılarında `Authorization` header'ında kullanılır:
+Alınan `accessToken`, tüm API çağrılarında `Authorization` header'ında kullanılır:
 
 ```
-Authorization: Bearer {access_token}
+Authorization: Bearer {accessToken}
 ```
 
 ### 2.3 Token yenileme
 
-Client Credentials akışında refresh token kullanılmaz. Token süresi dolmadan önce yeni bir token alınmalıdır. Token süresinin %80'i dolduğunda yenileme yapmanız önerilir.
+Access token süresi dolmadan önce refresh token ile yenileme yapılabilir:
 
-### 2.4 Client ID ve Secret temini
+**Endpoint:** `POST /api/authentication:agent-user/refresh`
 
-Client credentials bilgilerinizi almak için InsurUp teknik ekibiyle iletişime geçin. Her partner için ayrı credentials oluşturulur ve güvenli bir şekilde paylaşılır.
+**İstek gövdesi:**
+
+| Alan | Tip | Zorunlu | Açıklama |
+| --- | --- | --- | --- |
+| `refreshToken` | String | Evet | Login yanıtından alınan refresh token |
+
+Token süresinin %80'i dolduğunda yenileme yapmanız önerilir.
+
+### 2.4 Agent User hesabı temini
+
+B2B entegrasyonu için agent user hesabı InsurUp tarafından oluşturulur. Hesap bilgilerinizi almak için InsurUp teknik ekibiyle iletişime geçin.
 
 ## 3. Temel API akışları
 
