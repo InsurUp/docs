@@ -143,7 +143,7 @@ Universal Links / App Links kullanımı güvenlik açısından önerilir.
 3. WebView'ın URL değişikliklerini dinleyin.
 4. URL, tanımladığınız `callbackUrl` ile başladığında WebView'ı kapatın.
 5. URL parametrelerinden ödeme sonucunu okuyun.
-6. Sonucu API üzerinden doğrulayın (`GET /api/proposals/{proposalId}/products/{proposalProductId}`).
+6. Sonucu API üzerinden doğrulayın (`GET /api/proposals/{ProposalId}`).
 
 ### 5.3 Ödeme sonrası doğrulama
 

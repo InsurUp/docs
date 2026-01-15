@@ -30,7 +30,9 @@ B2B entegrasyonlarında müşteri login akışı yerine **Client Credentials** (
 
 Partner sisteminiz aşağıdaki adımlarla access token alır:
 
-**Token Endpoint:** `POST /auth/connect/token`
+**Token Endpoint:** `POST /connect/token`
+
+> **Not:** Token endpoint'i AuthServer üzerinde bulunur. Base URL için InsurUp teknik ekibiyle iletişime geçin.
 
 **İstek parametreleri:**
 
@@ -75,11 +77,11 @@ B2B entegrasyonunda teklif alma ve poliçeleştirme akışları Web Satış Plat
 
 Temel akış özeti:
 
-1. **Müşteri oluşturma/güncelleme:** `POST /customers`
-2. **Araç/varlık ekleme:** `POST /customers/{customerId}/vehicles`
-3. **Teklif oluşturma:** `POST /proposals`
-4. **Teklifleri listeleme:** `GET /proposals/{proposalId}/products`
-5. **Poliçeleştirme:** `POST /proposals/{proposalId}/products/{productId}/purchase/sync`
+1. **Müşteri oluşturma/güncelleme:** `POST /api/customers`
+2. **Araç/varlık ekleme:** `POST /api/customers/{CustomerId}/vehicles`
+3. **Teklif oluşturma:** `POST /api/proposals`
+4. **Teklif detayı alma:** `GET /api/proposals/{ProposalId}`
+5. **Poliçeleştirme:** `POST /api/proposals/{ProposalId}/products/{ProposalProductId}/purchase/sync`
 
 ## 4. Poliçeleştirme (Sync vs Async)
 
@@ -87,7 +89,7 @@ B2B entegrasyonlarında poliçeleştirme için **sync** endpoint kullanılır. B
 
 ### 4.1 Sync poliçeleştirme (B2B için önerilen)
 
-**Endpoint:** `POST /proposals/{proposalId}/products/{productId}/purchase/sync`
+**Endpoint:** `POST /api/proposals/{ProposalId}/products/{ProposalProductId}/purchase/sync`
 
 Bu yöntemde:
 
@@ -117,7 +119,7 @@ Bu yöntemde:
 
 ### 4.2 Async poliçeleştirme (Web Satış için)
 
-**Endpoint:** `POST /proposals/{proposalId}/products/{productId}/purchase/async`
+**Endpoint:** `POST /api/proposals/{ProposalId}/products/{ProposalProductId}/purchase/async`
 
 Bu yöntem Web Satış Platformu için tasarlanmıştır ve kullanıcı yönlendirmesi gerektirir:
 
