@@ -45,11 +45,26 @@ Partner sisteminiz aşağıdaki endpoint ile access token alır:
 | --- | --- | --- |
 | `accessToken` | String | API çağrılarında kullanılacak JWT token |
 | `refreshToken` | String | Token yenilemek için kullanılacak token |
-| `expiresIn` | Integer | Access token geçerlilik süresi (saniye) |
+| `expiresIn` | Integer | Access token geçerlilik süresi (saniye, yaklaşık 600 saniye / 10 dakika) |
 | `requiresTwoFactor` | Boolean | 2FA gerekli ise `true` döner |
 | `userId` | String | Kimliği doğrulanan kullanıcı ID'si |
 
-### 2.2 Token kullanımı
+### 2.2 İki faktörlü doğrulama (2FA)
+
+Eğer login yanıtında `requiresTwoFactor: true` dönerse, kullanıcının iki faktörlü doğrulamayı tamamlaması gerekir.
+
+**Endpoint:** `POST /api/authentication:agent-user/verify-mfa`
+
+**İstek gövdesi:**
+
+| Alan | Tip | Zorunlu | Açıklama |
+| --- | --- | --- | --- |
+| `userId` | String | Evet | Login yanıtından alınan kullanıcı ID'si |
+| `code` | String | Evet | Kullanıcının cihazına gönderilen doğrulama kodu |
+
+2FA doğrulaması başarılı olduğunda, geçerli `accessToken` ve `refreshToken` döner.
+
+### 2.3 Token kullanımı
 
 Alınan `accessToken`, tüm API çağrılarında `Authorization` header'ında kullanılır:
 
@@ -57,7 +72,7 @@ Alınan `accessToken`, tüm API çağrılarında `Authorization` header'ında ku
 Authorization: Bearer {accessToken}
 ```
 
-### 2.3 Token yenileme
+### 2.4 Token yenileme
 
 Access token süresi dolmadan önce refresh token ile yenileme yapılabilir:
 
@@ -69,9 +84,21 @@ Access token süresi dolmadan önce refresh token ile yenileme yapılabilir:
 | --- | --- | --- | --- |
 | `refreshToken` | String | Evet | Login yanıtından alınan refresh token |
 
-Token süresinin %80'i dolduğunda yenileme yapmanız önerilir.
+**Yanıt:**
 
-### 2.4 Agent User hesabı temini
+| Alan | Tip | Açıklama |
+| --- | --- | --- |
+| `accessToken` | String | Yeni API çağrılarında kullanılacak JWT token |
+| `refreshToken` | String | Yeni refresh token (eski token geçersiz olur) |
+| `expiresIn` | Integer | Yeni access token geçerlilik süresi (saniye) |
+
+**Öneriler:**
+- Token süresinin %80'i dolduğunda (yaklaşık 8 dakika sonra) yenileme başlatın
+- Her API çağrısından önce kalan süreyi kontrol edin
+- Refresh token da geçersiz olduğunda kullanıcıyı login ekranına yönlendirin
+- Yenileme yapıldığında eski refresh token geçersiz olur; yeni değeri saklayın
+
+### 2.5 Agent User hesabı temini
 
 B2B entegrasyonu için agent user hesabı InsurUp tarafından oluşturulur. Hesap bilgilerinizi almak için InsurUp teknik ekibiyle iletişime geçin.
 
