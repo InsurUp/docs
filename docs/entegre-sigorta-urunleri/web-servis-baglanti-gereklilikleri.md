@@ -23,7 +23,7 @@ Aşağıdaki tabloda, sigorta şirketlerinin entegrasyon sırasında genellikle 
 | RAY SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Acente Numarası:<br />Kullanıcı IP:<br />Ortam: |
 | DOĞA SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Acente Numarası: |
 | ANADOLU SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Acente Numarası:<br />Alt Acente Numarası:<br />Uygulama Gizli Anahtarı:<br />İstemci ID:<br />İstemci Gizli Anahtarı:<br />İstemci IP: |
-| HDI SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Acente Numarası:<br />Client ID: |<br />Client Secret: |
+| HDI SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Acente Numarası:<br />Client ID:<br />Client Secret: |
 | KORU SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Acente Numarası: |
 | ZURICH SİGORTA | Acente Numarası:<br />Uygulama ID: |
 | TURKIYE SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Satış Kaynağı Kodu:<br />Müşteri Servis URL:<br />Kullanıcı IP: |
