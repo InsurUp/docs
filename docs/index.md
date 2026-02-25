@@ -3,7 +3,7 @@ title: Başlangıç
 sidebar_position: 1
 ---
 
-# InsurUp'a Hoş Geldiniz! 🚀
+# InsurUp'a Hoş Geldiniz!! 🚀
 
 InsurUp, sigorta acenteleri ve brokerları için geliştirilmiş yenilikçi bir CRM çözümüdür. Kolay kullanımı, güçlü özellikleri ve esnek altyapısıyla, sigorta işlemlerinizi hızlı ve verimli bir şekilde yönetmenize olanak tanır. İster küçük bir acente olun, ister büyük bir broker ağı yönetin; InsurUp, sigorta süreçlerinizi daha kolay ve etkili hale getirir.
 
