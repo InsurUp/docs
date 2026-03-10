@@ -16,7 +16,7 @@ Temel API akışları için [InsurUp Web Satış Platformu Self-servis Entegrasy
 
 InsurUp'ta her acente bir **organizasyon** olarak tanımlanır ve benzersiz bir `agentId` değerine sahiptir. Acente tek bir satış kanalı üzerinden çalışıyorsa yalnızca `agentId` yeterlidir. Ancak acentenin birden fazla satış noktası, partner sitesi veya alt acentesi varsa her biri için ayrı bir **şube (branch)** tanımlanır.
 
-Şubeler InsurUp CRM'de oluşturulur ve her şubeye benzersiz bir `agentBranchId` atanır. Bu ID, tüm API çağrılarında kullanılarak ilgili satışın hangi kanaldan geldiğini belirler.
+Şubeler InsurUp CRM'de [Şubeler](https://app.insurup.com/branches) sayfasından veya API üzerinden oluşturulur ve her şubeye benzersiz bir `agentBranchId` atanır. Bu ID, tüm API çağrılarında kullanılarak ilgili satışın hangi kanaldan geldiğini belirler.
 
 ### 1.1 Şube ile acente arasındaki ilişki
 
@@ -46,12 +46,11 @@ Tek bir web satış platformu işleten ve şube/partner ayrımı yapmayan acente
 
 ## 3. Şube oluşturma
 
-Şubeler, InsurUp CRM yönetim panelinden oluşturulur. Şube oluşturma adımları:
+Şubeler, InsurUp CRM'de [Şubeler](https://app.insurup.com/branches) sayfasından oluşturulur ve yönetilir. Şube oluşturma adımları:
 
-1. InsurUp CRM'de **Organizasyon Ayarları** bölümüne gidin.
-2. **Şubeler** sekmesinden yeni şube ekleyin.
-3. Şubeye bir ad verin (örn. "Güvenli Poliçe Ortaklığı", "Mobil Kanal").
-4. Oluşturulan şubenin `agentBranchId` değerini not edin; bu değer API çağrılarında kullanılacaktır.
+1. InsurUp CRM'de [Şubeler](https://app.insurup.com/branches) sayfasına gidin.
+2. Yeni şube ekleyin ve şubeye bir ad verin (örn. "Güvenli Poliçe Ortaklığı", "Mobil Kanal").
+3. Oluşturulan şubenin `agentBranchId` değerini not edin; bu değer API çağrılarında kullanılacaktır.
 
 Her şubeye ait temsilci (representative) ataması da CRM'den yapılabilir. Böylece ilgili şubeden gelen satış fırsatları otomatik olarak doğru temsilciye yönlendirilir.
 
@@ -351,20 +350,6 @@ Aşağıdaki akış, şubeli yapıda bir B2C satış sürecinin uçtan uca adım
 | Farklı endpoint'lerde farklı `agentBranchId` gönderilmesi | Müşteri, case ve teklif farklı şubelere atanır; tutarsız veri oluşur | `agentBranchId` değerini merkezi bir yerden (config) okuyun |
 | Login'de `agentBranchId` gönderilip proposal'da unutulması | Müşteri doğru şubeye bağlanır ama poliçe yanlış şubeye atanır | Tüm API çağrılarında tutarlı olun |
 | Aynı `agentBranchId` değerinin birden fazla site için kullanılması | Farklı kanallardan gelen satışlar ayırt edilemez | Her site/kanal için ayrı şube tanımlayın |
-
-## 9. Kontrol listesi
-
-Şubeli yapı entegrasyonunuzu tamamlamadan önce aşağıdaki adımları kontrol edin:
-
-- [ ] InsurUp CRM'de şube oluşturuldu ve `agentBranchId` alındı
-- [ ] Konfigürasyon dosyasında veya ortam değişkenlerinde `agentBranchId` tanımlandı
-- [ ] `auth/customer/login-or-register` çağrısında `agentBranchId` gönderiliyor
-- [ ] Müşteri güncelleme çağrısında `agentBranchId` gönderiliyor
-- [ ] Case oluşturma çağrısında `agentBranchId` gönderiliyor
-- [ ] Teklif oluşturma çağrısında `agentBranchId` gönderiliyor
-- [ ] CRM'de şube bazlı filtreleme ile test edilerek, satışların doğru şubeye atandığı doğrulandı
-- [ ] Partner siteleri için ayrı konfigürasyon dosyaları hazırlandı (çok siteli yapı varsa)
-- [ ] Her site/kanal için ayrı temsilci ataması yapıldı (gerekiyorsa)
 
 ---
 
