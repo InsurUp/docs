@@ -12,6 +12,7 @@ InsurUp ile sistemlerinizi entegre ederken kullanabileceğiniz başlıca rehberl
 - [InsurUp Web Satış Platformu Self‑servis Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-entegrasyon-rehberi): B2C akışında müşteri oturumundan teklif/poliçe ve ödeme süreçlerine kadar uçtan uca entegrasyon adımları.
 - [InsurUp Web Satış Platformu Self‑servis Kasko Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-kasko-entegrasyon-rehberi): Kasko branşı için uçtan uca entegrasyon rehberi.
 - [InsurUp Web Satış Platformu Self‑servis Tamamlayıcı Sağlık (TSS) Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-tss-entegrasyon-rehberi): Tamamlayıcı Sağlık Sigortası (TSS) teklifi alıp poliçe satışı yapmak için InsurUp API'lerini kullanma rehberi.
+- [Tamamlayıcı Sağlık'ta Aile Kurgusu ve Entegrasyonu](/entegrasyon/tss-aile-entegrasyonu): TSS tekliflerinde aile üyeleri (eş, çocuk) için teklif alma ve poliçe oluşturma rehberi.
 - [Webhook API Entegrasyonu](/entegrasyon/webhook-api-entegrasyonu): InsurUp tarafından tetiklenen async/sync webhook event'leri, imza doğrulama ve örnek payload'lar.
 - [Web Satış Platformunda Şubeli Yapı Kullanımları](/entegrasyon/web-satis-platformunda-subeli-yapi-kullanimlari): Partner siteler, alt acenteler ve beyaz etiket platformlar için şube (branch) yapısı entegrasyonu.
 
