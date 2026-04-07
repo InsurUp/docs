@@ -7,6 +7,12 @@ sidebar_position: 1
 
 Hoş geldiniz! Bu rehberde, InsurUp platformunun tüm modüllerini ve özelliklerini detaylı bir şekilde öğrenebilirsiniz. İster yeni bir kullanıcı olun, ister deneyimli bir acente temsilcisi; burada aradığınız tüm bilgilere kolayca erişebileceksiniz.
 
+## 🎬 Video Rehberler
+
+Platformu görsel olarak öğrenmek mi istiyorsunuz? Tüm modülleri kapsayan interaktif video rehberlerimize göz atın:
+
+- [InsurUp CRM Video Rehberleri](./kullanici-rehberleri/video-rehberleri): Müşteri yönetiminden teklif oluşturmaya, poliçe işlemlerinden kullanıcı yetkilendirmeye kadar 90+ interaktif demo videosu.
+
 ## 🚀 Hızlı Başlangıç
 
 Platforma yeni mi başladınız? Endişelenmeyin, sizi adım adım yönlendireceğiz. Öncelikle [Giriş Sayfası](./kullanici-rehberleri/giris-sayfasi) rehberimizi inceleyerek başlayabilirsiniz.
