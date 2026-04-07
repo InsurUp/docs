@@ -21,11 +21,14 @@ POST /api/auth/customer/login-or-register
 Content-Type: application/json
 
 {
+  "$type": "individual",
   "identityNumber": "11111111110",
-  "birthday": "01.01.1990",
-  "phoneNumber": "+905321234567",
-  "agentId": "AGENT-001",
-  "type": "individual"
+  "birthDate": "1990-01-01",
+  "phoneNumber": {
+    "countryCode": "90",
+    "number": "5321234567"
+  },
+  "agentId": "AGENT-001"
 }
 ```
 
