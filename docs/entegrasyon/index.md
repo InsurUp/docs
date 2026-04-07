@@ -15,6 +15,7 @@ InsurUp ile sistemlerinizi entegre ederken kullanabileceğiniz başlıca rehberl
 - [Tamamlayıcı Sağlık'ta Aile Kurgusu ve Entegrasyonu](/entegrasyon/tss-aile-entegrasyonu): TSS tekliflerinde aile üyeleri (eş, çocuk) için teklif alma ve poliçe oluşturma rehberi.
 - [Webhook API Entegrasyonu](/entegrasyon/webhook-api-entegrasyonu): InsurUp tarafından tetiklenen async/sync webhook event'leri, imza doğrulama ve örnek payload'lar.
 - [Web Satış Platformunda Şubeli Yapı Kullanımları](/entegrasyon/web-satis-platformunda-subeli-yapi-kullanimlari): Partner siteler, alt acenteler ve beyaz etiket platformlar için şube (branch) yapısı entegrasyonu.
+- [Servis Hesabı Oluşturma ve Kullanım Kılavuzu](/entegrasyon/servis-hesabi-olusturma): Servis hesabı oluşturma, Client ID/Secret ile token alma (M2M Authentication) ve API'ye erişim rehberi.
 
 ## Kimler için?
 
