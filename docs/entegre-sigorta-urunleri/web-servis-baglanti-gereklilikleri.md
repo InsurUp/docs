@@ -37,7 +37,7 @@ Aşağıdaki tabloda, sigorta şirketlerinin entegrasyon sırasında genellikle 
 | GULF SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Firma Kodu:<br />İstemci IP:<br />GUID:<br />Kanal ID: |
 | MAPFRE SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Acente Numarası:<br />API Anahtarı:<br />İstemci IP: |
 | EUREKO SİGORTA | Şirketten talep edilmeli |
-| MAGDEBURGER SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Acente Numarası:<br />İstemci ID:<br />İstemci Gizli Anahtarı: |
+| MAGDEBURGER SİGORTA | Kullanıcı Adı:<br />Şifre:<br />Acente Numarası: |
 
 
 Bu gereklilikleri toplayıp InsurUp'a tanımladığınızda, ekibiniz ürünleri hızla devreye alabilir ve süreçleri kesintisiz takip edebilir.
