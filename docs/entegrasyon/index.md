@@ -16,6 +16,8 @@ InsurUp ile sistemlerinizi entegre ederken kullanabileceğiniz başlıca rehberl
 - [Webhook API Entegrasyonu](/entegrasyon/webhook-api-entegrasyonu): InsurUp tarafından tetiklenen async/sync webhook event'leri, imza doğrulama ve örnek payload'lar.
 - [Web Satış Platformunda Şubeli Yapı Kullanımları](/entegrasyon/web-satis-platformunda-subeli-yapi-kullanimlari): Partner siteler, alt acenteler ve beyaz etiket platformlar için şube (branch) yapısı entegrasyonu.
 - [Servis Hesabı Oluşturma ve Kullanım Kılavuzu](/entegrasyon/servis-hesabi-olusturma): Servis hesabı oluşturma, Client ID/Secret ile token alma (M2M Authentication) ve API'ye erişim rehberi.
+- [InsurUp ile Giriş (OAuth 2.0 / OIDC) Entegrasyon Rehberi](/entegrasyon/insurup-ile-giris-oauth-entegrasyonu): Kendi uygulamanıza "InsurUp ile Giriş" eklemek için OAuth istemcisi oluşturma, Authorization Code + PKCE akışı ve token kullanımı.
+- [InsurUp ile Giriş: Uygulama Desenleri ve Sorun Giderme](/entegrasyon/insurup-ile-giris-uygulama-desenleri-ve-sorun-giderme): SPA ve sunucu (BFF) desenleri, örnek kurulum ve sık karşılaşılan sorunların (scope/`core-api`, proxy yönlendirme, çıkış, oturum geri yükleme) çözümleri.
 
 ## Kimler için?
 
