@@ -55,6 +55,10 @@ Auth Server yalnızca `authorization_code`, `refresh_token` ve `client_credentia
 
 Entegrasyona başlamadan önce uygulamanız için bir **OAuth istemcisi** tanımlamanız gerekir. Bunu CRM (Agent Panel) üzerinden self‑servis yaparsınız.
 
+:::info OAuth istemcisi globaldir
+İstemciyi herhangi bir acentenin paneli üzerinden oluşturursunuz, ancak istemci **acente bazlı değil, globaldir.** Yani **tek bir istemci** ile **farklı acentelerin** InsurUp kullanıcıları uygulamanıza giriş yapabilir. Her acente/uygulama için ayrı ayrı istemci oluşturmanız gerekmez — uygulamanız için bir istemci yeterlidir.
+:::
+
 Sol menüden **OAuth İstemcileri** (OAuth Clients) sayfasını açın. Sağ üstteki **mavi `+` butonuna** tıklayın.
 
 ![OAuth İstemcileri sayfası](./insurup-ile-giris-images/oauth-clients-tablosu.png)
