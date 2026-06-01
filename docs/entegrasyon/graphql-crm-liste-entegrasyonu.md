@@ -1,14 +1,12 @@
 ---
-title: "GraphQL CRM Liste Ekranları Entegrasyon Rehberi"
+title: "InsurUp CRM Liste Ekranları — GraphQL Entegrasyon Rehberi"
 sidebar_position: 10
 slug: /entegrasyon/graphql-crm-liste-entegrasyonu
 ---
 
 # InsurUp CRM Liste Ekranları — GraphQL Entegrasyon Rehberi
 
-Bu doküman, InsurUp Agent Panel’deki aşağıdaki liste ekranlarına karşılık gelen GraphQL API’sini harici CRM sistemlerine entegre etmek için hazırlanmıştır.
-
-**API Referansı:** Tüm REST endpoint'lerinin detaylı teknik dokümantasyonu için [api.insurup.com/scalar](https://api.insurup.com/scalar) adresini ziyaret edin.
+Bu doküman, InsurUp Agent Panel’deki aşağıdaki liste ekranlarına karşılık gelen GraphQL API’sini harici CRM sistemlerine entegre etmek için hazırlanmıştır:
 
 | Agent Panel ekranı | URL |
 |--------------------|-----|
@@ -19,10 +17,9 @@ Bu doküman, InsurUp Agent Panel’deki aşağıdaki liste ekranlarına karşıl
 
 **İlgili dokümanlar:**
 
-- [HTML sürüm (tarayıcı)](pathname:///entegrasyon/graphql-crm-list-integration.html) — yan menülü, kopyalanabilir kod blokları
-- [InsurUp ile Giriş (OAuth 2.0 / OIDC)](/entegrasyon/insurup-ile-giris-oauth-entegrasyonu) — kimlik doğrulama ve token
-- [InsurUp ile Giriş: Uygulama Desenleri ve Sorun Giderme](/entegrasyon/insurup-ile-giris-uygulama-desenleri-ve-sorun-giderme) — scope/`core-api`, oturum yönetimi
-- [B2B / CRM Entegrasyonu](/entegrasyon/b2b-crm-entegrasyonu) — teklif alma, poliçeleştirme ve genel B2B akışları
+- HTML sürüm (tarayıcı): `graphql-crm-list-integration.html`
+- Kimlik doğrulama ve OAuth: `login-with-insurup-integration.md`
+- Güvenlik ve izinler: `standards/12-security-and-secrets.md`
 
 ---
 
@@ -57,7 +54,7 @@ Content-Type: application/json
 
 - Her istekte **giriş yapmış agent kullanıcısının** `access_token` değeri kullanılmalıdır.
 - Tek bir servis hesabı token’ı ile tüm personel adına istek atılmamalıdır (audit ve yetki kaybı).
-- Detay: [InsurUp ile Giriş (OAuth 2.0 / OIDC)](/entegrasyon/insurup-ile-giris-oauth-entegrasyonu)
+- Detay: `login-with-insurup-integration.md`
 
 ### 2.2 OAuth scope (token seviyesi)
 
@@ -801,7 +798,7 @@ Scope: `policy:read`
 
 | Kaynak | Konum |
 |--------|--------|
-| OAuth ve token | [InsurUp ile Giriş (OAuth)](/entegrasyon/insurup-ile-giris-oauth-entegrasyonu) |
+| OAuth ve token | `docs/login-with-insurup-integration.md` |
 | OAuth scope sabitleri | `src/Packages/InsurUp.Api.Contracts/src/InsurUpApiScopes.cs` |
 | Agent izinleri | `src/Common/Permissions/.../AgentUserPermissions.cs` |
 | GraphQL sorguları | `src/Modules/*/Application/GraphQL/Queries/*Query.cs` |

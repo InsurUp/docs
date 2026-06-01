@@ -175,17 +175,11 @@ Başarılı bir sync poliçeleştirme sonucunda:
 
 ## 5. GraphQL ile veri sorgulama
 
-Partner sistemler, müşteri, teklif ve poliçe verilerini GraphQL API üzerinden sorgulayabilir. Liste ve arama işlemleri REST ile değil GraphQL üzerinden yapılır; Agent Panel ile aynı `*New` sorgularını (`customersNew`, `casesNew`, `proposalsNew`, `policiesNew`) kullanmanız önerilir.
+Partner sistemler, müşteri, teklif ve poliçe verilerini GraphQL API üzerinden sorgulayabilir. GraphQL, karmaşık sorguları tek bir istekte yapmanıza ve sadece ihtiyacınız olan alanları almanıza olanak tanır.
 
-**GraphQL Endpoint:** `POST https://api.insurup.com/graphql`
+**GraphQL Endpoint:** `POST /graphql`
 
-**GraphQL Schema:** `GET https://api.insurup.com/graphql/schema` (public, authentication gerektirmez)
-
-Detaylı alan listeleri, filtre/arama sözlüğü, cursor sayfalama, OAuth scope'ları ve örnek sorgular için **[GraphQL CRM Liste Ekranları Entegrasyon Rehberi](/entegrasyon/graphql-crm-liste-entegrasyonu)** dokümanına bakın. [HTML sürüm](pathname:///entegrasyon/graphql-crm-list-integration.html) yan menülü okuma ve kod kopyalama için uygundur.
-
-:::note
-Aşağıdaki örnek sorgular kısaltılmıştır. Güncel şema ve tam alan listesi için `/graphql/schema` endpoint'ini kullanın veya yukarıdaki rehbere başvurun.
-:::
+**GraphQL Schema:** `GET /graphql/schema` (public, authentication gerektirmez)
 
 ### 5.1 Müşteri sorgulama
 
