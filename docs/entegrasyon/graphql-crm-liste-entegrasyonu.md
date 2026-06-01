@@ -4,7 +4,7 @@ sidebar_position: 10
 slug: /entegrasyon/graphql-crm-liste-entegrasyonu
 ---
 
-# InsurUp CRM Liste Ekranları — GraphQL Entegrasyon Rehberi
+# GraphQL Entegrasyon Rehberi
 
 Bu doküman, InsurUp Agent Panel’deki aşağıdaki liste ekranlarına karşılık gelen GraphQL API’sini harici CRM sistemlerine entegre etmek için hazırlanmıştır:
 
