@@ -46,18 +46,26 @@ export const authConfig: TAuthConfig = {
 };
 ```
 
-Token'ı SDK'ya verin:
+Token'ı alıp API çağrılarında `Authorization` header'ına ekleyin:
 
 ```typescript
-import { DefaultInsurUpClient } from '@insurup/sdk';
+const apiBaseUrl = 'https://api.insurup.com';
 
-const client = new DefaultInsurUpClient({
-  baseUrl: 'https://api.insurup.com',
-  tokenProvider: () => token, // kütüphaneden gelen access token
-});
+async function getMyProfile(accessToken: string) {
+  const response = await fetch(`${apiBaseUrl}/agent-users/me`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.json();
+}
 ```
 
 Kütüphane PKCE'yi, code değişimini ve refresh'i sizin için yönetir.
+
+:::info .NET SDK
+Sunucu tarafında .NET kullanıyorsanız, `InsurUp.Sdk` paketini DI ile kaydedip `IInsurUpClient` üzerinden API çağrıları yapabilirsiniz. Detaylar için [OAuth Entegrasyon Rehberi](/entegrasyon/insurup-ile-giris-oauth-entegrasyonu) sayfasındaki SDK bölümüne bakın.
+:::
 
 ---
 
@@ -85,16 +93,25 @@ Confidential istemcide `/connect/token` isteğine `client_id` **ve** `client_sec
 
 ---
 
-## 4. Sorun Giderme (sık karşılaşılan tuzaklar)
+## 4. Onay ekranı (Consent)
+
+Agent Panel üzerinden oluşturduğunuz üçüncü parti OAuth istemcileri **açık onay (explicit consent)** gerektirir. Kullanıcı uygulamanıza ilk kez giriş yaptığında, auth.insurup.com üzerinde hangi bilgi ve yetkilere erişim verdiğini gösteren bir **onay ekranı** görür.
+
+- Kullanıcı onayladıktan sonra kalıcı bir yetkilendirme oluşturulur — aynı kapsamlarla tekrar giriş yaparken onay ekranı **tekrar gösterilmez.**
+- Kullanıcı "Reddet" seçerse, uygulamanıza `access_denied` hatası döner.
+
+---
+
+## 5. Sorun Giderme (sık karşılaşılan tuzaklar)
 
 Aşağıdakiler gerçek entegrasyonlarda en çok zaman kaybettiren noktalardır.
 
-### 4.1 `authorize` isteği `400 Bad Request` dönüyor
+### 5.1 `authorize` isteği `400 Bad Request` dönüyor
 
 **En olası sebepler (öncelik sırasıyla):**
 
-1. **İzin verilmemiş scope** (çoğu zaman `core-api`). İstemciye tanımlı olmayan bir kapsamı istiyorsanız Auth Server isteği reddeder.
-   - Test: `scope`'tan `core-api`'yi çıkarıp yalnızca granular kapsamlarla (`customer:read` vb.) deneyin. Geçiyorsa, sorun `core-api` iznidir → granular kapsam kullanın ya da `core-api`'yi istemcinize tanımlatmak için InsurUp ile iletişime geçin.
+1. **İstemciye tanımlanmamış scope isteniyor.** İstemci oluştururken seçmediğiniz bir kapsamı `scope` parametresinde isterseniz Auth Server isteği reddeder.
+   - Test: `scope`'u sadece `openid profile` yaparak deneyin. Geçiyorsa, sorun scope eşleşmesidir → istemcinizi düzenleyip eksik kapsamları ekleyin. Tam API erişimi için istemci formunda **"Tam Erişim"** modunu seçin.
 2. **`redirect_uri` eşleşmiyor** — istemcide kayıtlı adresle birebir aynı olmalı (şema, host, port, path).
 3. **`client_id` hatalı / istemci yok.**
 
@@ -102,35 +119,35 @@ Aşağıdakiler gerçek entegrasyonlarda en çok zaman kaybettiren noktalardır.
 Scope hatası `400` ile gelirken, kimliği doğrulanmamış kullanıcı `302` ile `/login`'e yönlenir. `400` görüyorsanız sorun kullanıcıda değil, **istek/istemci yapılandırmasındadır.**
 :::
 
-### 4.2 Ters proxy arkasında callback `localhost:8080` gibi bir adrese gidiyor
+### 5.2 Ters proxy arkasında callback `localhost:8080` gibi bir adrese gidiyor
 
 Railway, Heroku, Nginx gibi ortamlarda uygulamanız içeride bir adreste (ör. `localhost:8080`) çalışır. Callback sonrası yönlendirmeyi **gelen isteğin URL'inden (`req.url`) türetirseniz**, kullanıcı erişemediği iç adrese yönlendirilir (`ERR_CONNECTION_REFUSED`).
 
 **Çözüm:** Yönlendirmeleri **public origin'den** üretin — örn. kayıtlı `redirect_uri`'nin origin'inden ya da `X-Forwarded-Host`/`X-Forwarded-Proto` başlıklarından. `req.url`'e güvenmeyin.
 
-### 4.3 "Çıkış yaptım ama oturum geri geliyor"
+### 5.3 "Çıkış yaptım ama oturum geri geliyor"
 
 Çıkışta yalnızca tarayıcı tarafındaki durumu (store/localStorage) temizlerseniz, **sunucudaki httpOnly refresh cookie'si** yerinde kalır. Sonraki sayfa yüklemesinde `POST /api/auth/session` cookie'yi bulup oturumu **yeniden açar.**
 
 **Çözüm:** Çıkışta hem istemci durumunu temizleyin **hem de** `POST /api/auth/logout` ile sunucu cookie'sini silin. İstek hemen bir yönlendirmeyle birlikte yapılıyorsa, navigasyon isteği iptal etmesin diye `fetch(..., { keepalive: true })` veya `navigator.sendBeacon` kullanın.
 
-### 4.4 Giriş başarılı ama kullanıcı login sayfasına geri atılıyor
+### 5.4 Giriş başarılı ama kullanıcı login sayfasına geri atılıyor
 
 Callback'ten sonra access token henüz istemcide olmayabilir (BFF deseninde `/api/auth/session` ile asenkron alınır). Korumalı sayfanız bu kısa "oturum geri yükleme" anında `isAuthenticated === false` görüp kullanıcıyı login'e atarsa, kullanıcı **giriş yapmış olmasına rağmen** (header'da adı görünür) login sayfasında kalır.
 
 **Çözüm:** Korumalı sayfa yönlendirme guard'larını, oturum geri yükleme tamamlanana kadar bekletin. Bir `isHydrating` bayrağı tutun ve `if (!isHydrating && !isAuthenticated) redirectToLogin()` mantığını kullanın.
 
-### 4.5 "Arka planda şifreyle giriş yapamıyorum"
+### 5.5 "Arka planda şifreyle giriş yapamıyorum"
 
 Auth Server'da `password` grant'i **yoktur**. Kullanıcı adı/şifreyi kendi formunuzda toplayıp arka planda token alamazsınız. Giriş, auth.insurup.com'a **yönlendirme** ile yapılır; 2FA da orada işlenir. Bu bilinçli bir güvenlik tercihidir.
 
-### 4.6 2FA / SMS kodu
+### 5.6 2FA / SMS kodu
 
 2FA etkin kullanıcılarda kod, auth.insurup.com'un kendi sayfasında istenir (ör. SMS). Bu adımı uygulamanız yönetmez; kullanıcı doğrudan auth sayfasında tamamlar.
 
 ---
 
-## 5. Güvenlik kontrol listesi
+## 6. Güvenlik kontrol listesi
 
 - [ ] `client_secret` yalnızca sunucuda; tarayıcıya/asla repoya konmadı.
 - [ ] PKCE (`S256`) ve `state` her giriş isteğinde üretiliyor ve callback'te `state` doğrulanıyor.
@@ -142,7 +159,7 @@ Auth Server'da `password` grant'i **yoktur**. Kullanıcı adı/şifreyi kendi fo
 
 ---
 
-## 6. İlgili rehberler
+## 7. İlgili rehberler
 
 - [InsurUp ile Giriş (OAuth 2.0 / OIDC) Entegrasyon Rehberi](/entegrasyon/insurup-ile-giris-oauth-entegrasyonu) — kavramlar, istemci oluşturma, akış.
 - [Servis Hesabı Oluşturma ve Kullanım Kılavuzu](/entegrasyon/servis-hesabi-olusturma) — insan kullanıcı yerine otomasyon (M2M) erişimi.

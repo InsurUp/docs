@@ -43,7 +43,15 @@ Tüm OIDC uçlarını ve yeteneklerini şu adresten programatik olarak alabilirs
 | Token | `https://auth.insurup.com/connect/token` |
 | UserInfo | `https://auth.insurup.com/connect/userinfo` |
 | Logout (end session) | `https://auth.insurup.com/connect/logout` |
-| JWKS | `https://auth.insurup.com/.well-known/jwks` |
+| Logout (alias) | `https://auth.insurup.com/connect/end-session` |
+| Introspection | `https://auth.insurup.com/connect/introspect` |
+| Revocation | `https://auth.insurup.com/connect/revoke` |
+| PAR (Pushed Authorization) | `https://auth.insurup.com/connect/par` |
+| Discovery | `https://auth.insurup.com/.well-known/openid-configuration` |
+
+:::tip JWKS (JSON Web Key Set)
+JWKS ayrı bir sabit uçta sunulmaz. JWKS URI'sini discovery belgesi (`/.well-known/openid-configuration`) içindeki `jwks_uri` alanından alın.
+:::
 
 :::warning ROPC (şifre grant'i) desteklenmez
 Auth Server yalnızca `authorization_code`, `refresh_token` ve `client_credentials` grant türlerini destekler. **`password` grant'i yoktur.** Yani "kullanıcı adı + şifreyi arka planda API'ye gönderip token al" şeklinde, ekran değiştirmeden sessiz bir giriş **mümkün değildir.** Kullanıcı girişi her zaman auth.insurup.com'a yönlendirme (redirect) ile yapılır; 2FA da o sayfada işlenir.
@@ -106,13 +114,15 @@ Confidential istemcide secret yalnızca bir kez görünür/üretilir. **Tarayıc
 | `proposal:read` / `proposal:write` | Teklif okuma/yönetimi |
 | `policy:read` / `policy:write` | Poliçe okuma/yönetimi |
 | `case:read` / `case:write` | Talep okuma/yönetimi |
+| `webhook:read` / `webhook:write` | Webhook okuma/yönetimi |
 | `me:read` / `me:write` | Kendi profil bilgisi |
 
-:::warning `core-api` kapsamı hakkında önemli not
-Oluşturma formundaki kutucuklar **granular (ince taneli)** kapsamlardır; formda doğrudan bir `core-api` kutucuğu **yoktur**. İstemcinize **izin verilmemiş** bir kapsamı (örn. izin tanımlanmamış `core-api`) flow'da istemeniz hâlinde authorize isteği **`400 Bad Request`** ile reddedilir.
+:::info Kapsam seçim modları
+Oluşturma formunda iki mod bulunur:
+- **Granüler (İnce Taneli):** Yukarıdaki `resource:action` kapsamlarını teker teker seçersiniz.
+- **Tam Erişim:** `core-api` kapsamını otomatik olarak atar ve tüm API'ye erişim sağlar.
 
-- İhtiyacınız müşteri/teklif/poliçe/talep gibi alanlarsa: formda ilgili granular kapsamları seçin ve `scope` isteğinde bunları kullanın.
-- **Tam Core API erişimi (`core-api`)** gerekiyorsa, bu kapsamın istemcinize tanımlanması için **InsurUp ile iletişime geçin**.
+`core-api` ile granüler kapsamlar birlikte kullanılamaz — ikisinden birini seçin.
 :::
 
 ---
