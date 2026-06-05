@@ -43,7 +43,15 @@ Tüm OIDC uçlarını ve yeteneklerini şu adresten programatik olarak alabilirs
 | Token | `https://auth.insurup.com/connect/token` |
 | UserInfo | `https://auth.insurup.com/connect/userinfo` |
 | Logout (end session) | `https://auth.insurup.com/connect/logout` |
-| JWKS | `https://auth.insurup.com/.well-known/jwks` |
+| Logout (alias) | `https://auth.insurup.com/connect/end-session` |
+| Introspection | `https://auth.insurup.com/connect/introspect` |
+| Revocation | `https://auth.insurup.com/connect/revoke` |
+| PAR (Pushed Authorization) | `https://auth.insurup.com/connect/par` |
+| Discovery | `https://auth.insurup.com/.well-known/openid-configuration` |
+
+:::tip JWKS (JSON Web Key Set)
+JWKS ayrı bir sabit uçta sunulmaz. JWKS URI'sini discovery belgesi (`/.well-known/openid-configuration`) içindeki `jwks_uri` alanından alın.
+:::
 
 :::warning ROPC (şifre grant'i) desteklenmez
 Auth Server yalnızca `authorization_code`, `refresh_token` ve `client_credentials` grant türlerini destekler. **`password` grant'i yoktur.** Yani "kullanıcı adı + şifreyi arka planda API'ye gönderip token al" şeklinde, ekran değiştirmeden sessiz bir giriş **mümkün değildir.** Kullanıcı girişi her zaman auth.insurup.com'a yönlendirme (redirect) ile yapılır; 2FA da o sayfada işlenir.
@@ -106,13 +114,15 @@ Confidential istemcide secret yalnızca bir kez görünür/üretilir. **Tarayıc
 | `proposal:read` / `proposal:write` | Teklif okuma/yönetimi |
 | `policy:read` / `policy:write` | Poliçe okuma/yönetimi |
 | `case:read` / `case:write` | Talep okuma/yönetimi |
+| `webhook:read` / `webhook:write` | Webhook okuma/yönetimi |
 | `me:read` / `me:write` | Kendi profil bilgisi |
 
-:::warning `core-api` kapsamı hakkında önemli not
-Oluşturma formundaki kutucuklar **granular (ince taneli)** kapsamlardır; formda doğrudan bir `core-api` kutucuğu **yoktur**. İstemcinize **izin verilmemiş** bir kapsamı (örn. izin tanımlanmamış `core-api`) flow'da istemeniz hâlinde authorize isteği **`400 Bad Request`** ile reddedilir.
+:::info Kapsam seçim modları
+Oluşturma formunda iki mod bulunur:
+- **Granüler (İnce Taneli):** Yukarıdaki `resource:action` kapsamlarını teker teker seçersiniz.
+- **Tam Erişim:** `core-api` kapsamını otomatik olarak atar ve tüm API'ye erişim sağlar.
 
-- İhtiyacınız müşteri/teklif/poliçe/talep gibi alanlarsa: formda ilgili granular kapsamları seçin ve `scope` isteğinde bunları kullanın.
-- **Tam Core API erişimi (`core-api`)** gerekiyorsa, bu kapsamın istemcinize tanımlanması için **InsurUp ile iletişime geçin**.
+`core-api` ile granüler kapsamlar birlikte kullanılamaz — ikisinden birini seçin.
 :::
 
 ---
@@ -153,13 +163,13 @@ client_secret=<SECRET>
 {
   "access_token": "eyJhbGciOiJSUzI1NiIs...",
   "refresh_token": "...",
-  "expires_in": 600,
+  "expires_in": 1800,
   "token_type": "Bearer"
 }
 ```
 
 :::tip Oturum yenileme
-`access_token` kısa ömürlüdür. `offline_access` ile aldığınız `refresh_token`'ı kullanarak `grant_type=refresh_token` ile yeni access token alın. Refresh token'ı **güvenli** saklayın (tercihen sunucuda; bkz. BFF deseni).
+`access_token` kısa ömürlüdür (30 dakika). `offline_access` ile aldığınız `refresh_token`'ı kullanarak `grant_type=refresh_token` ile yeni access token alın. Refresh token 14 gün geçerlidir. Refresh token'ı **güvenli** saklayın (tercihen sunucuda; bkz. BFF deseni).
 :::
 
 ---
@@ -168,30 +178,387 @@ client_secret=<SECRET>
 
 Aldığınız `access_token` ile `https://api.insurup.com` üzerindeki uçlara `Authorization: Bearer <token>` başlığıyla istek atın. API, token içindeki kullanıcıyı çözüp ilgili acente/kullanıcı bağlamında yanıt verir.
 
-### Resmi SDK ile (önerilen)
+### 5.1 TypeScript SDK ile (`@insurup/sdk` — önerilen)
 
-`@insurup/sdk` (InsurUp TypeScript SDK), token'ı bir `tokenProvider` ile alır:
+Resmi TypeScript SDK, OAuth akışlarını (PKCE, client credentials, token yenileme) ve API çağrılarını yerleşik olarak yönetir:
+
+```bash
+npm install @insurup/sdk
+```
+
+**Auth modülü kurulumu ve SDK istemcisi oluşturma:**
 
 ```typescript
-import { DefaultInsurUpClient } from '@insurup/sdk';
+import { createInsurUpAuth, DefaultInsurUpClient } from '@insurup/sdk';
 
-const client = new DefaultInsurUpClient({
-  baseUrl: 'https://api.insurup.com',
-  tokenProvider: () => getAccessToken(), // geçerli access token'ı döndüren fonksiyonunuz
+// 1. Auth modülünü oluşturun
+const auth = createInsurUpAuth({
+  clientId: '<CLIENT_ID>',
+  // clientSecret: '<SECRET>',  // Yalnızca Confidential istemcilerde — SPA'larda KULLANMAYIN
+  scopes: ['openid', 'profile', 'offline_access', 'core-api'],
 });
 
-const result = await client.customers.getCustomers({ first: 10 });
-if (result.isSuccess) {
-  console.log(result.data.nodes);
+// 2. SDK istemcisini auth ile bağlayın — token injection ve refresh otomatik yapılır
+const client = new DefaultInsurUpClient({ auth });
+```
+
+**Authorization Code + PKCE giriş akışı (tarayıcı SPA):**
+
+```typescript
+// Giriş başlat — kullanıcıyı auth.insurup.com'a yönlendirir
+const { url, codeVerifier, state } = await auth.getAuthorizeUrl({
+  redirectUri: 'https://app.firmaniz.com/callback',
+});
+
+// codeVerifier ve state'i sessionStorage'a kaydedin
+sessionStorage.setItem('pkce', JSON.stringify({ codeVerifier, state }));
+
+// Kullanıcıyı yönlendirin
+location.assign(url);
+```
+
+```typescript
+// Callback sayfasında — code'u token'a çevirin
+const { codeVerifier, state } = JSON.parse(sessionStorage.getItem('pkce')!);
+sessionStorage.removeItem('pkce');
+
+const result = await auth.exchangeCode({
+  callbackUrl: location.href,
+  redirectUri: 'https://app.firmaniz.com/callback',
+  codeVerifier,
+  state,
+});
+
+if (!result.isSuccess) {
+  console.error('Giriş başarısız:', result.error);
+} else {
+  console.log('Giriş başarılı, token alındı');
 }
 ```
 
-### Doğrulama uçları
+**Client Credentials akışı (sunucu-sunucu / M2M):**
+
+```typescript
+const auth = createInsurUpAuth({
+  clientId: '<CLIENT_ID>',
+  clientSecret: '<CLIENT_SECRET>',
+});
+
+const login = await auth.loginWithClientCredentials({
+  scopes: ['core-api'],
+});
+
+if (!login.isSuccess) throw login.error;
+
+const client = new DefaultInsurUpClient({ auth });
+```
+
+**API çağrıları (token otomatik enjekte edilir):**
+
+```typescript
+// REST API — müşteri listesi
+const customers = await client.customers.getCustomers({ first: 10 });
+if (customers.isSuccess) {
+  console.log(customers.data);
+}
+
+// REST API — giriş yapan kullanıcının profili
+const me = await client.agentUsers.getMyAgentUser();
+if (me.isSuccess) {
+  console.log(me.data.email);
+}
+
+// GraphQL — tip-güvenli alan seçimi ile
+const policies = await client.policies.getPolicies({
+  first: 5,
+  select: ['id', 'policyNumber', 'state', 'startDate'] as const,
+});
+```
+
+:::tip Token yönetimi otomatiktir
+`auth` nesnesi SDK istemcisine bağlandığında, her API çağrısında geçerli access token otomatik enjekte edilir. Token süresi dolduğunda refresh token ile otomatik yenilenir — manuel `setToken` çağrısı gerekmez.
+:::
+
+:::info Daha fazla bilgi
+SDK kaynak kodu, demo uygulamalar ve API referansı: [github.com/InsurUp/ts-toolkit](https://github.com/InsurUp/ts-toolkit)
+:::
+
+### 5.2 .NET SDK ile (`InsurUp.Sdk`)
+
+.NET SDK, `IServiceCollection` üzerinden DI ile kaydedilir. OAuth akışını (token alma, yenileme) siz yönetirsiniz; aldığınız `access_token`'ı SDK'ya verirsiniz.
+
+```bash
+dotnet add package InsurUp.Sdk
+```
+
+#### Kurulum (DI kaydı)
+
+`AddInsurUp` extension metodu, `IInsurUpClient` / `DefaultInsurUpClient`'ı typed `HttpClient` ile DI'a kaydeder. Ayrıca `Microsoft.Extensions.Http.Resilience` ile **retry**, **circuit breaker**, **rate limiter** ve **timeout** stratejilerini otomatik olarak ekler.
+
+```csharp
+// Program.cs veya Startup.cs
+services.AddInsurUp(options =>
+{
+    options.BaseUrl = "https://api.insurup.com/api/";
+});
+```
+
+`InsurUpClientOptions` önemli ayarları:
+
+| Ayar | Varsayılan | Açıklama |
+|------|-----------|----------|
+| `BaseUrl` | `https://api.insurup.com/api/` | API temel adresi |
+| `TotalRequestTimeout` | 5 dakika | Toplam istek zaman aşımı |
+| `AttemptTimeout` | 30 saniye | Deneme başına zaman aşımı |
+| `Retry` | 3 deneme, exponential backoff | Yeniden deneme stratejisi |
+| `CircuitBreaker` | 2 dakika örnekleme | Devre kesici ayarları |
+
+Kaydedildikten sonra `IInsurUpClient` arayüzünü DI ile herhangi bir sınıfa inject edebilirsiniz.
+
+#### Token yönetimi
+
+.NET SDK'da token enjeksiyonu iki yöntemle yapılabilir:
+
+**Yöntem 1 — `SetToken` (basit):** Access token'ı her istek grubundan önce manuel olarak ayarlarsınız:
+
+```csharp
+_client.SetToken(accessToken);
+var result = await _client.GetMyAgentUser();
+```
+
+**Yöntem 2 — `DelegatingHandler` (önerilen):** HttpClient pipeline'ına bir handler ekleyerek token'ı her istekte otomatik enjekte edersiniz. Böylece her çağrıdan önce `SetToken` çağırmanıza gerek kalmaz:
+
+```csharp
+public class AccessTokenHandler(ITokenProvider tokenProvider) : DelegatingHandler
+{
+    protected override async Task<HttpResponseMessage> SendAsync(
+        HttpRequestMessage request,
+        CancellationToken cancellationToken)
+    {
+        var accessToken = await tokenProvider.GetAccessTokenAsync();
+        if (!string.IsNullOrEmpty(accessToken))
+        {
+            request.Headers.Authorization =
+                new AuthenticationHeaderValue("Bearer", accessToken);
+        }
+        return await base.SendAsync(request, cancellationToken);
+    }
+}
+
+// Program.cs — handler'ı HttpClient pipeline'ına ekleyin
+services.AddTransient<AccessTokenHandler>();
+services.AddInsurUp(options => { options.BaseUrl = "https://api.insurup.com/api/"; })
+    .AddHttpMessageHandler<AccessTokenHandler>();
+```
+
+`ITokenProvider` kendi token alma/yenileme mantığınızı barındırır (ör. `HttpContext`'ten okuma, refresh token ile yenileme).
+
+#### Result pattern (sonuç tipi)
+
+Her SDK metodu `InsurUpResult<T>` döndürür. Bu, [Dunet](https://github.com/domn1995/dunet) discriminated union'dır ve üç varyantı vardır:
+
+| Varyant | `IsSuccess` | Açıklama |
+|---------|-------------|----------|
+| `Success(T Data)` | `true` | Başarılı yanıt, `Data` ile veriye erişilir |
+| `ServerError(...)` | `false` | Sunucu hatası (4xx/5xx) — `Type`, `Detail`, `Status`, `TraceId`, `Codes`, `ValidationErrors` alanları |
+| `ClientError(...)` | `false` | İstemci hatası — `Type` (Timeout, JsonSerialization, HttpRequestFailed vb.), `Exception` |
+
+**Başarılı sonucu okuma:**
+
+```csharp
+var result = await _client.GetMyAgentUser();
+
+if (result.IsSuccess)
+{
+    var userData = result.UnwrapSuccess().Data;
+    Console.WriteLine($"E-posta: {userData.Email}");
+    Console.WriteLine($"Acente ID: {userData.AgentId}");
+}
+```
+
+**Hata kontrolü:**
+
+```csharp
+var result = await _client.GetCustomer(customerId);
+
+if (!result.IsSuccess)
+{
+    switch (result)
+    {
+        case InsurUpResult<GetCustomerEndpointResponse>.ServerError serverError:
+            // serverError.Type → ResourceNotFound, AccessDenied, InputValidation vb.
+            // serverError.Detail → insan okunur hata açıklaması
+            // serverError.Status → HTTP durum kodu (404, 403, 422 vb.)
+            // serverError.TraceId → destek için sunucu izleme kimliği
+            // serverError.Codes → hata kodları dizisi (["CUSTOMER_NOT_FOUND"] gibi)
+            // serverError.ValidationErrors → doğrulama hataları (InputValidation için)
+            Console.WriteLine($"Sunucu hatası [{serverError.Status}]: {serverError.Detail}");
+            Console.WriteLine($"TraceId: {serverError.TraceId}");
+            break;
+
+        case InsurUpResult<GetCustomerEndpointResponse>.ClientError clientError:
+            // clientError.Type → Timeout, HttpRequestFailed, JsonDeserialization vb.
+            // clientError.Exception → varsa alt düzey exception
+            Console.WriteLine($"İstemci hatası: {clientError.Type}");
+            break;
+    }
+    return;
+}
+
+var customer = result.UnwrapSuccess().Data;
+```
+
+**Sunucu hata tipleri (`InsurUpServerErrorType`):**
+
+| Tip | HTTP | Açıklama |
+|-----|------|----------|
+| `ResourceNotFound` | 404 | Kaynak bulunamadı |
+| `AccessDenied` | 403 | Yetki yetersiz |
+| `Unauthorized` | 401 | Token geçersiz/eksik |
+| `InputValidation` | 422 | Giriş doğrulama hatası (`ValidationErrors` dolu) |
+| `BusinessValidation` | 422 | İş kuralı ihlali |
+| `ResourceDuplicate` | 409 | Zaten var |
+| `Upstream` | 502 | Sigorta şirketi servisi hatası |
+
+#### Tam kullanım örneği
+
+Aşağıdaki örnek, tipik bir entegrasyon senaryosunu gösterir: kullanıcı doğrulama, müşteri sorgulama ve hata yönetimi.
+
+```csharp
+public class InsurUpIntegrationService
+{
+    private readonly IInsurUpClient _client;
+    private readonly ILogger<InsurUpIntegrationService> _logger;
+
+    public InsurUpIntegrationService(IInsurUpClient client, ILogger<InsurUpIntegrationService> logger)
+    {
+        _client = client;
+        _logger = logger;
+    }
+
+    /// <summary>
+    /// OAuth callback sonrası: token'ı doğrulayın ve kullanıcı bilgilerini alın.
+    /// </summary>
+    public async Task<AgentUserInfo?> ValidateAndGetUser(string accessToken)
+    {
+        _client.SetToken(accessToken);
+
+        var result = await _client.GetMyAgentUser();
+        if (!result.IsSuccess)
+        {
+            _logger.LogWarning("Kullanıcı doğrulaması başarısız: {Message}", result.Message);
+            return null;
+        }
+
+        var user = result.UnwrapSuccess().Data;
+        return new AgentUserInfo(user.Id, user.Email, user.AgentId);
+    }
+
+    /// <summary>
+    /// Müşteri TCKN ile arama (esnek tanımlayıcı: UUID, TCKN, VKN veya Yabancı Kimlik No).
+    /// </summary>
+    public async Task<CustomerInfo?> FindCustomer(string accessToken, string tckn)
+    {
+        _client.SetToken(accessToken);
+
+        var result = await _client.GetCustomer(tckn);
+
+        switch (result)
+        {
+            case InsurUpResult<GetCustomerEndpointResponse>.Success success:
+                var c = success.Data;
+                return new CustomerInfo(c.Id, c.Name, c.IdentityNumber);
+
+            case InsurUpResult<GetCustomerEndpointResponse>.ServerError { Type: InsurUpServerErrorType.ResourceNotFound }:
+                return null;
+
+            case InsurUpResult<GetCustomerEndpointResponse>.ServerError serverError:
+                _logger.LogError(
+                    "Müşteri sorgusu başarısız. Tip: {Type}, Detay: {Detail}, TraceId: {TraceId}",
+                    serverError.Type, serverError.Detail, serverError.TraceId);
+                throw new InvalidOperationException(serverError.Detail);
+
+            case InsurUpResult<GetCustomerEndpointResponse>.ClientError clientError:
+                _logger.LogError(clientError.Exception,
+                    "Müşteri sorgusu istemci hatası: {Type}", clientError.Type);
+                throw new InvalidOperationException($"API erişim hatası: {clientError.Type}");
+
+            default:
+                throw new InvalidOperationException("Beklenmeyen sonuç tipi");
+        }
+    }
+
+    /// <summary>
+    /// Poliçe detayını getir ve belgeyi müşteriye gönder.
+    /// </summary>
+    public async Task SendPolicyDocument(string accessToken, string policyId, string customerEmail)
+    {
+        _client.SetToken(accessToken);
+
+        var policyResult = await _client.GetPolicyDetail(policyId);
+        if (!policyResult.IsSuccess)
+        {
+            _logger.LogWarning("Poliçe bulunamadı: {PolicyId}", policyId);
+            return;
+        }
+
+        var sendResult = await _client.SendPolicyDocumentToCustomer(
+            new SendPolicyDocumentEndpointRequest
+            {
+                PolicyId = policyId,
+                Email = customerEmail
+            });
+
+        if (!sendResult.IsSuccess)
+        {
+            _logger.LogError("Poliçe belgesi gönderilemedi: {Message}", sendResult.Message);
+        }
+    }
+}
+```
+
+#### Mevcut API istemcileri
+
+`IInsurUpClient`, aşağıdaki tüm alt istemci arayüzlerini tek bir birleşik arayüzde toplar:
+
+| İstemci | Açıklama | Örnek metotlar |
+|---------|----------|----------------|
+| **AgentUser** | Kullanıcı yönetimi | `GetMyAgentUser()`, `InviteAgentUser(...)` |
+| **Customer** | Müşteri CRUD, adres, e-posta, telefon | `GetCustomer(id)`, `CreateCustomer(...)`, `GetCustomerAssets(id)` |
+| **Proposal** | Teklif oluşturma ve satın alma | `CreateProposal(...)`, `PurchaseProposalProductSync(...)` |
+| **Policy** | Poliçe yönetimi ve belge | `GetPolicyDetail(id)`, `FetchPolicyDocument(id)` |
+| **Case** | Talep/şikayet yönetimi | `GetCaseDetail(id)` |
+| **Vehicle** | Araç bilgileri | `GetVehicle(id)` |
+| **Property** | Konut bilgileri | `GetProperty(id)` |
+| **Webhook** | Webhook yönetimi | `CreateWebhook(...)` |
+| **Coverage** | Teminat yapılandırması | `GetCoverages(...)` |
+| **Insurance** | Sigorta şirketi/ürün bilgileri | `GetInsuranceCompaniesAsync()` |
+| **OAuthClient** | OAuth istemci yönetimi | CRUD işlemleri |
+| **File** | Dosya yükleme | `UploadFile(...)` |
+
+:::warning .NET SDK'da OAuth akışı manueldir
+TypeScript SDK'nın aksine, .NET SDK OAuth akışını (PKCE, token alma, yenileme) yönetmez. Token'ı kendiniz alıp istemciye vermeniz gerekir (yukarıdaki iki yöntemden biriyle). Token süresini takip etmek ve `refresh_token` ile yenilemek sizin sorumluluğunuzdadır.
+:::
+
+### 5.3 Doğrulama uçları
+
+Entegrasyonunuzu test etmek için aşağıdaki uçları kullanabilirsiniz:
 
 | Method | Endpoint | Beklenen |
 |--------|----------|----------|
-| `GET` | `https://auth.insurup.com/connect/userinfo` | Kullanıcı bilgileri |
-| `GET` | `https://api.insurup.com/api/agent-users/me` | Giriş yapan kullanıcının profili |
+| `GET` | `https://auth.insurup.com/connect/userinfo` | Kullanıcı bilgileri (OIDC standart) |
+| `GET` | `https://api.insurup.com/agent-users/me` | Giriş yapan kullanıcının profili |
+
+```typescript
+// TypeScript SDK ile
+const me = await client.agentUsers.getMyAgentUser();
+```
+
+```csharp
+// .NET SDK ile
+_client.SetToken(accessToken);
+var me = await _client.GetMyAgentUser();
+```
 
 ---
 
