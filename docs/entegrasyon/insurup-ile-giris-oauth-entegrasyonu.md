@@ -163,13 +163,13 @@ client_secret=<SECRET>
 {
   "access_token": "eyJhbGciOiJSUzI1NiIs...",
   "refresh_token": "...",
-  "expires_in": 600,
+  "expires_in": 1800,
   "token_type": "Bearer"
 }
 ```
 
 :::tip Oturum yenileme
-`access_token` kısa ömürlüdür. `offline_access` ile aldığınız `refresh_token`'ı kullanarak `grant_type=refresh_token` ile yeni access token alın. Refresh token'ı **güvenli** saklayın (tercihen sunucuda; bkz. BFF deseni).
+`access_token` kısa ömürlüdür (30 dakika). `offline_access` ile aldığınız `refresh_token`'ı kullanarak `grant_type=refresh_token` ile yeni access token alın. Refresh token 14 gün geçerlidir. Refresh token'ı **güvenli** saklayın (tercihen sunucuda; bkz. BFF deseni).
 :::
 
 ---
@@ -178,21 +178,37 @@ client_secret=<SECRET>
 
 Aldığınız `access_token` ile `https://api.insurup.com` üzerindeki uçlara `Authorization: Bearer <token>` başlığıyla istek atın. API, token içindeki kullanıcıyı çözüp ilgili acente/kullanıcı bağlamında yanıt verir.
 
-### Resmi SDK ile (önerilen)
+### Resmi SDK ile (.NET — önerilen)
 
-`@insurup/sdk` (InsurUp TypeScript SDK), token'ı bir `tokenProvider` ile alır:
+`InsurUp.Sdk` (.NET SDK), DI üzerinden kaydedilir ve token `SetToken` metodu ile ayarlanır:
 
-```typescript
-import { DefaultInsurUpClient } from '@insurup/sdk';
-
-const client = new DefaultInsurUpClient({
-  baseUrl: 'https://api.insurup.com',
-  tokenProvider: () => getAccessToken(), // geçerli access token'ı döndüren fonksiyonunuz
+```csharp
+// Startup / Program.cs
+services.AddInsurUp(options =>
+{
+    options.BaseUrl = "https://api.insurup.com/api/";
 });
 
-const result = await client.customers.getCustomers({ first: 10 });
-if (result.isSuccess) {
-  console.log(result.data.nodes);
+// Kullanım (DI ile inject edilen IInsurUpClient)
+public class MyService
+{
+    private readonly IInsurUpClient _client;
+
+    public MyService(IInsurUpClient client)
+    {
+        _client = client;
+    }
+
+    public async Task DoWork(string accessToken)
+    {
+        _client.SetToken(accessToken);
+
+        var result = await _client.GetMyAgentUser();
+        if (result.IsSuccess)
+        {
+            Console.WriteLine(result.Data.Email);
+        }
+    }
 }
 ```
 
@@ -201,7 +217,7 @@ if (result.isSuccess) {
 | Method | Endpoint | Beklenen |
 |--------|----------|----------|
 | `GET` | `https://auth.insurup.com/connect/userinfo` | Kullanıcı bilgileri |
-| `GET` | `https://api.insurup.com/api/agent-users/me` | Giriş yapan kullanıcının profili |
+| `GET` | `https://api.insurup.com/agent-users/me` | Giriş yapan kullanıcının profili |
 
 ---
 
