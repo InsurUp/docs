@@ -32,34 +32,34 @@ Kapsam ve süreklilik, şirketlerin sunduğu servislere bağlıdır; tüm ürün
 | Bereket Sigorta | ✓ | ✓ | ✓ | ✓ | ✓ |  | ✓ |  | ✓ |  |  |  |
 | Bupa Acıbadem Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Corpus Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
-| Doğa Sigorta | ✓ | ✓ | ✓ |  | ✓ | ✓ |  |  |  |  |  |  |
+| Doğa Sigorta | ✓ | ✓ | ✓ |  | ✓ | ✓ | ✓ |  |  |  |  |  |
 | Demir Hayat |  |  |  |  |  | ʘ |  |  |  |  |  |  |
 | Emaa Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Ethica Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Eureko Sigorta | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  |
-| Fiba Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
+| Fiba Sigorta |  |  |  |  |  |  | ✓ |  |  |  |  |  |
 | Global World Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Gulf Sigorta | ✓ |  |  |  | ✓ |  |  |  |  |  |  |  |
 | HDI Katılım Sigorta | ✓ |  | ✓ |  | ✓ |  | ✓ |  |  |  |  |  |
-| HDI Sigorta | ✓ | ✓ | ✓ |  | ✓ | ʘ |  |  |  |  |  |  |
+| HDI Sigorta | ✓ | ✓ | ✓ |  | ✓ | ʘ | ✓ |  |  |  |  |  |
 | Hepiyi Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Katılım Emeklilik |  |  |  |  |  | ✓ | ✓ |  |  |  |  |  |
 | Koru Sigorta | ✓ | ✓ |  |  | ✓ |  |  |  |  |  |  |  |
 | Magdeburger Sigorta | ✓ |  | ✓ |  | ✓ | ✓ |  | ✓ |  | ✓ |  |  |
 | Mapfre Sigorta | ✓ | ✓ |  |  |  | ʘ |  |  |  |  |  |  |
 | Medisa Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
-| Neova Sigorta | ✓ | ✓ |  |  | ✓ | ʘ | ʘ | ✓ |  |  |  |  |
+| Neova Sigorta | ✓ | ✓ |  |  | ✓ | ʘ | ✓ | ✓ |  |  |  |  |
 | Nippon Sigorta |  |  |  |  |  | ʘ |  |  |  |  |  |  |
 | Orient Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Prive Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
-| Quick Sigorta | ✓ | ✓ |  |  | ʘ |  |  |  |  |  |  |  |
+| Quick Sigorta | ✓ | ✓ |  |  | ʘ |  | ✓ |  |  |  |  |  |
 | Ray Sigorta | ✓ | ✓ | ✓ |  | ✓ |  |  |  |  |  |  |  |
 | Referans Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Sompo Sigorta | ✓ | ✓ | ✓ |  | ✓ | ✓ |  |  |  |  |  |  |
 | Şeker Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Turkcell Dijital Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Türkiye Katılım Sigorta | ✓ | ✓ | ✓ |  | ✓ |  |  |  |  |  |  |  |
-| Türkiye Sigorta | ✓ | ✓ | ʘ |  | ✓ | ✓ |  | ʘ |  |  |  |  |
+| Türkiye Sigorta | ✓ | ✓ | ʘ |  | ✓ | ✓ | ʘ | ʘ |  |  |  |  |
 | Unico Sigorta | ✓ | ✓ |  |  | ✓ |  |  |  |  |  |  |  |
 | VHV Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Zurich Sigorta | ✓ | ✓ |  |  | ʘ |  |  |  |  |  |  |  |
