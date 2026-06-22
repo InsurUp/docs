@@ -27,3 +27,9 @@ CLAUDE.md
 # Local agent docs
 AGENTS.md
 agents.md
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
