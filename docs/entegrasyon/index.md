@@ -19,6 +19,7 @@ InsurUp ile sistemlerinizi entegre ederken kullanabileceğiniz başlıca rehberl
 - [InsurUp ile Giriş (OAuth 2.0 / OIDC) Entegrasyon Rehberi](/entegrasyon/insurup-ile-giris-oauth-entegrasyonu): Kendi uygulamanıza "InsurUp ile Giriş" eklemek için OAuth istemcisi oluşturma, Authorization Code + PKCE akışı ve token kullanımı.
 - [InsurUp ile Giriş: Uygulama Desenleri ve Sorun Giderme](/entegrasyon/insurup-ile-giris-uygulama-desenleri-ve-sorun-giderme): SPA ve sunucu (BFF) desenleri, örnek kurulum ve sık karşılaşılan sorunların (scope/`core-api`, proxy yönlendirme, çıkış, oturum geri yükleme) çözümleri.
 - [Müşteri Belgesi PDF Entegrasyon Rehberi](/entegrasyon/musteri-belgesi-pdf): Teklif ürünlerinden müşteriye sunum için PDF belgesi oluşturma ve indirme.
+- [MERNIS ve TRAMER Sorgusu (B2B API)](/entegrasyon/mernis-tramer-sorgusu): Servis hesabı ile access token alma ve bu token'la MERNIS (kimlik) ve TRAMER (araç/poliçe) sorgularını yapma rehberi.
 
 ## GraphQL CRM Liste Entegrasyonu
 
