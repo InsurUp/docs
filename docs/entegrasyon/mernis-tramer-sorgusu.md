@@ -4,9 +4,9 @@ sidebar_position: 11
 slug: /entegrasyon/mernis-tramer-sorgusu
 ---
 
-# InsurUp B2B API — Token Alma, MERNIS ve TRAMER Sorgusu
+# InsurUp B2B API — Token Alma, Doğum Tarihi, MERNIS ve TRAMER Sorgusu
 
-Bu doküman, bir B2B entegrasyonunun InsurUp API üzerinden **erişim token'ı (access token)** almasını ve bu token ile **MERNIS** (kimlik sorgulama) ve **TRAMER** (araç/poliçe sorgulama) isteklerini nasıl yapacağını anlatır.
+Bu doküman, bir B2B entegrasyonunun InsurUp API üzerinden **erişim token'ı (access token)** almasını ve bu token ile **doğum tarihi sorgulama**, **MERNIS** (kimlik sorgulama) ve **TRAMER** (araç/poliçe sorgulama) isteklerini nasıl yapacağını anlatır.
 
 ---
 
@@ -16,6 +16,7 @@ Bu doküman, bir B2B entegrasyonunun InsurUp API üzerinden **erişim token'ı (
 |---|---|
 | Token nasıl alınır? | **OAuth 2.0 `client_credentials`** akışı ile (servis hesabı) |
 | Servis hesabı mı, OAuth kullanıcı akışı mı? | **Servis hesabı (client_credentials)** — makineden-makineye (M2M) entegrasyon için |
+| Doğum tarihi sorgusu | `POST /customers/external-lookup` — bireysel istekte `birthDate` **verilmezse** otomatik yapılır |
 | MERNIS endpoint | `POST /customers/external-lookup` |
 | TRAMER endpoint | `POST /customers/{CustomerId}/vehicles/external-lookup` |
 | Gerekli OAuth scope | `core-api` |
@@ -87,9 +88,84 @@ curl -X POST "https://auth.insurup.com/connect/token" \
 
 ---
 
-## Adım 2 — MERNIS sorgusu (kimlik doğrulama / ön dolum)
+## Adım 2 — Doğum tarihi sorgusu (bireysel müşteri, opsiyonel)
+
+Bireysel (T.C. vatandaşı) müşterilerde MERNIS ve TRAMER sorguları doğum tarihi gerektirir. Elinizde doğum tarihi yoksa, InsurUp bunu SBM üzerinden otomatik sorgular.
+
+> **Önemli — Ayrı endpoint yoktur:** Doğum tarihi sorgusu, MERNIS ile aynı endpoint üzerinden çalışır (`POST /customers/external-lookup`). İstek gövdesinde `birthDate` verilmezse, sistem arka planda önce doğum tarihi sorgusunu yapar, ardından MERNIS sorgusunu tamamlar. Tek API çağrısı, iki ardışık SBM işlemi demektir.
+
+```
+POST https://api.insurup.com/api/customers/external-lookup
+Authorization: Bearer {access_token}
+Content-Type: application/json
+```
+
+### Ne zaman gerekir?
+
+| Durum | Doğum tarihi sorgusu |
+|---|---|
+| Bireysel müşteri, `birthDate` bilinmiyor | Otomatik yapılır (istekte `birthDate` göndermeyin) |
+| Bireysel müşteri, `birthDate` biliniyor | Atlanır (istekte `birthDate` gönderin) |
+| Yabancı müşteri | Otomatik sorgu yok — `birthDate` istekte zorunlu |
+| Kurumsal müşteri | Doğum tarihi sorgusu yok |
+
+### İstek (yalnızca TCKN ile)
+
+| Alan | Tip | Zorunlu | Açıklama |
+|---|---|---|---|
+| `$type` | string | Evet | `"individual"` olmalı |
+| `identityNumber` | number | Evet | 11 haneli TCKN |
+| `birthDate` | string (`YYYY-MM-DD`) | Hayır | Göndermeyin — sistem SBM'den otomatik sorgular |
+
+```json
+{
+  "$type": "individual",
+  "identityNumber": 11111111111
+}
+```
+
+### Örnek yanıt
+
+Yanıt, MERNIS alanlarının yanı sıra sorgulanan doğum tarihini de içerir:
+
+```json
+{
+  "$type": "individual",
+  "fullName": "Ada Lovelace",
+  "gender": "FEMALE",
+  "birthDate": "1985-05-12",
+  "email": "ada@example.com",
+  "phoneNumber": { "number": "5321234567", "countryCode": 90 },
+  "maritalStatus": "MARRIED",
+  "city": { "value": "34", "text": "İstanbul" },
+  "district": { "value": "1234", "text": "Kadıköy" }
+}
+```
+
+> **İpucu:** Yalnızca doğum tarihine ihtiyacınız varsa bu isteği gönderip yanıttaki `birthDate` alanını kullanabilirsiniz. Müşteri oluştururken veya TRAMER sorgusundan önce doğum tarihini edinmek için uygundur.
+
+cURL örneği:
+
+```bash
+curl -X POST "https://api.insurup.com/api/customers/external-lookup" \
+  -H "Authorization: Bearer {access_token}" \
+  -H "Content-Type: application/json" \
+  -d '{"$type":"individual","identityNumber":11111111111}'
+```
+
+**Önemli notlar:**
+
+- Doğum tarihi sorgusu yalnızca **bireysel (T.C. vatandaşı)** müşteriler için geçerlidir.
+- SBM'de kayıt bulunamazsa veya sorgu başarısız olursa istek hata döner; MERNIS adımına geçilmez.
+- `birthDate` değerini biliyorsanız isteğe ekleyin — otomatik sorgu atlanır, doğrudan MERNIS çalışır (bkz. Adım 3).
+
+---
+
+## Adım 3 — MERNIS sorgusu (kimlik doğrulama / ön dolum)
 
 MERNIS sorgusu, TCKN (veya VKN/YKN) üzerinden kişi/kurum bilgilerini getirir. Bu endpoint bir müşteri **oluşturmaz**; sorgu sonucunu döner, isterseniz müşteri oluştururken kullanırsınız.
+
+**Adım 2 ile ilişki:** Bireysel müşteride `birthDate` verilmezse Adım 2'deki otomatik doğum tarihi sorgusu bu adımın parçası olarak çalışır. Aşağıdaki istek, doğum tarihi bilindiğinde veya kurumsal/yabancı müşteri için kullanılır.
 
 ```
 POST https://api.insurup.com/api/customers/external-lookup
@@ -105,7 +181,7 @@ Content-Type: application/json
 |---|---|---|---|
 | `$type` | string | Evet | `"individual"` olmalı |
 | `identityNumber` | number | Evet | 11 haneli TCKN |
-| `birthDate` | string (`YYYY-MM-DD`) | Hayır | Verilmezse sistem doğum tarihini önce sorgular |
+| `birthDate` | string (`YYYY-MM-DD`) | Hayır | Verilmezse Adım 2'deki otomatik sorgu devreye girer |
 
 ```json
 {
@@ -135,7 +211,7 @@ Content-Type: application/json
 |---|---|---|---|
 | `$type` | string | Evet | `"foreign"` olmalı |
 | `identityNumber` | string | Evet | Yabancı kimlik no / pasaport |
-| `birthDate` | string (`YYYY-MM-DD`) | Evet | Zorunlu |
+| `birthDate` | string (`YYYY-MM-DD`) | Evet | Zorunlu — otomatik sorgu yapılmaz |
 
 ```json
 {
@@ -172,11 +248,13 @@ curl -X POST "https://api.insurup.com/api/customers/external-lookup" \
 
 ---
 
-## Adım 3 — Müşteriyi oluşturma / bulma (CustomerId edinme)
+## Adım 4 — Müşteriyi oluşturma / bulma (CustomerId edinme)
 
 TRAMER sorgusu bir `CustomerId` gerektirir. Bu yüzden **önce müşteri sistemde olmalı**; yoksa oluşturursunuz, varsa bulursunuz. Akış şöyledir: müşteriyi oluşturur (`POST /customers`) veya mevcut kaydı bulur (`GET /customers/{TCKN|VKN}`), dönen `id` (GUID) değerini alırsınız; ardından bu `id`'yi TRAMER isteğinin URL'sinde `{CustomerId}` olarak kullanırsınız. Yani `CustomerId`, müşteri kaydı ile araç/TRAMER sorgusunu birbirine bağlayan referanstır.
 
-### 3a — Müşteri oluşturma
+**Doğum tarihi zorunluluğu:** Bireysel ve yabancı müşterilerde TRAMER sorgusu için müşteri kaydında doğum tarihi bulunmalıdır. Kayıt oluştururken doğum tarihini bilmiyorsanız Adım 2'yi kullanın veya `"fillMissingFields": true` ile otomatik doldurmayı tercih edin.
+
+### 4a — Müşteri oluşturma
 
 ```
 POST https://api.insurup.com/api/customers
@@ -207,7 +285,7 @@ Kurumsal:
 }
 ```
 
-> **İpucu — `fillMissingFields`:** İstek gövdesine `"fillMissingFields": true` eklerseniz, sistem müşteri oluştururken eksik alanları MERNIS/SBM'den otomatik doldurur. Böylece Adım 2'yi ayrıca çağırmadan tek istekte hem oluşturma hem ön dolum yapabilirsiniz.
+> **İpucu — `fillMissingFields`:** İstek gövdesine `"fillMissingFields": true` eklerseniz, sistem müşteri oluştururken eksik alanları MERNIS/SBM'den otomatik doldurur. Doğum tarihi dahil eksik alanlar bu yolla tamamlanabilir; Adım 2 veya 3'ü ayrıca çağırmadan tek istekte hem oluşturma hem ön dolum yapabilirsiniz.
 
 **Yanıt — CustomerId burada döner (HTTP 201):**
 
@@ -219,7 +297,7 @@ Kurumsal:
 
 Bu `id`, bir sonraki adımda TRAMER isteğinin URL'sinde `{CustomerId}` olarak kullanılır.
 
-> **Not — Aynı TCKN/VKN zaten varsa:** `POST /customers` mevcut müşteriyi döndürmez; **duplicate hatası** verir. Müşterinin zaten var olma ihtimali varsa önce 3b ile bulun, yoksa oluşturun.
+> **Not — Aynı TCKN/VKN zaten varsa:** `POST /customers` mevcut müşteriyi döndürmez; **duplicate hatası** verir. Müşterinin zaten var olma ihtimali varsa önce 4b ile bulun, yoksa oluşturun.
 
 cURL örneği:
 
@@ -230,7 +308,7 @@ curl -X POST "https://api.insurup.com/api/customers" \
   -d '{"$type":"individual","identityNumber":"11111111111","birthDate":"1985-05-12"}'
 ```
 
-### 3b — Mevcut müşteriyi bulma
+### 4b — Mevcut müşteriyi bulma
 
 Müşteri zaten kayıtlıysa, GUID / TCKN / VKN ile tekil olarak çekip `id`'yi alabilirsiniz:
 
@@ -243,12 +321,12 @@ Authorization: Bearer {access_token}
 
 ---
 
-## Adım 4 — TRAMER sorgusu (araç / poliçe sorgusu)
+## Adım 5 — TRAMER sorgusu (araç / poliçe sorgusu)
 
-Elinizde Adım 3'ten gelen `CustomerId` ile artık TRAMER sorgusu yapabilirsiniz. TRAMER; plaka (ve varsa ruhsat seri no) üzerinden aracın model, poliçe ve TRAMER bilgilerini getirir.
+Elinizde Adım 4'ten gelen `CustomerId` ile artık TRAMER sorgusu yapabilirsiniz. TRAMER; plaka (ve varsa ruhsat seri no) üzerinden aracın model, poliçe ve TRAMER bilgilerini getirir.
 
 > **Önemli — Müşteri kaydı zorunludur:**
-> TRAMER sorgusu, kimlik bilgilerini (bireysel için TCKN + doğum tarihi, kurumsal için VKN) **request gövdesinden değil**, URL'deki `{CustomerId}` ile bağlı **sistemdeki müşteri kaydından** okur. Bu nedenle sorgudan önce müşterinin sistemde kayıtlı olması gerekir (bkz. Adım 3). Bireysel/yabancı müşteride **doğum tarihi**, kurumsalda **VKN** kayıtlı değilse sorgu hata verir.
+> TRAMER sorgusu, kimlik bilgilerini (bireysel için TCKN + doğum tarihi, kurumsal için VKN) **request gövdesinden değil**, URL'deki `{CustomerId}` ile bağlı **sistemdeki müşteri kaydından** okur. Bu nedenle sorgudan önce müşterinin sistemde kayıtlı olması gerekir (bkz. Adım 4). Bireysel/yabancı müşteride **doğum tarihi**, kurumsalda **VKN** kayıtlı değilse sorgu hata verir.
 
 ```
 POST https://api.insurup.com/api/customers/{CustomerId}/vehicles/external-lookup
@@ -332,12 +410,15 @@ curl -X POST "https://api.insurup.com/api/customers/019f1234-5678-7abc-def0-1234
 ## Önerilen uçtan uca akış
 
 ```
-1) POST /connect/token                                        → access token al (scope: core-api)
-2) POST /api/customers/external-lookup                        → (opsiyonel) MERNIS ile kimlik bilgisi ön dolum
-3) GET  /api/customers/{TCKN|VKN}                             → müşteri var mı? Varsa CustomerId'yi al
-4) (müşteri yoksa) POST /api/customers                        → müşteri oluştur, yanıttaki { "id": ... } = CustomerId
-5) POST /api/customers/{CustomerId}/vehicles/external-lookup  → TRAMER (plaka +ruhsat seri no) sorgusu
+1) POST /connect/token                                              → access token al (scope: core-api)
+2) POST /api/customers/external-lookup (yalnızca TCKN)              → (opsiyonel) doğum tarihi otomatik sorgulanır
+3) POST /api/customers/external-lookup                              → (opsiyonel) MERNIS ile kimlik bilgisi ön dolum
+4) GET  /api/customers/{TCKN|VKN}                                   → müşteri var mı? Varsa CustomerId'yi al
+5) (müşteri yoksa) POST /api/customers                             → müşteri oluştur (doğum tarihi dahil), CustomerId al
+6) POST /api/customers/{CustomerId}/vehicles/external-lookup        → TRAMER (plaka + ruhsat seri no) sorgusu
 ```
+
+**Kısayol:** Adım 2–3 yerine `POST /customers` isteğine `"fillMissingFields": true` ekleyerek doğum tarihi ve MERNIS alanlarını tek adımda doldurabilirsiniz.
 
 ---
 
@@ -347,4 +428,5 @@ curl -X POST "https://api.insurup.com/api/customers/019f1234-5678-7abc-def0-1234
 |---|---|
 | `401 Unauthorized` | Token yok, geçersiz veya süresi dolmuş. Adım 1'i tekrarlayın. |
 | `403 Forbidden` | Servis hesabınızın bu işlem için rol/izni yok. |
-| Kimlik bilgisi eksik | TRAMER için müşterinin doğum tarihi (bireysel/yabancı) veya VKN (kurumsal) kaydı eksikse sorgu hata verir; müşteri kaydını tamamlayın. |
+| Doğum tarihi bulunamadı | Bireysel MERNIS isteğinde TCKN geçersiz veya SBM'de kayıt yok. TCKN'yi doğrulayın. |
+| Kimlik bilgisi eksik | TRAMER için müşterinin doğum tarihi (bireysel/yabancı) veya VKN (kurumsal) kayıtlı değilse sorgu hata verir; müşteri kaydını tamamlayın (Adım 2 veya `fillMissingFields`). |
