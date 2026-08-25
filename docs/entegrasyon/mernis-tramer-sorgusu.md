@@ -246,6 +246,35 @@ curl -X POST "https://api.insurup.com/api/customers/external-lookup" \
   -d '{"$type":"individual","identityNumber":11111111111,"birthDate":"1985-05-12"}'
 ```
 
+### Yanıt enum değerleri (MERNIS)
+
+`$type`, `gender` ve `maritalStatus` alanları string enum'dur. Aşağıdaki değerler birebir API yanıtında döner.
+
+#### `$type`
+
+| Değer | Açıklama |
+|---|---|
+| `"individual"` | Bireysel müşteri (T.C. vatandaşı) |
+| `"company"` | Kurumsal müşteri |
+| `"foreign"` | Yabancı müşteri |
+
+#### `gender`
+
+| Değer | Açıklama |
+|---|---|
+| `"UNKNOWN"` | Bilinmiyor |
+| `"MALE"` | Erkek |
+| `"FEMALE"` | Kadın |
+| `"OTHER"` | Diğer |
+
+#### `maritalStatus`
+
+| Değer | Açıklama |
+|---|---|
+| `"UNKNOWN"` | Bilinmiyor |
+| `"SINGLE"` | Bekâr |
+| `"MARRIED"` | Evli |
+
 ---
 
 ## Adım 4 — Müşteriyi oluşturma / bulma (CustomerId edinme)
@@ -377,7 +406,7 @@ Content-Type: application/json
   "engineIsMasked": false,
   "fuelType": "GASOLINE",
   "price": 150000,
-  "currency": "TRY",
+  "currency": "TURKISH_LIRA",
   "kaskoOldPolicy": {
     "insuranceCompanyPolicyNumber": "12345678",
     "insuranceCompanyRenewalNumber": 0,
@@ -386,7 +415,7 @@ Content-Type: application/json
     "endDate": "2026-03-15"
   },
   "trafikOldPolicy": null,
-  "utilizationStyle": "PRIVATE",
+  "utilizationStyle": "PRIVATE_CAR",
   "seatNumber": 5
 }
 ```
@@ -404,6 +433,107 @@ curl -X POST "https://api.insurup.com/api/customers/019f1234-5678-7abc-def0-1234
   -H "Content-Type: application/json" \
   -d '{"plate":{"city":34,"code":"ABC123"},"documentSerial":{"code":"AB","number":"123456"}}'
 ```
+
+### Yanıt enum değerleri (TRAMER)
+
+`fuelType`, `currency` ve `utilizationStyle` alanları string enum'dur. Aşağıdaki değerler birebir API yanıtında döner.
+
+#### `fuelType`
+
+| Değer | Açıklama |
+|---|---|
+| `"GASOLINE"` | Benzin |
+| `"DIESEL"` | Dizel |
+| `"HYBRID"` | Hibrit |
+| `"LPG"` | LPG |
+| `"LPG_GASOLINE"` | LPG + Benzin (çift yakıt) |
+| `"ELECTRIC"` | Elektrik |
+
+#### `currency`
+
+| Değer | Açıklama |
+|---|---|
+| `"UNKNOWN"` | Bilinmiyor |
+| `"TURKISH_LIRA"` | Türk Lirası (₺) |
+| `"UNITED_STATES_DOLLAR"` | ABD Doları ($) |
+| `"EURO"` | Euro (€) |
+
+#### `utilizationStyle`
+
+| Değer | Açıklama |
+|---|---|
+| `"UNKNOWN"` | Bilinmeyen |
+| `"PRIVATE_CAR"` | Özel otomobil |
+| `"TAXI"` | Taksi |
+| `"ROUTE_BASED_MINIBUS"` | Güzergah bazlı minibüs |
+| `"MEDIUM_BUS"` | Orta boy otobüs |
+| `"LARGE_BUS"` | Büyük otobüs |
+| `"PICKUP_TRUCK"` | Pikap |
+| `"CLOSED_BED_PICKUP"` | Kapalı kasa pikap |
+| `"TRUCK"` | Kamyon |
+| `"CONSTRUCTION_MACHINERY"` | İnşaat makinesi |
+| `"TRACTOR"` | Traktör |
+| `"TRAILER"` | Römork |
+| `"MOTORCYCLE"` | Motosiklet |
+| `"TANKER"` | Tanker |
+| `"TOW_TRUCK"` | Çekici |
+| `"MOTORIZED_CARAVAN"` | Motorlu karavan |
+| `"TOWABLE_CARAVAN"` | Çekilebilir karavan |
+| `"AGRICULTURAL_MACHINE_EXCLUDING_TRACTOR"` | Traktör hariç tarım makinesi |
+| `"OPEN_BODY_TRUCK"` | Açık kasa kamyon |
+| `"RENTAL_CAR"` | Kiralık otomobil |
+| `"ARMORED_VEHICLE"` | Zırhlı araç |
+| `"MINIBUS_SHARED_TAXI"` | Dolmuş |
+| `"JEEP"` | Cip |
+| `"JEEP_SAV"` | Cip spor aktivite aracı (SAV) |
+| `"JEEP_SUV"` | Cip spor kullanım aracı (SUV) |
+| `"JEEP_RENTAL"` | Kiralık cip |
+| `"JEEP_TAXI"` | Taksi olarak kullanılan cip |
+| `"AMBULANCE"` | Ambulans |
+| `"FIREFIGHTER_CAR"` | İtfaiye aracı |
+| `"HEARSE"` | Cenaze aracı |
+| `"CHAUFFEURED_RENTAL_CAR"` | Şoförlü kiralık araç |
+| `"OPERATIONAL_RENTAL"` | Operasyonel kiralık araç |
+| `"PRIVATE_MINIBUS"` | Özel minibüs |
+| `"ROUTE_MINIBUS"` | Güzergah minibüsü |
+| `"SERVICE_MINIBUS"` | Servis minibüsü |
+| `"COMPANY_MINIBUS"` | Şirket minibüsü |
+| `"RENTAL_MINIBUS"` | Kiralık minibüs |
+| `"AMBULANCE_MINIBUS"` | Ambulans minibüsü |
+| `"MINIBUS_BROADCASTING_VEHICLE"` | Yayın minibüsü |
+| `"MINIBUS_ARMORED_TRANSPORT"` | Zırhlı nakliye minibüsü |
+| `"SMALL_BUS_15_35_PASSENGERS"` | 15–35 yolcu kapasiteli küçük otobüs |
+| `"SMALL_BUS_SERVICE"` | Servis için küçük otobüs |
+| `"SMALL_BUS_CITY"` | Şehir içi küçük otobüs |
+| `"SMALL_BUS_ROUTE"` | Güzergah için küçük otobüs |
+| `"LARGE_BUS_36_PLUS"` | 36'dan fazla yolcu kapasiteli büyük otobüs |
+| `"DUMP_TRUCK"` | Damperli kamyon |
+| `"REFRIGERATED_TRUCK"` | Frigorifik kamyon |
+| `"TRUCK_WITH_CONCRETE_MIXER"` | Beton mikseri kamyonu |
+| `"SILO_TRUCK"` | Silo kamyonu |
+| `"TRUCK_WITH_CONCRETE_PUMP"` | Beton pompası kamyonu |
+| `"ROCK_TRUCK"` | Kaya kamyonu |
+| `"TRUCK_WITH_CRANE"` | Vinçli kamyon |
+| `"HEAVY_MACHINERY"` | Ağır makineler |
+| `"EXCAVATOR"` | Ekskavatör |
+| `"LOADER"` | Yükleyici |
+| `"BULLDOZER"` | Buldozer |
+| `"SCRAPER"` | Skreyper |
+| `"GRADER"` | Greyder |
+| `"ROAD_ROLLER"` | Yol silindiri |
+| `"MOBILE_CRANE"` | Mobil vinç |
+| `"INDOOR_FORKLIFT"` | İç mekan forklift |
+| `"OUTDOOR_FORKLIFT"` | Dış mekan forklift |
+| `"MOBILE_COMPRESSOR"` | Mobil kompresör |
+| `"MOBILE_PUMP"` | Mobil pompa |
+| `"MOBILE_WELDING_MACHINE"` | Mobil kaynak makinesi |
+| `"COMBINE_HARVESTER"` | Biçerdöver |
+| `"TANKER_ACID_CARRIER"` | Asit taşıyıcı tanker |
+| `"TANKER_WATER_FUEL_CARRIER"` | Su/yakıt taşıyıcı tanker |
+| `"TANKER_EXPLOSIVE_FLAMMABLE"` | Patlayıcı/yanıcı madde taşıyıcı tanker |
+| `"TOW_TRUCK_TRACTOR"` | Çekici traktör |
+| `"TOW_TRUCK_TANKER"` | Tanker çekici |
+| `"PANEL_GLASS_VAN_MINUBUS"` | Panel/camlı van kamyonet |
 
 ---
 
