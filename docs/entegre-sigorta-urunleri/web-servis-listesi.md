@@ -13,15 +13,15 @@ Kapsam ve süreklilik, şirketlerin sunduğu servislere bağlıdır; tüm ürün
 | Özet | Değer |
 | ---- | ----- |
 | Aktif Şirket Sayısı | 24 (en az bir branşta entegrasyon olan) |
-| Branş Sayısı | 6 (Kasko, Trafik, Konut Yangın, Dask, Tamamlayıcı Sağlık, İMM) |
-| Toplam Ürün Sayısı | 61 (her ✓ bir ürün entegrasyonunu temsil eder) |
+| Branş Sayısı | 11 (Kasko, Trafik, Konut Yangın, Ferdi Kaza, Dask, Tamamlayıcı Sağlık, Seyahat Sağlık, Acil Sağlık, Doktorum Benimle, Incoming Seyahat, İMM) |
+| Toplam Ürün Sayısı | 96 (her ✓ bir ürün entegrasyonunu temsil eder) |
 
 ## Entegre Web Servis Ürünleri
 
 | Şirket | Kasko | Trafik | Konut Yangın | Ferdi Kaza | Dask | Tamamlayıcı Sağlık | Seyahat Sağlık | Acil Sağlık | Doktorum Benimle | Incoming Seyahat | İMM | Pati |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | AcnTurk Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
-| AK Sigorta | ✓ | ʘ | ✓ |  | ✓ | ʘ |  |  |  |  |  |  |
+| AK Sigorta | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |
 | Allianz Sigorta | ✓ | ✓ | ✓ |  |  | ✓ |  |  |  |  |  |  |
 | Ana Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Anadolu Sigorta | ✓ | ✓ | ✓ |  |  | ✓ |  |  |  |  | ʘ |  |
@@ -44,22 +44,22 @@ Kapsam ve süreklilik, şirketlerin sunduğu servislere bağlıdır; tüm ürün
 | HDI Sigorta | ✓ | ✓ | ✓ |  | ✓ | ʘ | ✓ |  |  |  |  |  |
 | Hepiyi Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Katılım Emeklilik |  |  |  |  |  | ✓ | ✓ |  |  |  |  |  |
-| Koru Sigorta | ✓ | ✓ |  |  | ✓ |  |  |  |  |  |  |  |
+| Koru Sigorta | ✓ | ✓ |  |  | ✓ |  | ✓ |  |  |  |  |  |
 | Magdeburger Sigorta | ✓ |  | ✓ |  | ✓ | ✓ |  | ✓ |  | ✓ |  |  |
-| Mapfre Sigorta | ✓ | ✓ |  |  |  | ʘ |  |  |  |  |  |  |
+| Mapfre Sigorta | ✓ | ✓ |  |  |  | ✓ |  |  |  |  |  |  |
 | Medisa Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
-| Neova Sigorta | ✓ | ✓ |  |  | ✓ | ʘ | ✓ | ✓ |  |  |  |  |
+| Neova Sigorta | ✓ | ✓ |  |  | ✓ | ✓ | ✓ | ✓ |  |  |  |  |
 | Nippon Sigorta |  |  |  |  |  | ʘ |  |  |  |  |  |  |
 | Orient Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Prive Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
-| Quick Sigorta | ✓ | ✓ |  |  | ʘ |  | ✓ |  |  |  |  |  |
+| Quick Sigorta | ✓ |  |  |  | ʘ |  | ✓ |  |  |  |  |  |
 | Ray Sigorta | ✓ | ✓ | ✓ |  | ✓ |  |  |  |  |  |  |  |
 | Referans Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
-| Sompo Sigorta | ✓ | ✓ | ✓ |  | ✓ | ✓ |  |  |  |  |  |  |
+| Sompo Sigorta | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |
 | Şeker Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Turkcell Dijital Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Türkiye Katılım Sigorta | ✓ | ✓ | ✓ |  | ✓ |  |  |  |  |  |  |  |
-| Türkiye Sigorta | ✓ | ✓ | ʘ |  | ✓ | ✓ | ʘ | ʘ |  |  |  |  |
+| Türkiye Sigorta | ✓ | ✓ | ʘ |  | ✓ | ✓ | ✓ | ʘ |  |  | ✓ |  |
 | Unico Sigorta | ✓ | ✓ |  |  | ✓ |  |  |  |  |  |  |  |
 | VHV Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Zurich Sigorta | ✓ | ✓ |  |  | ʘ |  |  |  |  |  |  |  |
