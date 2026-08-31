@@ -48,12 +48,12 @@ Kapsam ve süreklilik, şirketlerin sunduğu servislere bağlıdır; tüm ürün
 | Magdeburger Sigorta | ✓ |  | ✓ |  | ✓ | ✓ |  | ✓ |  | ✓ |  |  |
 | Mapfre Sigorta | ✓ | ✓ |  |  |  | ✓ |  |  |  |  |  |  |
 | Medisa Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
-| Neova Sigorta | ✓ | ✓ |  |  | ✓ | ✓ | ✓ | ✓ |  |  |  |  |
+| Neova Sigorta | ✓ | ✓ |  |  | ✓ | ✓ | ✓ | ✓ |  |  | ✓ |  |
 | Nippon Sigorta |  |  |  |  |  | ʘ |  |  |  |  |  |  |
 | Orient Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Prive Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Quick Sigorta | ✓ |  |  |  | ʘ |  | ✓ |  |  |  |  |  |
-| Ray Sigorta | ✓ | ✓ | ✓ |  | ✓ |  |  |  |  |  |  |  |
+| Ray Sigorta | ✓ | ✓ | ✓ |  | ✓ |  |  |  |  |  | ✓ |  |
 | Referans Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Sompo Sigorta | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |
 | Şeker Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
@@ -62,7 +62,7 @@ Kapsam ve süreklilik, şirketlerin sunduğu servislere bağlıdır; tüm ürün
 | Türkiye Sigorta | ✓ | ✓ | ʘ |  | ✓ | ✓ | ✓ | ʘ |  |  | ✓ |  |
 | Unico Sigorta | ✓ | ✓ |  |  | ✓ |  |  |  |  |  |  |  |
 | VHV Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
-| Zurich Sigorta | ✓ | ✓ |  |  | ʘ |  |  |  |  |  |  |  |
+| Zurich Sigorta | ✓ | ✓ |  |  | ʘ |  |  |✓ |  |  |  |  |
 
 
 **✓** işareti bulunan alanlar, ilgili sigorta şirketinin o branşta web servis entegrasyonuna sahip olduğunu göstermektedir.  
