@@ -62,7 +62,7 @@ Kapsam ve süreklilik, şirketlerin sunduğu servislere bağlıdır; tüm ürün
 | Türkiye Sigorta | ✓ | ✓ | ʘ |  | ✓ | ✓ | ✓ | ʘ |  |  | ✓ |  |
 | Unico Sigorta | ✓ | ✓ |  |  | ✓ |  |  |  |  |  |  |  |
 | VHV Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
-| Zurich Sigorta | ✓ | ✓ |  |  | ʘ |  |  |✓ |  |  |  |  |
+| Zurich Sigorta | ✓ | ✓ |  |  | ʘ |  | ✓ | |  |  |  |  |
 
 
 **✓** işareti bulunan alanlar, ilgili sigorta şirketinin o branşta web servis entegrasyonuna sahip olduğunu göstermektedir.  
