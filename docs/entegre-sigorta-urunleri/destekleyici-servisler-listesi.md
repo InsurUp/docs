@@ -10,10 +10,10 @@ InsurUp’ın destekleyici servis entegrasyonları, sigorta şirketlerinin siste
 
 | Özet | Değer |
 | ---- | ----- |
-| Servisi Aktif Şirket Sayısı | 27 |
+| Servisi Aktif Şirket Sayısı | 17 |
 | Servis Türü Sayısı | 6 |
 | Web Servis Entegrasyon Sayısı | 12 |
-| Robot Entegrasyon Sayısı | 48 |
+| Robot Entegrasyon Sayısı | 34 (ayrıca 20 atıl entegrasyon) |
 
 ## Web Servis / Destekleyici Servisler Listesi
 Sigorta şirketlerinin sunduğu API’ler aracılığıyla Tramer gibi destekleyici sorgular doğrudan sistemlerden alınır. Bu yaklaşım, [Web Servis (API)](./web-servis-listesi.md) entegrasyon mantığına paralel olup ilgili şirketten “web servis erişim izni/partaj” gerektirir. Kapsam, şirketlerin sunduğu servislere göre değişebilir.
@@ -65,48 +65,50 @@ Sigorta şirketlerinin sunduğu API’ler aracılığıyla Tramer gibi destekley
 ## Robot / Destekleyici Servisler Listesi
 Web servis bulunmadığında ya da tercih edilmediğinde, InsurUp’ın [Robot (RPA)](./robot-urun-listesi.md) katmanı sigorta şirketlerinin ekranlarından işlemleri insan operatör gibi gerçekleştirir. Aşağıdaki tabloda robot ile sağlanan destekleyici servis entegrasyonları listelenmiştir.
 
-| Sigorta Şirketi | Tescil | Doğum Tarihi | Mernis | Tramer | Uavt Adres | Dask Eski Poliçe |
-| --------------- | ------ | ------------ | ------ | ------ | ---------- | ---------------- |
-| Acıbadem        |        |              |        |        |            |                  |
-| AcnTürk         |        |              |        |        |            |                  |
-| Ak              |        |              |        |        |            |                  |
-| Allianz         |        | ✓            | ✓      | ✓      |            |                  |
-| Ana             | ✓      |              |        |        |            |                  |
-| Ankara          |        | ✓            | ✓      | ✓      | ✓          |                  |
-| Anadolu         |        |              |        |        |            |                  |
-| AtlasMutel      |        |              |        |        |            |                  |
-| Aveon           | ✓      |              |        |        |            |                  |
-| Axa             |        |              |        |        |            |                  |
-| Bereket         |        | ✓            | ✓      |        |            |                  |
-| Corpus          | ✓      |              |        |        |            |                  |
-| Doğa            | ✓      | ✓            | ✓      | ✓      | ✓          | ✓                |
-| Dubai           |        |              |        |        |            |                  |
-| Ethica          |        |              |        |        |            |                  |
-| Eureko          |        | ✓            | ✓      | ✓      |            |                  |
-| Generali        |        |              |        |        |            |                  |
-| Gri             |        |              |        |        |            |                  |
-| Groupama        |        |              |        |        |            |                  |
-| Gulf            |        |              |        |        |            |                  |
-| Halk            |        |              |        |        |            |                  |
-| HDI             |        | ✓            | ✓      | ✓      |            |                  |
-| Hepiyi          |        | ✓            | ✓      | ✓      |            |                  |
-| Koru            | ✓      |              |        |        |            |                  |
-| Magdeburger     |        | ✓            | ✓      | ✓      |            |                  |
-| Mapfre          |        |              |        |        |            |                  |
-| Neova           | ✓      |              |        |        |            |                  |
-| Nippon          |        |              |        |        |            |                  |
-| Orient          | ✓      |              |        |        |            |                  |
-| Prive           | ✓      |              |        |        |            |                  |
-| Quick           |        | ✓            | ✓      |        |            |                  |
-| Ray             |        | ✓            | ✓      | ✓      |            |                  |
-| Sompo           |        | ✓            | ✓      |        |            |                  |
-| Şeker           | ✓      |              |        |        |            |                  |
-| Tmt             |        |              |        |        |            |                  |
-| Türkiye         |        | ✓            | ✓      | ✓      | ✓          |                  |
-| Türkiye Katılım | ✓      |              |        |        |            |                  |
-| Unico           |        |              |        |        |            |                  |
-| Zurich          | ✓      |              |        |        |            |                  |
+| Sigorta Şirketi | Tescil | Doğum Tarihi | Mernis       | Tramer       | Uavt Adres | Dask Eski Poliçe |
+| --------------- | ------ | ------------ | ------------ | ------------ | ---------- | ---------------- |
+| Acıbadem        |        |              |              |              |            |                  |
+| AcnTürk         |        |              |              |              |            |                  |
+| Ak              |        |              |              |              |            |                  |
+| Allianz         |        | ✓            | ✓ (yıldızlı) | ✓ (yıldızlı) |            |                  |
+| Ana             | (atıl) | ✓            | ✓            | ✓            | ✓          |                  |
+| Ankara          |        |              |              |              |            |                  |
+| Anadolu         |        | ✓            |              |              |            |                  |
+| AtlasMutel      |        |              |              |              |            |                  |
+| Aveon           | (atıl) | (atıl)       | (atıl)       | (atıl)       | (atıl)     | (atıl)           |
+| Axa             |        | ✓            | ✓ (yıldızlı) |              | (atıl)     |                  |
+| Bereket         |        |              |              |              |            |                  |
+| Corpus          |        |              |              |              |            |                  |
+| Doğa            | ✓      | ✓            | ✓            | ✓            | ✓          | ✓                |
+| Dubai           |        |              |              |              |            |                  |
+| Ethica          |        |              |              |              |            |                  |
+| Eureko          |        |              |              |              |            |                  |
+| Generali        |        |              |              |              |            |                  |
+| Gri             | (atıl) | (atıl)       | (atıl)       | (atıl)       | (atıl)     | (atıl)           |
+| Groupama        |        |              |              |              |            |                  |
+| Gulf            |        |              |              |              |            |                  |
+| Halk            |        |              |              |              |            |                  |
+| HDI             |        | ✓            | ✓            | ✓            |            |                  |
+| Hepiyi          |        |              |              |              |            |                  |
+| Koru            | ✓      | (atıl)       | (atıl)       | ✓            | ✓          | ✓                |
+| Magdeburger     |        |              |              |              |            |                  |
+| Mapfre          |        |              |              |              |            |                  |
+| Neova           |        | (atıl)       | (atıl)       | (atıl)       |            |                  |
+| Nippon          |        |              |              |              |            |                  |
+| Orient          |        |              |              |              |            |                  |
+| Prive           | (atıl) |              | ✓            | ✓            |            |                  |
+| Quick           |        |              |              |              |            |                  |
+| Ray             |        | ✓            |              |              |            |                  |
+| Sompo           |        |              |              |              |            |                  |
+| Şeker           |        |              |              |              |            |                  |
+| Tmt             |        |              |              |              |            |                  |
+| Türkiye         |        | ✓            | ✓ (yıldızlı) | ✓ (yıldızlı) |            |                  |
+| Türkiye Katılım | ✓      |              | ✓            | ✓            | ✓          | ✓                |
+| Unico           |        |              |              |              |            |                  |
+| Zurich          |        |              |              |              |            |                  |
 
-**✓** işareti bulunan alanlar, ilgili sigorta şirketinde o destekleyici servise entegrasyon olduğunu gösterir. Özet istatistikler, yukarıdaki web servis ve robot tablolarının toplamlarına göre hesaplanmıştır. Kapsam ve süreklilik şirketlerin sunduğu altyapıya bağlı olarak değişebilir.
+**✓** işareti bulunan alanlar, ilgili sigorta şirketinde o destekleyici servise entegrasyon olduğunu ve servisin çalışır durumda olduğunu gösterir. **✓ (yıldızlı)** işareti, entegrasyonun çalıştığını ancak sigorta şirketinin veriyi maskeleyerek (örneğin ad-soyad veya araç kullanım tipi `H***İ O***L` biçiminde) döndürdüğünü belirtir; bu alanlar CRM'e ya kısmi ya da hiç aktarılamaz. **(atıl)** işareti, servisin robot yazılımında uygulanmış olduğunu ancak canlıda hiç istek almadığını gösterir; entegrasyon hazır durumda bekler, talep geldiğinde devreye alınabilir. İstek aldığı hâlde dolu veri döndürmeyen entegrasyonlar listeye alınmamıştır. Özet istatistikler, yukarıdaki web servis ve robot tablolarının toplamlarına göre hesaplanmıştır. Kapsam ve süreklilik şirketlerin sunduğu altyapıya bağlı olarak değişebilir.
+
+**Ada Yazılım altyapısını kullanan şirketler hakkında.** Ana Sigorta, Aveon Sigorta, Doğa Sigorta, Gri Sigorta, Koru Sigorta, Prive Sigorta ve Türkiye Katılım Sigorta, robot entegrasyonlarında ortak bir altyapı (Ada Yazılım) üzerinden hizmet vermektedir. Bu altyapı destekleyici servislerin tamamını kapsadığından, söz konusu şirketler en geniş servis kapsamına sahip sigorta şirketleridir. Bu şirketlerde yer alan **(atıl)** işaretleri, servisin çalışmadığı anlamına gelmez; ilgili şirket üzerinden robot çalıştıran bir acentenin bulunmamasından kaynaklanıyor olabilir. Bu şirketlerle çalışan acente bulunması hâlinde ilgili servislerin tarafımızca kontrol edilmesi gerekmektedir. Bu değerlendirme yalnızca destekleyici servisler için geçerlidir.
 
 
