@@ -30,7 +30,8 @@ InsurUp’da **liste ve arama** işlemleri REST ile değil **GraphQL** üzerinde
 | Kaynak | URL | Açıklama |
 |--------|-----|----------|
 | GraphQL endpoint | `POST https://api.insurup.com/graphql` | Liste, filtre, arama, sayfalama |
-| GraphQL şema (SDL) | `GET https://api.insurup.com/graphql/schema` | Anonim erişilebilir şema dosyası |
+| GraphQL şema (SDL) | `GET https://api.insurup.com/graphql/schema` | Şema dosyası; acente token'ı ister |
+| GraphQL IDE (Nitro) | `https://api.insurup.com/graphql/ui/` | Tarayıcıdan şema keşfi ve sorgu denemesi; acente token'ını bağlantı ayarlarındaki Authorization bölümüne Bearer olarak girin |
 | Tek kayıt detayı | REST | Örn. `GET /customers/{id}`, `GET /proposals/{id}` |
 
 ```http
@@ -176,10 +177,10 @@ Tüm `*New` sorguları **cursor pagination** ve aynı filtre/arama sözlüğün�
 - `QueryProposalsResultFilterInput`
 - `QueryPoliciesResultFilterInput`
 
-Şemayı indirmek için:
+Şemayı indirmek için (acente token'ı gerekir; introspection da yalnız acente token'ıyla çalışır):
 
 ```bash
-curl -s https://api.insurup.com/graphql/schema -o insurup-schema.graphql
+curl -s -H "Authorization: Bearer {access_token}" https://api.insurup.com/graphql/schema -o insurup-schema.graphql
 ```
 
 ---

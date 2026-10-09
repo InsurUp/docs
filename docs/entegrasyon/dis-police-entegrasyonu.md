@@ -7,7 +7,7 @@ slug: /entegrasyon/dis-police-entegrasyonu
 
 Bu döküman, InsurUp platformuna **acenteniz dışında düzenlenmiş poliçelerin** kaydedilmesi için kullanılan Dış Poliçe API'sinin nasıl çağrılacağını açıklar. Hedef kitle, entegrasyon gerçekleştirecek partner yazılım ekipleridir.
 
-**API Referansı:** Tüm endpoint'lerin detaylı teknik dokümantasyonu için [api.insurup.com/scalar](https://api.insurup.com/scalar) adresini ziyaret edin.
+**API Referansı:** Endpoint'lerin teknik dokümantasyonu [api.insurup.com](https://api.insurup.com) adresindedir. Bu rehberdeki endpoint'ler acente token'ı ister: sayfadaki kutuya acente token'ınızı (kullanıcı ya da servis hesabı) girip **Agent** dokümanını Scalar veya Swagger UI ile açın.
 
 ## 1. Dış Poliçe Nedir?
 
