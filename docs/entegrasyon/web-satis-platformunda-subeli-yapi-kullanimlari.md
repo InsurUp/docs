@@ -10,7 +10,7 @@ Bu doküman, InsurUp Web Satış Platformu'nu kullanan acentelerin **şube (bran
 
 Temel API akışları için [InsurUp Web Satış Platformu Self-servis Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-entegrasyon-rehberi), ürün bazlı detaylar için [Kasko Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-kasko-entegrasyon-rehberi) ve [TSS Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-tss-entegrasyon-rehberi) dökümanlarını incelemeniz önerilir.
 
-**API Referansı:** Tüm endpoint'lerin detaylı teknik dokümantasyonu için [api.insurup.com/scalar](https://api.insurup.com/scalar) adresini ziyaret edin.
+**API Referansı:** Endpoint'lerin teknik dokümantasyonu [api.insurup.com](https://api.insurup.com) adresindedir. Token gerektirmeyen endpoint'ler (ör. `login-or-register`) **Public** dokümanında herkese açıktır; müşteri endpoint'leri için sayfadaki kutuya müşteri token'ınızı girip **Customer** dokümanını Scalar veya Swagger UI ile açın.
 
 ## 1. Şubeli yapı nedir?
 
@@ -353,4 +353,4 @@ Aşağıdaki akış, şubeli yapıda bir B2C satış sürecinin uçtan uca adım
 
 ---
 
-Bu rehber, InsurUp Web Satış Platformu'nda şubeli yapı kullanımının teknik detaylarını ve en iyi uygulamalarını kapsar. Entegrasyon sırasında oluşacak sorular için InsurUp teknik ekibiyle iletişime geçebilir ve endpoint detayları için [api.insurup.com/scalar](https://api.insurup.com/scalar) adresini kullanabilirsiniz.
+Bu rehber, InsurUp Web Satış Platformu'nda şubeli yapı kullanımının teknik detaylarını ve en iyi uygulamalarını kapsar. Entegrasyon sırasında oluşacak sorular için InsurUp teknik ekibiyle iletişime geçebilir ve endpoint detayları için [api.insurup.com](https://api.insurup.com) adresindeki dokümanları kullanabilirsiniz.

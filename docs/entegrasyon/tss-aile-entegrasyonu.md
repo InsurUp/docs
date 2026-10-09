@@ -10,7 +10,7 @@ Bu rehber, InsurUp Web Satış Platformu üzerinden Tamamlayıcı Sağlık Sigor
 
 Temel TSS akışı için [TSS Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-tss-entegrasyon-rehberi), genel entegrasyon akışı için [Self-servis Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-entegrasyon-rehberi) dökümanlarını incelemeniz önerilir.
 
-**API Referansı:** Tüm endpoint'lerin detaylı teknik dokümantasyonu için [api.insurup.com/scalar](https://api.insurup.com/scalar) adresini ziyaret edin.
+**API Referansı:** Endpoint'lerin teknik dokümantasyonu [api.insurup.com](https://api.insurup.com) adresindedir. Bu rehberdeki müşteri endpoint'leri için sayfadaki kutuya müşteri token'ınızı girip **Customer** dokümanını Scalar veya Swagger UI ile açın.
 
 :::tip Yeni aile modülü
 Eski modelde her aile üyesi için ayrı bir teklif oluşturuluyordu. Yeni aile modülünde **tek bir TSS teklifi** ana sigortalı ile birlikte en fazla 4 ek sigortalıyı (toplam 5 kişi) aynı poliçede kapsar. Yeni akış, `POST /api/proposals` isteğinin `additionalInsuredCustomers` alanı üzerinden yönetilir.
@@ -458,4 +458,4 @@ Hayır. İlişki silme işlemi yalnızca CRM'deki müşteri ilişki kaydını ka
 
 ---
 
-Bu rehber, InsurUp Web Satış Platformu'nda TSS ürünü için yeni aile modülünün uçtan uca entegrasyonunu açıklar. Temel TSS akışı için [TSS Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-tss-entegrasyon-rehberi) dökümanına, API endpoint detayları için [api.insurup.com/scalar](https://api.insurup.com/scalar) adresine bakabilirsiniz. Entegrasyon sırasında oluşacak sorular için InsurUp teknik ekibiyle iletişime geçebilirsiniz.
+Bu rehber, InsurUp Web Satış Platformu'nda TSS ürünü için yeni aile modülünün uçtan uca entegrasyonunu açıklar. Temel TSS akışı için [TSS Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-tss-entegrasyon-rehberi) dökümanına, API endpoint detayları için [api.insurup.com](https://api.insurup.com) adresindeki **Customer** dokümanına bakabilirsiniz. Entegrasyon sırasında oluşacak sorular için InsurUp teknik ekibiyle iletişime geçebilirsiniz.

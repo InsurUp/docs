@@ -10,7 +10,7 @@ Bu döküman, InsurUp API'lerini kendi CRM veya B2B sistemlerine entegre etmek i
 
 Temel API akışları için [InsurUp Web Satış Platformu Self-servis Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-entegrasyon-rehberi) ve ürün bazlı detaylar için [Kasko Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-kasko-entegrasyon-rehberi) dökümanlarını incelemeniz önerilir. Bu döküman, söz konusu dökümanlardan farklılaşan B2B-spesifik konuları kapsar.
 
-**API Referansı:** Tüm endpoint'lerin detaylı teknik dokümantasyonu için [api.insurup.com/scalar](https://api.insurup.com/scalar) adresini ziyaret edin.
+**API Referansı:** Endpoint'lerin teknik dokümantasyonu [api.insurup.com](https://api.insurup.com) adresindedir. Bu rehberdeki endpoint'ler acente token'ı ister: sayfadaki kutuya acente token'ınızı girip **Agent** dokümanını Scalar veya Swagger UI ile açın.
 
 ## 1. Web Satış Platformu ile B2B entegrasyon farkları
 
@@ -179,7 +179,7 @@ Partner sistemler, müşteri, teklif ve poliçe verilerini GraphQL API üzerinde
 
 **GraphQL Endpoint:** `POST /graphql`
 
-**GraphQL Schema:** `GET /graphql/schema` (public, authentication gerektirmez)
+**GraphQL Schema:** `GET /graphql/schema` (acente token'ı gerekir: `Authorization: Bearer {access_token}`)
 
 ### 5.1 Müşteri sorgulama
 
@@ -362,4 +362,4 @@ API hata yanıtları standart HTTP durum kodları ile döner. `detail` ve `sugge
 
 ---
 
-Bu döküman B2B entegrasyonunun temel farklılıklarını kapsar. Ortak API akışları için ilgili entegrasyon rehberlerine başvurun. API endpoint detayları için [api.insurup.com/scalar](https://api.insurup.com/scalar) adresini kullanın. Entegrasyon sırasında oluşacak sorular için InsurUp teknik ekibiyle iletişime geçebilirsiniz.
+Bu döküman B2B entegrasyonunun temel farklılıklarını kapsar. Ortak API akışları için ilgili entegrasyon rehberlerine başvurun. API endpoint detayları için [api.insurup.com](https://api.insurup.com) adresindeki **Agent** dokümanını kullanın. Entegrasyon sırasında oluşacak sorular için InsurUp teknik ekibiyle iletişime geçebilirsiniz.

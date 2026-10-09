@@ -428,7 +428,7 @@ Karşılaştırma PDF'i (`POST .../compare-pdf`) detaylı teminat tablosu içeri
 İnsan kullanıcı girişi senaryosunda Authorization Code + PKCE ile alınan kullanıcı token'ı; otomasyon senaryosunda Servis Hesabı (client credentials) token'ı kullanılır. Her iki durumda da `proposal:write` veya `core-api` kapsamı gerekir.
 
 **API şemasını nereden görebilirim?**  
-Güncel OpenAPI belgesi: `https://api.insurup.com/openapi/v1.json`
+Güncel OpenAPI belgesi acente token'ıyla indirilir: `https://api.insurup.com/openapi/agent.json` (`Authorization: Bearer {access_token}`). Tarayıcıdan bakmak için [api.insurup.com](https://api.insurup.com) sayfasındaki kutuya token'ınızı girip **Agent** dokümanını Scalar veya Swagger UI ile açın.
 
 ---
 

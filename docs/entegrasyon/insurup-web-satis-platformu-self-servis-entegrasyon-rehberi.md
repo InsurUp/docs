@@ -353,5 +353,5 @@ Aşağıdaki özet, self‑servis entegrasyonun genel akışını gösterir:
 
 ---
 
-Bu rehber, InsurUp Web Satış Platformu’nun API entegrasyonunu uçtan uca açıklar. Entegrasyon sırasında oluşacak sorular için InsurUp teknik ekibiyle iletişime geçebilir ve API değişikliklerini takip etmek için InsurUp’ın resmi dokümantasyon sitesini (api.insurup.com/scalar) kullanabilirsiniz.
+Bu rehber, InsurUp Web Satış Platformu’nun API entegrasyonunu uçtan uca açıklar. Entegrasyon sırasında oluşacak sorular için InsurUp teknik ekibiyle iletişime geçebilir ve API değişikliklerini takip etmek için InsurUp’ın API dokümantasyonunu ([api.insurup.com](https://api.insurup.com); müşteri endpoint'lerinin **Customer** dokümanı müşteri token'ı ister) kullanabilirsiniz.
 

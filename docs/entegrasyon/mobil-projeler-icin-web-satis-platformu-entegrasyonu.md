@@ -10,7 +10,7 @@ Bu rehber, InsurUp Web Satış Platformu'nu mobil uygulamalarına (iOS, Android 
 
 Temel API akışları için [InsurUp Web Satış Platformu Self-servis Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-entegrasyon-rehberi) ve ürün bazlı detaylar için [Kasko Entegrasyon Rehberi](/entegrasyon/insurup-web-satis-platformu-self-servis-kasko-entegrasyon-rehberi) dökümanlarını incelemeniz önerilir. Bu rehber, söz konusu dökümanların mobil uygulamalar için tamamlayıcısı niteliğindedir.
 
-**API Referansı:** Tüm endpoint'lerin detaylı teknik dokümantasyonu için [api.insurup.com/scalar](https://api.insurup.com/scalar) adresini ziyaret edin.
+**API Referansı:** Endpoint'lerin teknik dokümantasyonu [api.insurup.com](https://api.insurup.com) adresindedir. Token gerektirmeyen endpoint'ler (ör. `login-or-register`) **Public** dokümanında herkese açıktır; bu rehberdeki müşteri endpoint'leri için sayfadaki kutuya müşteri token'ınızı girip **Customer** dokümanını Scalar veya Swagger UI ile açın.
 
 ## 1. Entegrasyon yaklaşımları
 
@@ -71,7 +71,7 @@ Eğer poliçe bir şube, alt acente veya partner üzerinden üretilecekse, `agen
 | Partner/alt acente adına üretim | Gerekli | Gerekli |
 | UTM takipli partner linkleri | Gerekli | Gerekli |
 
-Bu parametreler; müşteri kaydı (`login-or-register`), müşteri oluşturma ve teklif oluşturma (`proposals`) endpoint'lerinde kullanılır. Detaylar için [api.insurup.com/scalar](https://api.insurup.com/scalar) adresindeki ilgili endpoint açıklamalarına bakın.
+Bu parametreler; müşteri kaydı (`login-or-register`), müşteri oluşturma ve teklif oluşturma (`proposals`) endpoint'lerinde kullanılır. Detaylar için [api.insurup.com](https://api.insurup.com) adresindeki **Public** ve **Customer** dokümanlarında ilgili endpoint açıklamalarına bakın (Customer dokümanı müşteri token'ı ister).
 
 ## 3. Kanal (channel) parametresi
 
@@ -274,4 +274,4 @@ Mobil uygulama için kasko veya trafik entegrasyon akışı:
 
 ---
 
-Bu rehber, mobil uygulama entegrasyonunun temel adımlarını ve mobil ortama özgü gereksinimleri kapsar. API endpoint detayları için [api.insurup.com/scalar](https://api.insurup.com/scalar) adresini kullanın. Entegrasyon sırasında oluşacak sorular için InsurUp teknik ekibiyle iletişime geçebilirsiniz.
+Bu rehber, mobil uygulama entegrasyonunun temel adımlarını ve mobil ortama özgü gereksinimleri kapsar. API endpoint detayları için [api.insurup.com](https://api.insurup.com) adresindeki dokümanları kullanın. Entegrasyon sırasında oluşacak sorular için InsurUp teknik ekibiyle iletişime geçebilirsiniz.
