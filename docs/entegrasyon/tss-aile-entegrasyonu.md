@@ -22,14 +22,14 @@ Standart TSS akışında sigorta ettiren ve sigortalı aynı kişidir. Aile kurg
 
 Bu yapı şu şekilde çalışır:
 
-1. Müşterinin aile üyeleri önceden CRM'de **müşteri ilişkisi (relationship)** olarak kaydedilir.
+1. Müşteri, aile üyelerini `customers/me/relationships` API'leri ile **ilişki (relationship)** olarak kaydeder. İlişki, müşterinin o kişi hakkındaki beyanını (ad, TCKN, doğum tarihi, iletişim, boy/kilo) taşır.
 2. TSS teklifi oluşturulurken, ana sigortalının `insuredCustomerId` değeriyle birlikte ek sigortalıların ID listesi `additionalInsuredCustomers` alanında gönderilir.
-3. InsurUp, ana sigortalı ile her ek sigortalı arasındaki yakınlık derecesini CRM kaydından **otomatik olarak** tespit eder ve sigorta şirketine doğru yakınlık koduyla iletir.
+3. InsurUp, ana sigortalı ile her ek sigortalı arasındaki yakınlık derecesini ilişki kaydından **otomatik olarak** tespit eder; ek sigortalının bilgilerini de **ilişki profilinden** alarak sigorta şirketine doğru yakınlık koduyla iletir.
 4. Tek bir teklif, tek bir prim ve tek bir poliçe oluşturulur.
 
 ### 1.1 Desteklenen yakınlık tipleri
 
-CRM tarafında müşteri ilişkisi tanımlanırken yalnızca `SPOUSE` ve `CHILD` manuel olarak oluşturulur. Teklif oluşturulurken ise sistem, ana sigortalı açısından kayıtlı yakınlığı otomatik olarak okur ve ilgili koda dönüştürür.
+Müşteri ilişkisi tanımlanırken yalnızca `SPOUSE` ve `CHILD` manuel olarak oluşturulur. Teklif oluşturulurken ise sistem, ana sigortalı açısından kayıtlı yakınlığı otomatik olarak okur ve ilgili koda dönüştürür.
 
 | Tip | JSON değeri | Açıklama | Manuel eklenebilir mi? |
 | --- | --- | --- | --- |
@@ -39,7 +39,7 @@ CRM tarafında müşteri ilişkisi tanımlanırken yalnızca `SPOUSE` ve `CHILD`
 | Kardeş | `SIBLING` | Sigorta ettirenin kardeşi | Hayır — çocuk eklendiğinde otomatik oluşturulur |
 
 :::info Otomatik ilişkiler
-**Ebeveyn** ve **Kardeş** ilişkileri doğrudan oluşturulamaz. Çocuk ilişkisi eklendiğinde sistem otomatik olarak ters yöndeki ebeveyn ilişkisini ve varsa kardeş ilişkilerini oluşturur. Detaylar için [İlişki kuralları](#24-i̇lişki-kuralları-ve-kısıtlar) bölümüne bakın.
+**Ebeveyn** ve **Kardeş** ilişkileri doğrudan oluşturulamaz. Çocuk ilişkisi eklendiğinde sistem otomatik olarak ters yöndeki ebeveyn ilişkisini ve varsa kardeş ilişkilerini oluşturur. Detaylar için [İlişki kuralları](#25-i̇lişki-kuralları-ve-kısıtlar) bölümüne bakın.
 :::
 
 ### 1.2 Tipik kullanım senaryosu
@@ -66,26 +66,29 @@ Yeni aile modülü, uçtan uca tutarlılığı korumak için aşağıdaki iş ku
 | En az bir yetişkin zorunlu | Ek sigortalı varsa sigortalılar arasında (ana sigortalı ya da ek sigortalılardan en az biri) en az bir **yetişkin** (20 yaş ve üzeri) bulunmalıdır. |
 | Sigorta ettiren yetişkin olmalı | `insurerCustomerId` ile belirtilen kişi **çocuk olamaz** (20 yaş altı kabul edilmez). |
 | Çocuk yaş sınırı | `CHILD` yakınlığıyla eklenen ek sigortalı **20 yaşından küçük** olmalıdır. Diğer yakınlık tiplerinde (eş, ebeveyn, kardeş) yaş sınırı uygulanmaz. |
-| Her sigortalı için boy/kilo zorunlu | Ana sigortalı ve tüm ek sigortalılar için CRM'de `height` ve `weight` bilgisinin dolu olması gerekir. |
-| Ek sigortalı, ana sigortalının yakını olmalı | `additionalInsuredCustomers` listesinde belirtilen her ID, `insuredCustomerId` için CRM'de kayıtlı bir aile ilişkisine sahip olmalıdır. |
+| Her sigortalı için boy/kilo zorunlu | Ana sigortalı için müşteri kaydında, ek sigortalılar için ilişki profilinde `height` ve `weight` bilgisinin dolu olması gerekir. |
+| Ek sigortalı, ana sigortalının yakını olmalı | `additionalInsuredCustomers` listesinde belirtilen her ID (`relatedCustomerId`), `insuredCustomerId` için kayıtlı bir aile ilişkisine sahip olmalıdır. |
 | Tekrar yasaktır | Aynı müşteri `additionalInsuredCustomers` içinde iki kez veya ana sigortalı ile aynı ID ile gönderilemez. |
 
 Kural ihlalleri `POST /api/proposals` yanıtında ilgili hata koduyla birlikte döner; detay için [Hata kodları](#46-hata-kodları) bölümüne bakın.
 
 ## 2. Aile üyesi yönetimi API'leri
 
-Aile üyeleri, müşteri ilişkileri (customer relationships) API'leri üzerinden yönetilir. Bu API'ler, aile üyelerinin sisteme eklenmesini, listelenmesini ve silinmesini sağlar.
+Aile üyeleri, **giriş yapmış müşterinin kendi** ilişkileri üzerinden yönetilir. Müşteri kimliği rotadan değil access token'dan çözülür; bu nedenle bir müşteri başka bir müşterinin ailesini görüntüleyemez veya düzenleyemez. Uçlar `customers/me/relationships` altındadır.
 
-:::info Ön koşul
-Aile üyesi olarak eklenecek kişinin önce InsurUp'ta müşteri olarak kayıtlı olması gerekir. Kayıtlı değilse önce `auth/customer/login-or-register` endpoint'i ile kayıt oluşturulmalıdır.
+:::info İlişki, müşterinin beyanıdır
+Bir aile ilişkisi, müşterinin bir başka kişi hakkındaki **doğrulanmamış beyanıdır**; tarif edilen kişi bu kayda rıza göstermemiştir ve iki farklı müşteri aynı kişiyi farklı tarif edebilir. Bu yüzden ad soyad, TCKN, doğum tarihi, e-posta, telefon, boy ve kilo bilgileri **ilişkinin üzerinde (profil)** tutulur; aile üyesinin InsurUp'taki müşteri kaydına yazılmaz ve oradan okunmaz. Teklife de ilişkideki bu veri gider.
+
+Sonuç olarak:
+- Aile üyesi daha önce InsurUp'ta kayıtlıysa yalnızca kaydının ID'si ilişkiye bağlanır; kaydındaki hiçbir alan okunmaz, güncellenmez veya yanıtta döndürülmez.
+- Aile üyesi kayıtlı değilse yalnızca kimlik alanlarıyla (TCKN, ad soyad, doğum tarihi) bir müşteri kaydı oluşturulur; telefon ve e-posta yalnızca ilişkide kalır.
+- Aile üyesinin ayrıca `auth/customer/login-or-register` ile kayıt olmasına gerek yoktur.
 :::
 
 ### 2.1 Aile üyelerini listeleme
 
-Müşterinin mevcut aile üyelerini görüntülemek için:
-
 ```http
-GET /api/customers/{customerId}/relationships
+GET /api/customers/me/relationships
 Authorization: Bearer <accessToken>
 ```
 
@@ -102,7 +105,19 @@ Authorization: Bearer <accessToken>
     "relatedCustomerName": "Ad Soyad",
     "relatedCustomerEmail": "email@example.com",
     "relatedCustomerPhoneNumber": "+905xxxxxxxxx",
-    "createdAt": "2026-03-15T10:30:00Z"
+    "createdAt": "2026-03-15T10:30:00Z",
+    "isCustomerCreated": true,
+    "profile": {
+      "fullName": "Ad Soyad",
+      "identityNumber": "{identityNumber}",
+      "birthDate": "1990-05-20",
+      "email": "email@example.com",
+      "phoneNumber": "+905xxxxxxxxx",
+      "gender": "FEMALE",
+      "height": 170,
+      "weight": 65,
+      "job": "{job}"
+    }
   }
 ]
 ```
@@ -111,26 +126,52 @@ Authorization: Bearer <accessToken>
 | --- | --- | --- |
 | `id` | Guid | İlişki kaydının tekil ID'si |
 | `customerId` | Guid | Ana müşteri (sigorta ettiren) ID'si |
-| `relatedCustomerId` | Guid | İlişkili müşteri (aile üyesi) ID'si |
+| `relatedCustomerId` | Guid | İlişkili müşteri (aile üyesi) ID'si. Teklifte `additionalInsuredCustomers` içinde bu değer kullanılır. |
 | `relatedCustomerType` | String | Müşteri tipi (`Individual`) |
 | `relationType` | String | Yakınlık tipi (`SPOUSE`, `CHILD`, `PARENT`, `SIBLING`) |
 | `relatedCustomerName` | String | Aile üyesinin ad soyadı |
 | `relatedCustomerEmail` | String? | Aile üyesinin e-posta adresi (opsiyonel) |
 | `relatedCustomerPhoneNumber` | String? | Aile üyesinin telefon numarası (opsiyonel) |
 | `createdAt` | DateTime | İlişki oluşturulma tarihi |
+| `isCustomerCreated` | Boolean | İlişkinin müşteri tarafından (web sitesi üzerinden) oluşturulup oluşturulmadığı |
+| `profile` | Object? | Müşterinin bu kişi için girdiği beyan. Müşteri kişiyi henüz tanımlamadıysa `null`. |
+
+`profile` alanları müşterinin **kendi beyanıdır** ve aile üyesinin InsurUp'taki müşteri kaydından farklı olabilir:
+
+| Alan | Tip | Açıklama |
+| --- | --- | --- |
+| `fullName` | String? | Müşterinin bu kişiye verdiği ad soyad |
+| `identityNumber` | String? | Müşterinin bu kişi için girdiği TCKN |
+| `birthDate` | Date? | Doğum tarihi |
+| `email` | String? | E-posta adresi |
+| `phoneNumber` | String? | Telefon numarası (E.164) |
+| `gender` | String? | Cinsiyet (`MALE`, `FEMALE`, `OTHER`, `UNKNOWN`) |
+| `height` | Integer? | Boy (cm) |
+| `weight` | Integer? | Kilo (kg) |
+| `job` | String? | Meslek |
+
+:::note Listeleme kapsamı
+Liste yalnızca müşterinin **web sitesi üzerinden oluşturduğu** ve profili bulunan ilişkileri döner. Acente panelinden oluşturulan ilişkiler ve profili olmayan türev satırlar (eşin mevcut çocukları, otomatik oluşan kardeş ilişkileri gibi) listelenmez.
+:::
 
 ### 2.2 Aile üyesi ekleme
 
-Yeni bir aile üyesi eklemek için:
-
 ```http
-POST /api/customers/{customerId}/relationships
+POST /api/customers/me/relationships
 Authorization: Bearer <accessToken>
 Content-Type: application/json
 
 {
-  "relatedCustomerId": "{relatedCustomerId}",
-  "relationType": "SPOUSE"
+  "relationType": "SPOUSE",
+  "identityNumber": "{identityNumber}",
+  "fullName": "Ad Soyad",
+  "birthDate": "1990-05-20",
+  "email": "email@example.com",
+  "phoneNumber": "+905xxxxxxxxx",
+  "gender": "FEMALE",
+  "height": 170,
+  "weight": 65,
+  "job": "{job}"
 }
 ```
 
@@ -138,27 +179,50 @@ Content-Type: application/json
 
 | Alan | Tip | Zorunlu | Açıklama |
 | --- | --- | --- | --- |
-| `relatedCustomerId` | Guid | Evet | Aile üyesi olarak eklenecek müşterinin ID'si |
 | `relationType` | String | Evet | Yakınlık tipi: `SPOUSE` veya `CHILD` |
+| `identityNumber` | String | Evet | Eklenecek kişinin TCKN'si. Kişiyi bulmak veya yeni kayıt açmak için kullanılır. |
+| `fullName` | String | Evet | Bu kişi için tutulacak ad soyad |
+| `birthDate` | Date | Evet | Bu kişi için tutulacak doğum tarihi (`YYYY-MM-DD`) |
+| `email` | String | Koşullu | İletişim e-postası. Yalnızca ilişkide saklanır. |
+| `phoneNumber` | String | Koşullu | İletişim telefonu. Yalnızca ilişkide saklanır. |
+| `gender` | String | Hayır | Cinsiyet |
+| `height` | Integer | Hayır* | Boy (cm). TSS teklifi için zorunludur. |
+| `weight` | Integer | Hayır* | Kilo (kg). TSS teklifi için zorunludur. |
+| `job` | String | Koşullu | Meslek |
+
+\* `height` ve `weight` ilişki oluşturulurken zorunlu değildir; ancak TSS teklifi alınmadan önce dolu olmalıdır (bkz. [Aile üyesi için sağlık bilgisi](#3-aile-üyesi-için-sağlık-bilgisi)).
+
+:::info Yetişkin aile üyeleri
+Aile üyesi **18 yaş ve üzerindeyse** iletişim bilgileri (telefon / e-posta) ve meslek bilgisi zorunludur; çünkü yetişkin bir kişi kendi hesabına sahip olabilir. Reşit olmayan çocuklar için bu alanlar zorunlu değildir.
+:::
 
 **Yanıt:**
 
 ```json
 {
-  "id": "{relationshipId}"
+  "ids": ["{relationshipId}", "{derivedRelationshipId}"]
 }
 ```
+
+Tek bir aile bağı, ilişkilerin çift yönlü ve türev olması nedeniyle birden fazla satır üretir; `ids` alanı oluşturulan veya devralınan tüm ilişki satırlarının ID'lerini içerir. Yanıtta aile üyesine ait ad, telefon veya e-posta bilgisi **bulunmaz**.
 
 #### Eş ekleme örneği
 
 ```http
-POST /api/customers/{customerId}/relationships
+POST /api/customers/me/relationships
 Authorization: Bearer <accessToken>
 Content-Type: application/json
 
 {
-  "relatedCustomerId": "{spouseCustomerId}",
-  "relationType": "SPOUSE"
+  "relationType": "SPOUSE",
+  "identityNumber": "{spouseIdentityNumber}",
+  "fullName": "Ad Soyad",
+  "birthDate": "1990-05-20",
+  "email": "email@example.com",
+  "phoneNumber": "+905xxxxxxxxx",
+  "job": "{job}",
+  "height": 170,
+  "weight": 65
 }
 ```
 
@@ -167,13 +231,17 @@ Eş ilişkisi çift yönlüdür. Sistem otomatik olarak hem `müşteri → eş` 
 #### Çocuk ekleme örneği
 
 ```http
-POST /api/customers/{customerId}/relationships
+POST /api/customers/me/relationships
 Authorization: Bearer <accessToken>
 Content-Type: application/json
 
 {
-  "relatedCustomerId": "{childCustomerId}",
-  "relationType": "CHILD"
+  "relationType": "CHILD",
+  "identityNumber": "{childIdentityNumber}",
+  "fullName": "Ad Soyad",
+  "birthDate": "2015-03-10",
+  "height": 130,
+  "weight": 30
 }
 ```
 
@@ -183,42 +251,75 @@ Content-Type: application/json
 - Müşterinin eşi varsa `eş → çocuk` (Child) ve `çocuk → eş` (Parent) ilişkilerini de oluşturur
 - Müşterinin başka çocukları varsa çocuklar arasında `Sibling` ilişkisini oluşturur
 
-### 2.3 Aile üyesi silme
+Bu türev satırların profili olmadığı için [listeleme](#21-aile-üyelerini-listeleme) yanıtında görünmez.
 
-Bir aile üyesi ilişkisini kaldırmak için:
+:::note Zaten var olan bağ hata değildir
+Eklenmek istenen bağ daha önce (örneğin acente tarafından) kurulmuşsa istek hata dönmez; ilişki web sitesi kanalına yükseltilir ve ilk oluşturan bilgisi korunur. Sonuç bağın önceden var olup olmadığından bağımsız olarak aynı olduğu için, bu davranış başka bir müşterinin kaydı hakkında bilgi sızdırmaz.
+:::
+
+### 2.3 Aile üyesi bilgilerini güncelleme
+
+Müşteri, aile üyesi için tuttuğu bilgileri güncelleyebilir. Yakınlık tipi ve TCKN değiştirilemez; bunun için ilişki silinip yeniden eklenmelidir.
 
 ```http
-DELETE /api/customers/{customerId}/relationships/{relationshipId}
+PUT /api/customers/me/relationships/{relationshipId}
+Authorization: Bearer <accessToken>
+Content-Type: application/json
+
+{
+  "fullName": "Ad Soyad",
+  "birthDate": "1990-05-20",
+  "email": "email@example.com",
+  "phoneNumber": "+905xxxxxxxxx",
+  "gender": "FEMALE",
+  "height": 172,
+  "weight": 66,
+  "job": "{job}"
+}
+```
+
+`relationshipId` değeri, listeleme yanıtındaki `id` alanından alınır ve rotada gönderilir. Alan kuralları ekleme isteğiyle aynıdır (`fullName` ve `birthDate` zorunlu; yetişkinler için iletişim ve meslek zorunlu). İstek yalnızca ilişkideki profili değiştirir, aile üyesinin müşteri kaydına dokunmaz.
+
+### 2.4 Aile üyesi silme
+
+```http
+DELETE /api/customers/me/relationships/{relationshipId}
 Authorization: Bearer <accessToken>
 ```
 
-`relationshipId` değeri, listeleme yanıtındaki `id` alanından alınır.
+`relationshipId` değeri, listeleme yanıtındaki `id` alanından alınır. Güncelleme ve silme yalnızca müşterinin **kendi oluşturduğu** satırlarda çalışır; başkasına (örneğin acenteye) ait bir satır için kayıt "bulunamadı" yanıtı verir.
 
-### 2.4 İlişki kuralları ve kısıtlar
+### 2.5 İlişki kuralları ve kısıtlar
 
 | Kural | Açıklama |
 | --- | --- |
-| Her müşterinin en fazla 1 eşi olabilir | İkinci bir eş eklenmeye çalışıldığında hata döner |
+| Her müşterinin en fazla 1 eşi olabilir | İkinci bir eş eklenmeye çalışıldığında hata döner. Kural, müşterinin göremediği ilişkiler dahil tüm ilişki grafiği üzerinden denetlenir. |
 | Eşin de eşi olmamalıdır | İlişkilendirilecek kişinin zaten bir eşi varsa hata döner |
 | Çocuk en fazla 2 ebeveyne sahip olabilir | Farklı bir ailede ebeveyn ilişkisi bulunan çocuk eklenemez |
 | Ebeveyn ilişkisi manuel oluşturulamaz | `PARENT` tipi yalnızca çocuk ekleme sırasında otomatik oluşturulur |
 | Kardeş ilişkisi manuel oluşturulamaz | `SIBLING` tipi yalnızca çocuk ekleme sırasında otomatik oluşturulur |
-| Kendisiyle ilişki kurulamaz | `customerId` ve `relatedCustomerId` aynı olamaz |
-| Tekrar eden ilişki kurulamaz | Aynı iki müşteri arasında birden fazla ilişki oluşturulamaz |
+| Kendisiyle ilişki kurulamaz | Müşteri kendi TCKN'siyle ilişki oluşturamaz |
+| Yetişkinler için iletişim ve meslek zorunludur | 18 yaş ve üzeri aile üyelerinde telefon / e-posta ve meslek bilgisi gerekir |
 
 **Hata kodları:**
 
 | Hata kodu | Açıklama |
 | --- | --- |
 | `CUSTOMER_RELATIONSHIP_SELF` | Müşteri kendisiyle ilişki kuramaz |
-| `CUSTOMER_RELATIONSHIP_DUPLICATE` | Bu ilişki zaten mevcut |
-| `CUSTOMER_RELATIONSHIP_SPOUSE_EXISTS` | Müşterinin zaten bir eşi var |
+| `CUSTOMER_RELATIONSHIP_SPOUSE_EXISTS` | Müşterinin veya eklenen kişinin zaten bir eşi var |
 | `CUSTOMER_RELATIONSHIP_CHILD_OTHER_FAMILY` | Çocuk başka bir aileye kayıtlı |
-| `CUSTOMER_RELATIONSHIP_PARENT_MANUAL` | Ebeveyn ilişkisi manuel oluşturulamaz |
+| `CUSTOMER_RELATIONSHIP_PARENT_MANUAL` | Ebeveyn / kardeş ilişkisi manuel oluşturulamaz |
 
-## 3. Aile üyesi için sağlık bilgisi güncelleme
+## 3. Aile üyesi için sağlık bilgisi
 
-TSS teklifi alabilmek için **her sigortalının** (ana sigortalı dahil her bir ek sigortalının) `height` ve `weight` bilgisi CRM'de dolu olmalıdır. Sağlık bilgileri her müşteri için ayrı ayrı, standart sağlık bilgisi endpoint'i üzerinden güncellenir.
+TSS teklifi alabilmek için **her sigortalının** (ana sigortalı dahil her bir ek sigortalının) `height` ve `weight` bilgisi dolu olmalıdır. Kaynak, sigortalının kim olduğuna göre değişir:
+
+| Sigortalı | Boy / kilo nerede tutulur? | Nasıl güncellenir? |
+| --- | --- | --- |
+| Ana sigortalı (müşterinin kendisi) | Müşteri kaydının sağlık bilgisi | `PUT /api/customers/{customerId}/health-info` |
+| Aile üyesi (ek sigortalı) | **İlişki profili** | `POST /api/customers/me/relationships` veya `PUT /api/customers/me/relationships/{relationshipId}` ile `height` ve `weight` alanları |
+
+Ana sigortalının sağlık bilgisi standart endpoint ile güncellenir:
 
 ```http
 PUT /api/customers/{customerId}/health-info
@@ -240,8 +341,8 @@ Content-Type: application/json
 | `surgeries` | Array | Evet | Ameliyat kodları (boş array gönderilebilir) |
 | `diseases` | Array | Evet | Kronik hastalık kodları (boş array gönderilebilir) |
 
-:::warning Eksik sağlık bilgisi
-Ek sigortalılardan herhangi birinin boy veya kilo bilgisi eksikse teklif `PROPOSAL_HEIGHT_REQUIRED` veya `PROPOSAL_WEIGHT_REQUIRED` hatasıyla reddedilir. Tüm aile üyeleri için sağlık bilgilerini tamamladıktan sonra teklif çağrısını yapın.
+:::warning Aile üyesinin müşteri kaydına yazılmaz
+Aile üyesi için sağlık bilgisi, ilişki profiline yazılır. Aile üyesinin InsurUp'taki müşteri kaydının sağlık bilgisi bu akışla değiştirilmez; bu sayede TCKN'sini bilen bir kişinin gerçek bir kişinin sağlık verisini ezmesi engellenir.
 :::
 
 Sağlık bilgisini okumak için:
@@ -250,6 +351,16 @@ Sağlık bilgisini okumak için:
 GET /api/customers/{customerId}/health-info
 Authorization: Bearer <accessToken>
 ```
+
+`{customerId}`, çağıranın web sitesi üzerinden eklediği bir aile üyesinin ID'siyse yanıt, müşteri kaydından değil **ilişki profilinden** üretilir: `height` ve `weight` profildeki değerlerdir, sayaçlar sıfır döner, ameliyat ve hastalık listeleri boştur. Aynı şekilde `GET /api/customers/{customerId}` da bu durumda ad, TCKN gibi alanları ilişki profilinden döner.
+
+:::warning Eksik sağlık bilgisi
+Sigortalılardan herhangi birinin boy veya kilo bilgisi eksikse teklif `PROPOSAL_HEIGHT_REQUIRED` veya `PROPOSAL_WEIGHT_REQUIRED` hatasıyla reddedilir. Tüm aile üyeleri için sağlık bilgilerini tamamladıktan sonra teklif çağrısını yapın.
+:::
+
+:::info Ameliyat ve hastalık beyanı
+Ek sigortalının ameliyat / hastalık beyanı boşsa, sigorta ettirenin beyanı ona **atanmaz**; ek sigortalı sağlıklı olarak iletilir. Her sigortalı için risk beyanı kendi bilgisine dayanır.
+:::
 
 ## 4. Aile poliçesi TSS teklifi oluşturma
 
@@ -287,20 +398,20 @@ Content-Type: application/json
 | `channel` | String | Evet | Satış kanalı: `WEBSITE` |
 
 :::info Yakınlık tespiti otomatiktir
-`additionalInsuredCustomers` listesinde gönderilen **her ID**, `insuredCustomerId` açısından CRM'de kayıtlı bir aile ilişkisine sahip olmalıdır. Yakınlık tipi (eş / çocuk / ebeveyn / kardeş) istekte yer almaz; sunucu tarafında CRM kaydından okunup sigorta şirketine iletilir. İlişki tanımlı değilse teklif `PROPOSAL_ADDITIONAL_INSURED_NOT_RELATIVE` hatasıyla reddedilir.
+`additionalInsuredCustomers` listesinde gönderilen **her ID**, `insuredCustomerId` açısından kayıtlı bir aile ilişkisine sahip olmalıdır. Yakınlık tipi (eş / çocuk / ebeveyn / kardeş) istekte yer almaz; sunucu tarafında ilişki kaydından okunup sigorta şirketine iletilir. İlişki tanımlı değilse teklif `PROPOSAL_ADDITIONAL_INSURED_NOT_RELATIVE` hatasıyla reddedilir.
 :::
 
 ### 4.2 Aile doğrulama kuralları
 
 Teklif oluşturulduğunda sunucu aşağıdaki kuralları sırasıyla uygular. İhlal durumunda teklif oluşturulmaz ve `400 Bad Request` yanıtı ilgili hata kodu ile döner.
 
-1. **Sigorta ettiren yetişkin olmalı.** `insurerCustomerId` için CRM'deki doğum tarihi 20 yaş altıysa istek reddedilir.
+1. **Sigorta ettiren yetişkin olmalı.** `insurerCustomerId` için doğum tarihi 20 yaş altıysa istek reddedilir.
 2. **Ana sigortalının sağlık bilgileri tam olmalı.** `insuredCustomerId` için `height` ve `weight` dolu olmalıdır.
 3. **Aile boyu üst sınırı.** `1 + additionalInsuredCustomers.Length` değeri **5**'i aşmamalıdır.
 4. **Tekrar yasak.** `additionalInsuredCustomers` içinde aynı ID birden fazla kez yer alamaz ve `insuredCustomerId` ile aynı olamaz.
-5. **Her ek sigortalı, ana sigortalının yakını olmalı.** CRM'de ilişki kaydı bulunmalıdır; ilişki tipi sunucu tarafından otomatik çözülür.
+5. **Her ek sigortalı, ana sigortalının yakını olmalı.** İlişki kaydı bulunmalıdır; ilişki tipi sunucu tarafından otomatik çözülür.
 6. **`CHILD` yakınlığındaki ek sigortalılar 20 yaşından küçük olmalı.** Eş, ebeveyn, kardeş yakınlığında yaş sınırı yoktur.
-7. **Her ek sigortalının sağlık bilgileri tam olmalı.** `height` ve `weight` dolu olmalıdır.
+7. **Her ek sigortalının sağlık bilgileri tam olmalı.** `height` ve `weight` dolu olmalıdır (ana sigortalı için müşteri kaydında, ek sigortalılar için ilişki profilinde).
 8. **En az bir yetişkin zorunlu.** Ek sigortalı varsa, ana sigortalı ya da ek sigortalılardan en az biri 20 yaş ve üzeri olmalıdır. (Sigorta ettiren yetişkin olsa bile, eğer sigortalılar arasında yer almıyorsa bu kural için geçerli sayılmaz — çünkü sigorta ettiren mutlaka bir aile ferdi olmak zorunda değildir.)
 
 ### 4.3 Sigorta şirketine iletilen veri
@@ -317,6 +428,10 @@ Kabul edilen teklifte sunucu, her sigortalı için yakınlık bilgisini otomatik
 | Kardeş | `5` | `Kardeşi` | `1441` |
 
 Bu dönüşüm InsurUp tarafında yapılır; entegrasyon tarafında yalnızca `additionalInsuredCustomers` listesinin gönderilmesi yeterlidir.
+
+:::info Ek sigortalı verisi ilişki profilinden gelir
+Teklif anında ek sigortalının ad, e-posta, doğum tarihi, boy/kilo gibi bilgileri aile üyesinin müşteri kaydından değil, müşterinin girdiği **ilişki profilinden** alınır ve teklif/poliçe snapshot'ında bu değerler saklanır.
+:::
 
 ### 4.4 Teklif yanıtı ve ürün listeleme
 
@@ -356,6 +471,10 @@ Content-Type: application/json
 
 Başarılı ödemenin ardından **tek bir TSS poliçesi** oluşturulur. Poliçe üzerinde ana sigortalı ve tüm ek sigortalılar ayrı satırlar olarak görünür; poliçe numarası, prim ve belge tektir.
 
+:::info Ek sigortalının poliçe görünürlüğü
+Ek sigortalı olarak yer alan müşteri, kendisini kapsayan poliçeyi görüntüleyebilir. Teklif ise yalnızca teklifi oluşturan müşteriye görünür; ek sigortalı teklifi görmez.
+:::
+
 ### 4.6 Hata kodları
 
 Aile kurgusuna özgü doğrulama hataları:
@@ -368,7 +487,7 @@ Aile kurgusuna özgü doğrulama hataları:
 | `PROPOSAL_ADDITIONAL_INSURED_NOT_RELATIVE` | Ek sigortalılardan biri ana sigortalının kayıtlı bir aile yakını değil. | Önce ilgili müşteriyi [aile üyesi olarak ekleyin](#22-aile-üyesi-ekleme), ardından tekrar deneyin. |
 | `PROPOSAL_ADDITIONAL_INSURED_CHILD_TOO_OLD` | `CHILD` yakınlığıyla eklenen ek sigortalı 20 yaş veya üzeri. | 20 yaş altı olan çocukları listede bırakın; 20 yaş ve üzeri çocuklar aile poliçesine ek sigortalı olarak eklenemez. |
 | `PROPOSAL_FAMILY_REQUIRES_ADULT` | Sigortalılar arasında (ana + ek) yetişkin bulunmuyor. | Listeye en az bir ebeveyn/eş ekleyin ya da ana sigortalıyı yetişkin bir kişiyle değiştirin. |
-| `PROPOSAL_HEIGHT_REQUIRED` / `PROPOSAL_WEIGHT_REQUIRED` | Sigortalılardan birinin sağlık bilgisi eksik. | [Sağlık bilgilerini](#3-aile-üyesi-için-sağlık-bilgisi-güncelleme) tamamlayın. |
+| `PROPOSAL_HEIGHT_REQUIRED` / `PROPOSAL_WEIGHT_REQUIRED` | Sigortalılardan birinin sağlık bilgisi eksik. | [Sağlık bilgilerini](#3-aile-üyesi-için-sağlık-bilgisi) tamamlayın. |
 
 ## 5. Uçtan uca entegrasyon akışı
 
@@ -378,10 +497,8 @@ Aşağıdaki akış, bir ailenin tamamı için tek bir TSS poliçesi satın alma
 
 1. **Ana müşteri girişi:** `POST /api/auth/customer/login-or-register` ile ana müşteri giriş yapar ve `accessToken` alır.
 2. **Müşteri bilgisi:** `GET /api/customers/me` ile ana müşteri ID'si (`insurerCustomerId` ve `insuredCustomerId`) alınır.
-3. **Aile üyelerini kaydetme:** Her aile üyesi için:
-   - Aile üyesi kayıtlı değilse `POST /api/auth/customer/login-or-register` ile kayıt oluşturulur.
-   - `POST /api/customers/{customerId}/relationships` ile ilişki (`SPOUSE` veya `CHILD`) tanımlanır.
-4. **Sağlık bilgilerini güncelleme:** Ana sigortalı ve her ek sigortalı için `PUT /api/customers/{id}/health-info` ile boy/kilo bilgisi girilir.
+3. **Aile üyelerini kaydetme:** Her aile üyesi için `POST /api/customers/me/relationships` ile ilişki (`SPOUSE` veya `CHILD`) tanımlanır. Aile üyesinin ayrıca müşteri olarak kayıt olması gerekmez; ad, TCKN, doğum tarihi, iletişim, meslek ve boy/kilo bilgileri istekte gönderilir. Yanıttaki ilişkiler `GET /api/customers/me/relationships` ile listelenir ve `relatedCustomerId` değeri alınır.
+4. **Sağlık bilgilerini güncelleme:** Ana sigortalı için `PUT /api/customers/{id}/health-info`, her ek sigortalı için ilişkideki `height` / `weight` alanları (`POST` veya `PUT /api/customers/me/relationships/{relationshipId}`) doldurulur.
 
 ### 5.2 Tek seferlik aile teklifi ve satın alma
 
@@ -397,13 +514,14 @@ Aşağıdaki akış, bir ailenin tamamı için tek bir TSS poliçesi satın alma
 ```
 1. Anne (Sigorta Ettiren + Ana Sigortalı) giriş yapar
 
-2. Aile üyelerini CRM'e ekler:
-   ├── Eşi     → POST /customers/{anneId}/relationships  { relationType: "SPOUSE" }
-   ├── Çocuk 1 → POST /customers/{anneId}/relationships  { relationType: "CHILD" }
-   └── Çocuk 2 → POST /customers/{anneId}/relationships  { relationType: "CHILD" }
+2. Aile üyelerini ekler (kimlik, iletişim, boy/kilo bilgileriyle):
+   ├── Eşi     → POST /customers/me/relationships  { relationType: "SPOUSE", ... }
+   ├── Çocuk 1 → POST /customers/me/relationships  { relationType: "CHILD", ... }
+   └── Çocuk 2 → POST /customers/me/relationships  { relationType: "CHILD", ... }
 
-3. Sağlık bilgilerini günceller (anne + eş + 2 çocuk)
-   └── PUT /customers/{id}/health-info (her bir müşteri için ayrı çağrı)
+3. Sağlık bilgilerini günceller
+   ├── Anne        → PUT /customers/{anneId}/health-info
+   └── Eş + çocuk  → PUT /customers/me/relationships/{relationshipId} (height / weight)
 
 4. Tek bir aile teklifi oluşturur:
    POST /proposals
@@ -411,7 +529,7 @@ Aşağıdaki akış, bir ailenin tamamı için tek bir TSS poliçesi satın alma
      "$type": "tss",
      "insurerCustomerId": anneId,
      "insuredCustomerId":  anneId,
-     "additionalInsuredCustomers": [eşId, çocuk1Id, çocuk2Id],
+     "additionalInsuredCustomers": [eşRelatedCustomerId, çocuk1RelatedCustomerId, çocuk2RelatedCustomerId],
      "coverageGroupIds": [coverageGroupId],
      "channel": "WEBSITE"
    }
@@ -434,7 +552,7 @@ Evet, geriye dönük uyumluluk için her aile üyesi için ayrı `POST /api/prop
 
 ### 6.3 Aile üyesinin InsurUp'ta müşteri kaydı olması zorunlu mu?
 
-Evet. `additionalInsuredCustomers` içindeki her ID'nin InsurUp'ta kayıtlı bir müşteri olması ve ana sigortalı için CRM'de bir aile ilişkisinin tanımlı olması gerekir. Kayıt için `auth/customer/login-or-register` endpoint'ini kullanın.
+Aile üyesinin kendisinin kayıt olması gerekmez. `additionalInsuredCustomers` içindeki her ID'nin ana sigortalı için tanımlı bir aile ilişkisine ait `relatedCustomerId` olması yeterlidir. Aile üyesi eklenirken (`POST /api/customers/me/relationships`) TCKN'si InsurUp'ta kayıtlıysa mevcut kaydına bağlanır, değilse yalnızca kimlik alanlarıyla yeni bir kayıt açılır.
 
 ### 6.4 Çocuğun yaş sınırı var mı?
 
@@ -454,7 +572,15 @@ Sigorta şirketi, teklif yanıtında ya da poliçeleştirme anında bir sigortal
 
 ### 6.8 Bir aile üyesi silinirse mevcut poliçeler etkilenir mi?
 
-Hayır. İlişki silme işlemi yalnızca CRM'deki müşteri ilişki kaydını kaldırır. Daha önce oluşturulmuş teklifler ve poliçeler, ilişki silinse dahi etkilenmez; poliçe içeriği teklif anındaki snapshot'a göre saklanır.
+Hayır. İlişki silme işlemi yalnızca müşteri ilişki kaydını kaldırır. Daha önce oluşturulmuş teklifler ve poliçeler, ilişki silinse dahi etkilenmez; poliçe içeriği teklif anındaki snapshot'a göre saklanır.
+
+### 6.9 Aile üyesinin bilgileri müşteri kaydına yazılır mı?
+
+Hayır. İlişki, müşterinin bir başka kişi hakkındaki doğrulanmamış beyanı olduğundan ad, TCKN, doğum tarihi, e-posta, telefon, boy ve kilo bilgileri ilişkide saklanır; aile üyesinin müşteri kaydına yazılmaz ve oradan okunmaz. Bu nedenle iki farklı müşteri aynı kişiyi farklı bilgilerle tanımlayabilir ve biri diğerinin kaydını değiştiremez.
+
+### 6.10 Acentenin oluşturduğu ilişkileri müşteri görebilir mi?
+
+`GET /api/customers/me/relationships` yalnızca müşterinin web sitesi üzerinden oluşturduğu ilişkileri döner. Acente panelinden oluşturulan ilişkiler listelenmez; ancak müşteri aynı bağı kendisi eklerse ilişki web sitesi kanalına yükseltilir. Acente panelinde her ilişkinin hangi kanaldan (Manuel / Web Sitesi) oluşturulduğu görünür.
 
 ---
 
