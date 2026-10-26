@@ -13,19 +13,19 @@ Kapsam ve süreklilik, şirketlerin sunduğu servislere bağlıdır; tüm ürün
 | Özet | Değer |
 | ---- | ----- |
 | Aktif Şirket Sayısı | 24 (en az bir branşta entegrasyon olan) |
-| Branş Sayısı | 11 (Kasko, Trafik, Konut Yangın, Ferdi Kaza, Dask, Tamamlayıcı Sağlık, Seyahat Sağlık, Acil Sağlık, Doktorum Benimle, Incoming Seyahat, İMM) |
-| Toplam Ürün Sayısı | 96 (her ✓ bir ürün entegrasyonunu temsil eder) |
+| Branş Sayısı | 12 (Kasko, Trafik, Konut Yangın, Ferdi Kaza, Dask, Tamamlayıcı Sağlık, Seyahat Sağlık, Acil Sağlık, Doktorum Benimle, Incoming Seyahat, İMM, Pati) |
+| Toplam Ürün Sayısı | 103 (her ✓ bir ürün entegrasyonunu temsil eder) |
 
 ## Entegre Web Servis Ürünleri
 
 | Şirket | Kasko | Trafik | Konut Yangın | Ferdi Kaza | Dask | Tamamlayıcı Sağlık | Seyahat Sağlık | Acil Sağlık | Doktorum Benimle | Incoming Seyahat | İMM | Pati |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | AcnTurk Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
-| AK Sigorta | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |
+| AK Sigorta | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  | ✓ |
 | Allianz Sigorta | ✓ | ✓ | ✓ |  |  | ✓ |  |  |  |  |  |  |
 | Ana Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Anadolu Sigorta | ✓ | ✓ | ✓ |  |  | ✓ |  |  |  |  | ʘ |  |
-| Ankara Sigorta | ✓ |  | ✓ | ʘ | ✓ |  |  |  |  |  |  |  |
+| Ankara Sigorta | ✓ |  | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |
 | Arex Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Atlas Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | AXA Sigorta | ✓ | ✓ |  |  | ✓ | ✓ |  |  |  |  |  |  |
@@ -55,11 +55,11 @@ Kapsam ve süreklilik, şirketlerin sunduğu servislere bağlıdır; tüm ürün
 | Quick Sigorta | ✓ |  |  |  | ʘ |  | ✓ |  |  |  |  |  |
 | Ray Sigorta | ✓ | ✓ | ✓ |  | ✓ |  |  |  |  |  | ✓ |  |
 | Referans Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
-| Sompo Sigorta | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |
+| Sompo Sigorta | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |
 | Şeker Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Turkcell Dijital Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Türkiye Katılım Sigorta | ✓ | ✓ | ✓ |  | ✓ |  |  |  |  |  |  |  |
-| Türkiye Sigorta | ✓ | ✓ | ʘ |  | ✓ | ✓ | ✓ | ʘ |  |  | ✓ |  |
+| Türkiye Sigorta | ✓ | ✓ | ʘ |  | ✓ | ✓ | ✓ | ʘ |  |  | ✓ | ✓ |
 | Unico Sigorta | ✓ | ✓ |  |  | ✓ |  |  |  |  |  |  |  |
 | VHV Sigorta |  |  |  |  |  |  |  |  |  |  |  |  |
 | Zurich Sigorta | ✓ | ✓ |  |  | ʘ |  | ✓ | |  |  |  |  |
